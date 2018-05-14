@@ -6,6 +6,9 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,6 +25,9 @@ public class User extends Actor {
 	private Collection<Comment>			comments;
 
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "user")
 	public Collection<Announcement> getAnnouncements() {
 		return this.announcements;
 	}
@@ -30,6 +36,9 @@ public class User extends Actor {
 		this.announcements = announcements;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "user")
 	public Collection<Report> getReports() {
 		return this.reports;
 	}
@@ -38,6 +47,9 @@ public class User extends Actor {
 		this.reports = reports;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "user")
 	public Collection<Patronage> getPatronages() {
 		return this.patronages;
 	}
@@ -46,6 +58,9 @@ public class User extends Actor {
 		this.patronages = patronages;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "creator")
 	public Collection<Project> getProjects() {
 		return this.projects;
 	}
@@ -54,6 +69,9 @@ public class User extends Actor {
 		this.projects = projects;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "user")
 	public Collection<Comment> getComments() {
 		return this.comments;
 	}

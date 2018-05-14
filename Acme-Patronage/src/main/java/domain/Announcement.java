@@ -7,8 +7,11 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -68,6 +71,9 @@ public class Announcement extends DomainEntity {
 	private Project							project;
 
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public User getUser() {
 		return this.user;
 	}
@@ -76,6 +82,9 @@ public class Announcement extends DomainEntity {
 		this.user = user;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "announcement")
 	public Collection<AnnouncementComment> getAnnouncementComments() {
 		return this.announcementComments;
 	}
@@ -84,6 +93,9 @@ public class Announcement extends DomainEntity {
 		this.announcementComments = announcementComments;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Project getProject() {
 		return this.project;
 	}

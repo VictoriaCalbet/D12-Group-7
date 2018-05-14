@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -73,6 +74,9 @@ public class Patronage extends DomainEntity {
 	private Project	project;
 
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public User getUser() {
 		return this.user;
 	}
@@ -81,6 +85,9 @@ public class Patronage extends DomainEntity {
 		this.user = user;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Project getProject() {
 		return this.project;
 	}

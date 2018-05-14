@@ -4,6 +4,9 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -44,6 +47,9 @@ public class Report extends DomainEntity {
 	private Project	project;
 
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public User getUser() {
 		return this.user;
 	}
@@ -52,6 +58,9 @@ public class Report extends DomainEntity {
 		this.user = user;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Project getProject() {
 		return this.project;
 	}

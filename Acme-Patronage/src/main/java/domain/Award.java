@@ -4,7 +4,11 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -57,6 +61,8 @@ public class Award extends DomainEntity {
 	private Project			project;
 
 
+	@Valid
+	@OneToMany(mappedBy = "award")
 	public AwardComment getAwardComment() {
 		return this.awardComment;
 	}
@@ -65,6 +71,9 @@ public class Award extends DomainEntity {
 		this.awardComment = awardComment;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Project getProject() {
 		return this.project;
 	}

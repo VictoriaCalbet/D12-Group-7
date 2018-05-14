@@ -7,8 +7,11 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -124,6 +127,9 @@ public class Project extends DomainEntity {
 	private Collection<Award>			award;
 
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public User getCreator() {
 		return this.creator;
 	}
@@ -132,6 +138,9 @@ public class Project extends DomainEntity {
 		this.creator = creator;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<Announcement> getAnnouncements() {
 		return this.announcements;
 	}
@@ -140,6 +149,9 @@ public class Project extends DomainEntity {
 		this.announcements = announcements;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<Report> getReports() {
 		return this.reports;
 	}
@@ -148,6 +160,9 @@ public class Project extends DomainEntity {
 		this.reports = reports;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<Patronage> getPatronages() {
 		return this.patronages;
 	}
@@ -156,6 +171,9 @@ public class Project extends DomainEntity {
 		this.patronages = patronages;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<ProjectComment> getProjectComments() {
 		return this.projectComments;
 	}
@@ -164,6 +182,9 @@ public class Project extends DomainEntity {
 		this.projectComments = projectComments;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<Sponsorship> getSponsorships() {
 		return this.sponsorships;
 	}
@@ -172,6 +193,9 @@ public class Project extends DomainEntity {
 		this.sponsorships = sponsorships;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Category getCategory() {
 		return this.category;
 	}
@@ -180,6 +204,9 @@ public class Project extends DomainEntity {
 		this.category = category;
 	}
 
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "project")
 	public Collection<Award> getAward() {
 		return this.award;
 	}

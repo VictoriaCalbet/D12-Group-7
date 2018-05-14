@@ -4,6 +4,9 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -17,7 +20,7 @@ public class Sponsorship extends DomainEntity {
 	// Attributes -------------------------------------------------------------
 
 	private String	bannerURL;
-	private String	infoLink;
+	private String	pageURL;
 
 
 	@NotBlank
@@ -33,12 +36,12 @@ public class Sponsorship extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getInfoLink() {
-		return this.infoLink;
+	public String getPageURL() {
+		return this.pageURL;
 	}
 
-	public void setInfoLink(final String infoLink) {
-		this.infoLink = infoLink;
+	public void setPageURL(final String pageURL) {
+		this.pageURL = pageURL;
 	}
 
 
@@ -48,6 +51,9 @@ public class Sponsorship extends DomainEntity {
 	private Corporation	corporation;
 
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Project getProject() {
 		return this.project;
 	}
@@ -56,6 +62,9 @@ public class Sponsorship extends DomainEntity {
 		this.project = project;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne
 	public Corporation getCorporation() {
 		return this.corporation;
 	}
