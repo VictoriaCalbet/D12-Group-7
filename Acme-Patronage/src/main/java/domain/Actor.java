@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
@@ -19,12 +21,14 @@ import security.UserAccount;
 @Access(AccessType.PROPERTY)
 public abstract class Actor extends DomainEntity {
 
-	// Constructors -----------------------------------------------------------
-
 	// Attributes -------------------------------------------------------------
+
 	private String	name;
 	private String	surname;
-	private String	phone;
+	private Date	birthday;
+	private String	email;
+	private String	bio;
+	private String	telephone;
 
 
 	@NotBlank
@@ -45,17 +49,42 @@ public abstract class Actor extends DomainEntity {
 		this.surname = surname;
 	}
 
+	public Date getBirthday() {
+		return this.birthday;
+	}
+
+	public void setBirthday(final Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
+	public String getBio() {
+		return this.bio;
+	}
+
+	public void setBio(final String bio) {
+		this.bio = bio;
+	}
+
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPhone() {
-		return this.phone;
+	public String getTelephone() {
+		return this.telephone;
 	}
-	public void setPhone(final String phone) {
-		this.phone = phone;
+	public void setTelephone(final String telephone) {
+		this.telephone = telephone;
 	}
 
 
 	// Relationships ----------------------------------------------------------
+
 	private UserAccount	userAccount;
 
 
