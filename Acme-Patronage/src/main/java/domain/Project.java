@@ -7,6 +7,16 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,13 +27,15 @@ public class Project extends DomainEntity {
 	private String	title;
 	private String	description;
 	private Date	creationMoment;
-	private Double	economicGoal;
-	private Double	minimumPatronageAmmount;
+	private double	economicGoal;
+	private double	minimumPatronageAmmount;
 	private Date	limitDate;
-	private Boolean	isDraft;
-	private Boolean	isCancelled;
+	private boolean	isDraft;
+	private boolean	isCancelled;
 
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
 	}
@@ -32,6 +44,8 @@ public class Project extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
@@ -40,6 +54,10 @@ public class Project extends DomainEntity {
 		this.description = description;
 	}
 
+	@Past
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getCreationMoment() {
 		return this.creationMoment;
 	}
@@ -48,22 +66,27 @@ public class Project extends DomainEntity {
 		this.creationMoment = creationMoment;
 	}
 
-	public Double getEconomicGoal() {
+	@DecimalMin(value = "0")
+	public double getEconomicGoal() {
 		return this.economicGoal;
 	}
 
-	public void setEconomicGoal(final Double economicGoal) {
+	public void setEconomicGoal(final double economicGoal) {
 		this.economicGoal = economicGoal;
 	}
 
-	public Double getMinimumPatronageAmmount() {
+	@DecimalMin(value = "0")
+	public double getMinimumPatronageAmmount() {
 		return this.minimumPatronageAmmount;
 	}
 
-	public void setMinimumPatronageAmmount(final Double minimumPatronageAmmount) {
+	public void setMinimumPatronageAmmount(final double minimumPatronageAmmount) {
 		this.minimumPatronageAmmount = minimumPatronageAmmount;
 	}
 
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getLimitDate() {
 		return this.limitDate;
 	}
@@ -72,19 +95,19 @@ public class Project extends DomainEntity {
 		this.limitDate = limitDate;
 	}
 
-	public Boolean getIsDraft() {
+	public boolean getIsDraft() {
 		return this.isDraft;
 	}
 
-	public void setIsDraft(final Boolean isDraft) {
+	public void setIsDraft(final boolean isDraft) {
 		this.isDraft = isDraft;
 	}
 
-	public Boolean getIsCancelled() {
+	public boolean getIsCancelled() {
 		return this.isCancelled;
 	}
 
-	public void setIsCancelled(final Boolean isCancelled) {
+	public void setIsCancelled(final boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
 

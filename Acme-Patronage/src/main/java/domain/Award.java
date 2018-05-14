@@ -4,6 +4,11 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMin;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -13,9 +18,11 @@ public class Award extends DomainEntity {
 
 	private String	name;
 	private String	description;
-	private Double	moneyGoal;
+	private double	moneyGoal;
 
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
@@ -24,6 +31,8 @@ public class Award extends DomainEntity {
 		this.name = name;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
@@ -32,11 +41,12 @@ public class Award extends DomainEntity {
 		this.description = description;
 	}
 
-	public Double getMoneyGoal() {
+	@DecimalMin(value = "0")
+	public double getMoneyGoal() {
 		return this.moneyGoal;
 	}
 
-	public void setMoneyGoal(final Double moneyGoal) {
+	public void setMoneyGoal(final double moneyGoal) {
 		this.moneyGoal = moneyGoal;
 	}
 

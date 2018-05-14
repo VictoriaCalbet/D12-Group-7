@@ -5,6 +5,11 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
@@ -15,6 +20,9 @@ public class Sponsorship extends DomainEntity {
 	private String	infoLink;
 
 
+	@NotBlank
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBannerURL() {
 		return this.bannerURL;
 	}
@@ -23,6 +31,8 @@ public class Sponsorship extends DomainEntity {
 		this.bannerURL = bannerURL;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getInfoLink() {
 		return this.infoLink;
 	}

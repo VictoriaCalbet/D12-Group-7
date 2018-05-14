@@ -5,6 +5,11 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
@@ -16,6 +21,8 @@ public class Message extends DomainEntity {
 	private String	attachmentLink;
 
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getHeader() {
 		return this.header;
 	}
@@ -24,6 +31,8 @@ public class Message extends DomainEntity {
 		this.header = header;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -32,6 +41,8 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getAttachmentLink() {
 		return this.attachmentLink;
 	}

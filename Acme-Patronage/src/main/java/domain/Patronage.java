@@ -6,6 +6,14 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -13,20 +21,25 @@ public class Patronage extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private Double		amount;
+	private double		amount;
 	private Date		creationDate;
 	private CreditCard	creditCard;
-	private Boolean		isCancelled;
+	private boolean		isCancelled;
 
 
-	public Double getAmount() {
+	@DecimalMin(value = "0")
+	public double getAmount() {
 		return this.amount;
 	}
 
-	public void setAmount(final Double amount) {
+	public void setAmount(final double amount) {
 		this.amount = amount;
 	}
 
+	@Past
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getCreationDate() {
 		return this.creationDate;
 	}
@@ -35,6 +48,8 @@ public class Patronage extends DomainEntity {
 		this.creationDate = creationDate;
 	}
 
+	@NotNull
+	@Valid
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
@@ -43,11 +58,11 @@ public class Patronage extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	public Boolean getIsCancelled() {
+	public boolean getIsCancelled() {
 		return this.isCancelled;
 	}
 
-	public void setIsCancelled(final Boolean isCancelled) {
+	public void setIsCancelled(final boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
 
