@@ -57,7 +57,7 @@ public abstract class Actor extends DomainEntity {
 	@Past
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getBirthday() {
 		return this.birthday;
 	}

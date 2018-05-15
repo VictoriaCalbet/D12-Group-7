@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -27,7 +28,7 @@ public class User extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	public Collection<Announcement> getAnnouncements() {
 		return this.announcements;
 	}
@@ -38,7 +39,7 @@ public class User extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	public Collection<Report> getReports() {
 		return this.reports;
 	}
@@ -49,7 +50,7 @@ public class User extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	public Collection<Patronage> getPatronages() {
 		return this.patronages;
 	}
@@ -60,7 +61,7 @@ public class User extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "creator")
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.REMOVE)
 	public Collection<Project> getProjects() {
 		return this.projects;
 	}
@@ -71,7 +72,7 @@ public class User extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	public Collection<Comment> getComments() {
 		return this.comments;
 	}

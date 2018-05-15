@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class Corporation extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "corporation")
+	@OneToMany(mappedBy = "corporation", cascade = CascadeType.REMOVE)
 	public Collection<Sponsorship> getSponsorships() {
 		return this.sponsorships;
 	}

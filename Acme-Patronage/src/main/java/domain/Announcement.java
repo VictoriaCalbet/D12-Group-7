@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -84,7 +85,7 @@ public class Announcement extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "announcement")
+	@OneToMany(mappedBy = "announcement", cascade = CascadeType.REMOVE)
 	public Collection<AnnouncementComment> getAnnouncementComments() {
 		return this.announcementComments;
 	}

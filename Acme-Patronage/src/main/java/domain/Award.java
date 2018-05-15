@@ -1,11 +1,14 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -57,18 +60,19 @@ public class Award extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private AwardComment	awardComment;
-	private Project			project;
+	private Collection<AwardComment>	awardComments;
+	private Project						project;
 
 
+	@NotNull
 	@Valid
-	@OneToOne(optional = true)
-	public AwardComment getAwardComment() {
-		return this.awardComment;
+	@OneToMany(mappedBy = "award", cascade = CascadeType.REMOVE)
+	public Collection<AwardComment> getAwardComments() {
+		return this.awardComments;
 	}
 
-	public void setAwardComment(final AwardComment awardComment) {
-		this.awardComment = awardComment;
+	public void setAwardComments(final Collection<AwardComment> awardComments) {
+		this.awardComments = awardComments;
 	}
 
 	@NotNull

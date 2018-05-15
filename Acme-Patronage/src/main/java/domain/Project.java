@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -140,7 +141,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<Announcement> getAnnouncements() {
 		return this.announcements;
 	}
@@ -151,7 +152,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<Report> getReports() {
 		return this.reports;
 	}
@@ -162,7 +163,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<Patronage> getPatronages() {
 		return this.patronages;
 	}
@@ -173,7 +174,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<ProjectComment> getProjectComments() {
 		return this.projectComments;
 	}
@@ -184,7 +185,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<Sponsorship> getSponsorships() {
 		return this.sponsorships;
 	}
@@ -206,7 +207,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	public Collection<Award> getAward() {
 		return this.award;
 	}
