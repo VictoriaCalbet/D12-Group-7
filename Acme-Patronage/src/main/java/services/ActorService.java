@@ -36,25 +36,19 @@ public class ActorService {
 
 	public Collection<Actor> findAll() {
 		Collection<Actor> result;
-
 		result = this.actorRepository.findAll();
-
 		return result;
 	}
 
 	public Actor findOne(final int actorId) {
 		Actor result;
-
 		result = this.actorRepository.findOne(actorId);
-
 		return result;
 	}
 
 	public Actor findOneByUsername(final String username) {
 		Actor result;
-
 		result = this.actorRepository.findOneByUsername(username);
-
 		return result;
 	}
 

@@ -10,10 +10,8 @@ import security.UserAccount;
 import security.UserAccountService;
 import services.ActorService;
 import services.AdministratorService;
-import services.CustomerService;
 import domain.Actor;
 import domain.Administrator;
-import domain.Customer;
 import domain.forms.ActorForm;
 
 @Service
@@ -26,9 +24,6 @@ public class ActorFormService {
 
 	@Autowired
 	private ActorService			actorService;
-
-	@Autowired
-	private CustomerService			customerService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -50,7 +45,7 @@ public class ActorFormService {
 		if (this.actorService.checkAuthority(principal, "CUSTOMER") || this.actorService.checkAuthority(principal, "ADMIN")) {
 			result.setName(principal.getName());
 			result.setSurname(principal.getSurname());
-			result.setPhone(principal.getPhone());
+			result.setPhone(principal.getTelephone());
 			result.setUsername(principal.getUserAccount().getUsername());
 		}
 
