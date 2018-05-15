@@ -21,7 +21,7 @@ public class ProjectComment extends Comment {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Project getProject() {
 		return this.project;
 	}

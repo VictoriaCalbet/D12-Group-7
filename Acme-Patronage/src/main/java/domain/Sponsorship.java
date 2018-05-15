@@ -53,7 +53,7 @@ public class Sponsorship extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Project getProject() {
 		return this.project;
 	}
@@ -64,7 +64,7 @@ public class Sponsorship extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Corporation getCorporation() {
 		return this.corporation;
 	}

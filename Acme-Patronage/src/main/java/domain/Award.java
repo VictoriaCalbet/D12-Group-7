@@ -5,7 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -62,7 +62,7 @@ public class Award extends DomainEntity {
 
 
 	@Valid
-	@OneToMany(mappedBy = "award")
+	@OneToOne(optional = true)
 	public AwardComment getAwardComment() {
 		return this.awardComment;
 	}
@@ -73,7 +73,7 @@ public class Award extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Project getProject() {
 		return this.project;
 	}

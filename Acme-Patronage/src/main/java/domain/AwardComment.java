@@ -21,7 +21,7 @@ public class AwardComment extends Comment {
 
 	@NotNull
 	@Valid
-	@OneToOne
+	@OneToOne(optional = false)
 	public AwardComment getAwardComment() {
 		return this.awardComment;
 	}

@@ -69,7 +69,7 @@ public class Comment extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public User getUser() {
 		return this.user;
 	}

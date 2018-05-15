@@ -129,7 +129,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public User getCreator() {
 		return this.creator;
 	}
@@ -195,7 +195,7 @@ public class Project extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Category getCategory() {
 		return this.category;
 	}

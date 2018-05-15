@@ -63,7 +63,7 @@ public class Message extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Actor getSender() {
 		return this.sender;
 	}
@@ -74,7 +74,7 @@ public class Message extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Actor getRecipient() {
 		return this.recipient;
 	}

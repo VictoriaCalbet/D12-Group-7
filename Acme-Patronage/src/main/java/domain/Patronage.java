@@ -76,7 +76,7 @@ public class Patronage extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public User getUser() {
 		return this.user;
 	}
@@ -87,7 +87,7 @@ public class Patronage extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Project getProject() {
 		return this.project;
 	}
