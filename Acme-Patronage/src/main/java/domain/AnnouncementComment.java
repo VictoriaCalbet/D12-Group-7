@@ -21,7 +21,7 @@ public class AnnouncementComment extends Comment {
 
 	@NotNull
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Announcement getAnnouncement() {
 		return this.announcement;
 	}
