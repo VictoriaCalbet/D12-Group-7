@@ -22,8 +22,7 @@ public abstract class Actor extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	name;
-	private String	surname;
+	private String	fullName;
 	private String	email;
 	private String	bio;
 	private String	telephone;
@@ -31,20 +30,12 @@ public abstract class Actor extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getName() {
-		return this.name;
-	}
-	public void setName(final String name) {
-		this.name = name;
+	public String getFullName() {
+		return this.fullName;
 	}
 
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getSurname() {
-		return this.surname;
-	}
-	public void setSurname(final String surname) {
-		this.surname = surname;
+	public void setFullName(final String fullName) {
+		this.fullName = fullName;
 	}
 
 	@NotBlank
