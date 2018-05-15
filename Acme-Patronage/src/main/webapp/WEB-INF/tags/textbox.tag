@@ -26,17 +26,29 @@
 <%@ attribute name="code" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
+<%@ attribute name="valueInput" required="false" %>
+<%@ attribute name="placeholder" required="false" %>
+<%@ attribute name="maxlength" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
 
+<jstl:if test="${placeholder == null}">
+	<jstl:set var="placeholder" value="" />
+</jstl:if>
+
+<jstl:if test="${valueInput == null}">
+	<jstl:set var="valueInput" value="" />
+</jstl:if>
+
+<jstl:if test="${maxlength == null}">
+	<jstl:set var="maxlength" value="" />
+</jstl:if>
 <%-- Definition --%>
 
 <div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" />	
-	<form:errors path="${path}" cssClass="error" />
+    <b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>
+	<form:input path="${path}" readonly="${readonly}" value="${valueInput}" placeholder="${placeholder}" maxlength="${maxlength}"/>
+    <form:errors path="${path}" cssClass="error" />
 </div>	

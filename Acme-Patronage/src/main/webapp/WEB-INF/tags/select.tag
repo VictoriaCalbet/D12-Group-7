@@ -26,9 +26,9 @@
 <%@ attribute name="code" required="true" %>
 <%@ attribute name="items" required="true" type="java.util.Collection" %>
 <%@ attribute name="itemLabel" required="true" %>
-
 <%@ attribute name="id" required="false" %>
 <%@ attribute name="onchange" required="false" %>
+<%@ attribute name="optionalRow" required="false" type="java.lang.Boolean"%>
 
 <jstl:if test="${id == null}">
 	<jstl:set var="id" value="${UUID.randomUUID().toString()}" />
@@ -38,17 +38,21 @@
 	<jstl:set var="onchange" value="javascript: return true;" />
 </jstl:if>
 
+<jstl:if test="${optionalRow == null}">
+	<jstl:set var="optionalRow" value="false"/>
+</jstl:if>
+
 <%-- Definition --%>
 
 <div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:select id="${id}" path="${path}" onchange="${onchange}">
-		<form:option value="0" label="----" />		
-		<form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
-	</form:select>
-	<form:errors path="${path}" cssClass="error" />
+    <b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>	
+    <form:select id="${id}" path="${path}" onchange="${onchange}">
+    	<jstl:if test="${optionalRow eq true}">
+        	<form:option value="0" label="----" />
+        </jstl:if>		
+        <form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
+    </form:select>
+    <form:errors path="${path}" cssClass="error" />
 </div>
 
 
