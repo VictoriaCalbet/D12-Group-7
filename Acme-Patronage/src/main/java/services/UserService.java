@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.User;
 
 @Service
@@ -77,4 +79,15 @@ public class UserService {
 
 	// Other business methods -------------------------------------------------
 
+	public User findByPrincipal() {
+		User result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.userRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
+
+		return result;
+	}
 }

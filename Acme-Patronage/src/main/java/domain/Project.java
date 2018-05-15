@@ -32,7 +32,7 @@ public class Project extends DomainEntity {
 	private String	description;
 	private Date	creationMoment;
 	private double	economicGoal;
-	private double	minimumPatronageAmmount;
+	private double	minimumPatronageAmount;
 	private Date	limitDate;
 	private boolean	isDraft;
 	private boolean	isCancelled;
@@ -80,12 +80,12 @@ public class Project extends DomainEntity {
 	}
 
 	@DecimalMin(value = "0")
-	public double getMinimumPatronageAmmount() {
-		return this.minimumPatronageAmmount;
+	public double getMinimumPatronageAmount() {
+		return this.minimumPatronageAmount;
 	}
 
-	public void setMinimumPatronageAmmount(final double minimumPatronageAmmount) {
-		this.minimumPatronageAmmount = minimumPatronageAmmount;
+	public void setMinimumPatronageAmount(final double minimumPatronageAmount) {
+		this.minimumPatronageAmount = minimumPatronageAmount;
 	}
 
 	@NotNull

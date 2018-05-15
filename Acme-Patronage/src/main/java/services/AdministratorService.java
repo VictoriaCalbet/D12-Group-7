@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,14 +33,48 @@ public class AdministratorService {
 
 	//Simple CRUD methods ----------------------------------------------------
 
-	public Administrator saveFromEdit(final Administrator administrator) {
-		Assert.notNull(administrator);
-
-		Administrator result;
-
-		result = this.administratorRepository.save(administrator);
+	// TODO: User - create
+	public Administrator create() {
+		final Administrator result = null;
 
 		return result;
+	}
+
+	public Collection<Administrator> findAll() {
+		Collection<Administrator> result = null;
+		result = this.administratorRepository.findAll();
+		return result;
+	}
+
+	public Administrator findOne(final int adminId) {
+		Administrator result = null;
+		result = this.administratorRepository.findOne(adminId);
+		return result;
+	}
+
+	public Administrator save(final Administrator administrator) {
+		Assert.notNull(administrator);
+		Administrator result = null;
+		result = this.administratorRepository.save(administrator);
+		return result;
+	}
+
+	// TODO: User - saveFromCreate
+	public Administrator saveFromCreate() {
+		final Administrator result = null;
+
+		return result;
+	}
+
+	// TODO: User - saveFromEdit
+	public Administrator saveFromEdit() {
+		final Administrator result = null;
+
+		return result;
+	}
+
+	public void flush() {
+		this.administratorRepository.flush();
 	}
 
 	//Other business methods -------------------------------------------------

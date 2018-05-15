@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ModeratorRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Moderator;
 
 @Service
@@ -77,4 +79,15 @@ public class ModeratorService {
 
 	// Other business methods -------------------------------------------------
 
+	public Moderator findByPrincipal() {
+		Moderator result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.moderatorRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
+
+		return result;
+	}
 }
