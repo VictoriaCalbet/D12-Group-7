@@ -32,10 +32,10 @@
 
 <jstl:choose>
 	<jstl:when test="${not empty imageURL and not empty imageNotFoundLocation}">
-		<img src="${imageURL}" onerror="this.src='${imageNotFoundLocation}';"  height="${height}" width="${width}">
+		<img src="${imageURL}" onerror="this.src='${imageNotFoundLocation}';"  height="${height}" width="${width}"/>
 	</jstl:when>
 	<jstl:when test="${not empty imageURL and empty imageNotFoundLocation}">
-		<img src="${imageURL}" height="${height}" width="${width}">
+		<img src="${imageURL}" height="${height}" width="${width}"/>
 	</jstl:when>
 	<jstl:otherwise>
 		<spring:message code="${codeError}" var="unspecifiedURLLink"/>

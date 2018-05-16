@@ -12,12 +12,11 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <div>
-	<a href=""><img src="images/logo.jpg"
-		alt="Acme Co., Inc." /></a>
+	<acme:image imageURL="images/logo.jpg" height="200" width="400" codeError=""/>
 </div>
 
 <div>
