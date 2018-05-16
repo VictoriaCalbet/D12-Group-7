@@ -16,18 +16,18 @@ public class AwardComment extends Comment {
 
 	// Relationships ----------------------------------------------------------
 
-	private AwardComment	awardComment;
+	private Award	award;
 
 
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public AwardComment getAwardComment() {
-		return this.awardComment;
+	public Award getAward() {
+		return this.award;
 	}
 
-	public void setAwardComment(final AwardComment awardComment) {
-		this.awardComment = awardComment;
+	public void setAward(final Award award) {
+		this.award = award;
 	}
 
 }

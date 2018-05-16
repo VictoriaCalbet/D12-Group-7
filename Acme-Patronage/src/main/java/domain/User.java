@@ -24,7 +24,7 @@ public class User extends Actor {
 	private Collection<Patronage>		patronages;
 	private Collection<Project>			projects;
 	private Collection<Comment>			comments;
-
+	
 
 	@NotNull
 	@Valid

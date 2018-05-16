@@ -125,7 +125,7 @@ public class Project extends DomainEntity {
 	private Collection<ProjectComment>	projectComments;
 	private Collection<Sponsorship>		sponsorships;
 	private Category					category;
-	private Collection<Award>			award;
+	private Collection<Award>			awards;
 
 
 	@NotNull
@@ -208,12 +208,12 @@ public class Project extends DomainEntity {
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
-	public Collection<Award> getAward() {
-		return this.award;
+	public Collection<Award> getAwards() {
+		return this.awards;
 	}
 
-	public void setAward(final Collection<Award> award) {
-		this.award = award;
+	public void setAwards(final Collection<Award> awards) {
+		this.awards = awards;
 	}
 
 }
