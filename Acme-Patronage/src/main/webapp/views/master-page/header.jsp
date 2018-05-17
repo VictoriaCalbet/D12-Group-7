@@ -34,6 +34,23 @@
 				</ul></li>
 		</security:authorize>
 
+		<security:authorize access="permitAll">
+		
+			<li><a class="fNiv" href="project/list.do"><spring:message code="master.page.project"/></a></li>
+			
+		</security:authorize>
+		
+		<!-- #User -->
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv" href="project/user/list.do"><spring:message code="master.page.project.user.list" /></a></li>	
+		</security:authorize>
+
+		<security:authorize access="hasRole('ADMIN')">
+		
+			<li><a class="fNiv" href="project/administrator/list.do"><spring:message code="master.page.project.admin.list" /></a></li>
+		</security:authorize>
+
+
 		<security:authorize access="hasRole('CUSTOMER')">
 			<li><a class="fNiv"><spring:message
 						code="master.page.customer" /></a>

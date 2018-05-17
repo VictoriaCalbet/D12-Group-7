@@ -20,8 +20,11 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository	projectRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserService			userService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -76,5 +79,21 @@ public class ProjectService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Project> findProjectFutureDueDate() {
+		return this.projectRepository.findProjectFutureDueDate();
+	}
+
+	public Collection<Project> findProjectByKeyWord(final String keyWord) {
+		return this.projectRepository.findProjectByKeyWord(keyWord);
+	}
+
+	public Collection<Project> findProjectByKeyWordByAdmin(final String keyWord) {
+		return this.projectRepository.findProjectByKeyWordByAdmin(keyWord);
+	}
+
+	public Collection<Project> findAllOrdered() {
+		return this.projectRepository.findAllOrdered();
+	}
 
 }
