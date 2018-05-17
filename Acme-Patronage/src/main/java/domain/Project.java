@@ -33,7 +33,7 @@ public class Project extends DomainEntity {
 	private Date	creationMoment;
 	private double	economicGoal;
 	private double	minimumPatronageAmount;
-	private Date	limitDate;
+	private Date	dueDate;
 	private boolean	isDraft;
 	private boolean	isCancelled;
 
@@ -91,12 +91,12 @@ public class Project extends DomainEntity {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getLimitDate() {
-		return this.limitDate;
+	public Date getDueDate() {
+		return this.dueDate;
 	}
 
-	public void setLimitDate(final Date limitDate) {
-		this.limitDate = limitDate;
+	public void setDueDate(final Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public boolean getIsDraft() {

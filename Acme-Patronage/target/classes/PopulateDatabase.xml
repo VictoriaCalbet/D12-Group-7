@@ -632,7 +632,7 @@
 		<property name="economicGoal" value="5050.0"/>
 		<property name="minimumPatronageAmount" value="5.0"/>
 		<property name="isDraft" value="false"/>
-		<property name="limitDate" value="12/02/2017 15:30"/>
+		<property name="dueDate" value="12/02/2019 15:30"/>
 		<property name="isCancelled" value="false"/>
 		<property name="creator" ref="user1"/>
 		<property name="category" ref="category1"/>
@@ -697,7 +697,7 @@
 		<property name="economicGoal" value="10050.0"/>
 		<property name="minimumPatronageAmount" value="10.0"/>
 		<property name="isDraft" value="false"/>
-		<property name="limitDate" value="1/01/2017 15:30"/>
+		<property name="dueDate" value="1/01/2017 15:30"/>
 		<property name="isCancelled" value="false"/>
 		<property name="creator" ref="user2"/>
 		<property name="category" ref="category2"/>
@@ -761,7 +761,7 @@
 		<property name="economicGoal" value="12470.0"/>
 		<property name="minimumPatronageAmount" value="15.0"/>
 		<property name="isDraft" value="false"/>
-		<property name="limitDate" value="1/03/2017 15:30"/>
+		<property name="dueDate" value="1/03/2017 15:30"/>
 		<property name="isCancelled" value="false"/>
 		<property name="creator" ref="user3"/>
 		<property name="category" ref="category3"/>
@@ -824,7 +824,7 @@
 		<property name="economicGoal" value="620050.0"/>
 		<property name="minimumPatronageAmount" value="30.0"/>
 		<property name="isDraft" value="false"/>
-		<property name="limitDate" value="1/01/2018 15:30"/>
+		<property name="dueDate" value="1/01/2019 15:30"/>
 		<property name="isCancelled" value="true"/>
 		<property name="creator" ref="user3"/>
 		<property name="category" ref="category4"/>
@@ -886,7 +886,7 @@
 		<property name="economicGoal" value="720050.0"/>
 		<property name="minimumPatronageAmount" value="40.0"/>
 		<property name="isDraft" value="true"/>
-		<property name="limitDate" value="1/04/2018 15:30"/>
+		<property name="dueDate" value="1/04/2019 15:30"/>
 		<property name="isCancelled" value="false"/>
 		<property name="creator" ref="user3"/>
 		<property name="category" ref="category4"/>
