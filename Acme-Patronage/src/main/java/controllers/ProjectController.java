@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.ProjectService;
 import domain.Project;
 
@@ -30,8 +29,6 @@ public class ProjectController extends AbstractController {
 
 	@Autowired
 	private ProjectService	projectService;
-	@Autowired
-	private ActorService	actorService;
 
 
 	// Constructors -----------------------------------------------------------

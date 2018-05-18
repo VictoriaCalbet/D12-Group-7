@@ -37,7 +37,7 @@
 		<security:authorize access="permitAll">
 		
 			<li><a class="fNiv" href="project/list.do"><spring:message code="master.page.project"/></a></li>
-			
+			<li><a class="fNiv" href="category/list.do"><spring:message code="master.page.category"/></a></li>
 		</security:authorize>
 		
 		<!-- #User -->

@@ -17,3 +17,15 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+
+<form:form action="${requestURI}" modelAttribute="categoryForm">
+<form:hidden path="id"/>
+<acme:textbox code="category.name" path="name"/>
+
+<acme:textbox code="category.description" path="description"/>
+
+<input type="submit" name="save" value="<spring:message code="category.save"/>"/>
+<acme:cancel url="category/list.do" code="category.cancel" /> <br/>
+
+</form:form>

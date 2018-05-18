@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CategoryRepository;
+import domain.Administrator;
 import domain.Category;
+import domain.Project;
 
 @Service
 @Transactional
@@ -18,7 +21,13 @@ public class CategoryService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private CategoryRepository	categoryRepository;
+	private CategoryRepository		categoryRepository;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -31,11 +40,52 @@ public class CategoryService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Category - create
 	public Category create() {
-		final Category result = null;
+		final Category result = new Category();
+		final Collection<Project> projects = new ArrayList<Project>();
+		result.setProjects(projects);
+		return result;
+	}
+	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
+	public Category save(final Category category) {
+		Assert.notNull(category, "message.error.category.null");
+		Category result;
+		final Administrator principal = this.administratorService.findByPrincipal();
+		Assert.isTrue(category.getProjects().isEmpty(), "message.error.category.inUse");
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.save.admin");
+		result = this.categoryRepository.save(category);
+		return result;
+	}
+
+	public Category saveFromCreate(final Category category) {
+		Assert.notNull(category, "message.error.category.null");
+
+		final Category result;
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.create.admin");
+
+		result = this.save(category);
 
 		return result;
+	}
+	public Category saveFromEdit(final Category category) {
+		Assert.notNull(category, "message.error.category.null");
+
+		Category result;
+		final Administrator principal = this.administratorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.save.admin");
+		Assert.isTrue(category.getProjects().isEmpty(), "message.error.category.inUse");
+		result = this.save(category);
+		return result;
+	}
+	public void delete(final Category category) {
+		Assert.notNull(category, "message.error.category.null");
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.delete.admin");
+		this.categoryRepository.delete(category);
 	}
 
 	public Collection<Category> findAll() {
@@ -50,31 +100,9 @@ public class CategoryService {
 		return result;
 	}
 
-	public Category save(final Category category) {
-		Assert.notNull(category);
-		Category result = null;
-		result = this.categoryRepository.save(category);
-		return result;
-	}
-
-	// TODO: Category - saveFromCreate
-	public Category saveFromCreate() {
-		final Category result = null;
-
-		return result;
-	}
-
-	// TODO: Category - saveFromEdit
-	public Category saveFromEdit() {
-		final Category result = null;
-
-		return result;
-	}
-
 	public void flush() {
 		this.categoryRepository.flush();
 	}
-
 	// Other business methods -------------------------------------------------
 
 }

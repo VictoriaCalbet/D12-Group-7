@@ -20,11 +20,8 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository	projectRepository;
 
+
 	// Supporting services ----------------------------------------------------
-
-	@Autowired
-	private UserService			userService;
-
 
 	// Constructors -----------------------------------------------------------
 

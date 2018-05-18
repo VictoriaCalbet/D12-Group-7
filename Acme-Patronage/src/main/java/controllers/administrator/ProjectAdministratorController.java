@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AdministratorService;
 import services.ProjectService;
 import controllers.AbstractController;
 import domain.Project;
@@ -21,9 +20,7 @@ import domain.Project;
 public class ProjectAdministratorController extends AbstractController {
 
 	@Autowired
-	private ProjectService			projectService;
-	@Autowired
-	private AdministratorService	administratorService;
+	private ProjectService	projectService;
 
 
 	public ProjectAdministratorController() {
