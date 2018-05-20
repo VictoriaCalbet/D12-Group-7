@@ -84,12 +84,20 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<security:authorize access="hasRole('CUSTOMER')">
-						<li><a href="customer/customer/display.do"><spring:message
+					<security:authorize access="hasRole('USER')">
+						<li><a href="user/user/edit.do"><spring:message
 									code="master.page.profile.display" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ADMIN')">
-						<li><a href="administrator/administrator/display.do"><spring:message
+						<li><a href="administrator/administrator/edit.do"><spring:message
+									code="master.page.profile.display" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('MODERATOR')">
+						<li><a href="moderator/moderator/edit.do"><spring:message
+									code="master.page.profile.display" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('CORPORATION')">
+						<li><a href="corporation/corporation/edit.do"><spring:message
 									code="master.page.profile.display" /></a></li>
 					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message

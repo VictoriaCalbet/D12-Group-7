@@ -67,6 +67,7 @@ public class ActorFormService {
 		final Actor actor = this.actorService.findByPrincipal();
 
 		result = new ActorForm();
+		result.setId(actor.getId());
 		result.setFullName(actor.getFullName());
 		result.setEmail(actor.getEmail());
 		result.setBio(actor.getBio());
