@@ -35,6 +35,6 @@
 
 <div>
     <b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>	
-    <form:input path="${path}" readonly="${readonly}"/> (dd/MM/yyyy)		
+    <form:input path="${path}" readonly="${readonly}"/> (dd/MM/yyyy HH:mm)		
     <form:errors path="${path}" cssClass="error" />
 </div>	

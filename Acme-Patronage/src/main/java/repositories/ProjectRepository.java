@@ -23,4 +23,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 	@Query("select p from Project p order by p.creationMoment desc")
 	Collection<Project> findAllOrdered();
+
+	@Query("select count(r) from Project p join p.reports r where r.isLegit = true and p.id = ?1")
+	Integer isProjectLegitComplaint(int projectId);
+
 }

@@ -17,6 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <form action="${requestURI}" method="get">
@@ -26,6 +27,7 @@
 </form>
 <br/>
 
+<jsp:useBean id="now" class="java.util.Date"/>
 <security:authentication property="principal" var="loggedactor"/>
 
 <jstl:choose>
@@ -92,8 +94,78 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+	
+	<spring:message code="project.delete" var="deleteHeader" />	
+		<display:column title="${deleteHeader}">
+		<jstl:choose>
+			<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username }">
+				<jstl:choose>
+						<jstl:when test="${(fn:length(row.patronages) ==0)}">	
+							<a href="project/user/delete.do?projectId=${row.id}">
+							 	<spring:message code="project.deleteButton" />
+							</a>
+						</jstl:when>
+						
+						<jstl:when test="${(fn:length(row.patronages) !=0)}">	
+							<a href="project/user/cancel.do?projectId=${row.id}">
+							 	<spring:message code="project.cancel" />
+							</a>
+						</jstl:when>
+				</jstl:choose>	
+			</jstl:when>
+			<jstl:otherwise>
+				<spring:message code= "project.notCancelDelete" var="projectNotCancelDelete"/>
+					<jstl:out value="${projectNotCancelDelete}"/> 
+			</jstl:otherwise>
+			
+		</jstl:choose>
+	
+		</display:column>
+		
+		<spring:message code="project.edit" var="editHeader" />	
+		<display:column title="${editHeader}">
+			<jstl:choose>
+			
+				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
+					<a href="project/user/edit.do?projectId=${row.id}">
+					 	<spring:message code="project.editButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notEdit" var="projectNotEditable"/>
+						<jstl:out value="${projectNotEditable}"/> 
+				</jstl:otherwise>
+			</jstl:choose>	
+						
+		</display:column>
+	
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+	
+	<spring:message code="project.delete" var="deleteHeader" />	
+		<display:column title="${deleteHeader}">	
+			<a href="project/administrator/delete.do?projectId=${row.id}">
+			 	<spring:message code="project.deleteButton" />
+			</a>
+		</display:column>
+	
+	</security:authorize>
+	
 	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	
+	<div>
+		<b><a href="project/user/create.do"> 
+			<spring:message code="project.create"/>
+		</a></b>
+	</div>
+	<br/>
+</security:authorize>
+
 
 <security:authorize access="isAuthenticated()">
 	<jstl:if test="${not empty projects}">

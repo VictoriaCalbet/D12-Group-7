@@ -45,4 +45,21 @@ public class ProjectAdministratorController extends AbstractController {
 		return result;
 	}
 
+	//Delete
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int projectId) {
+		ModelAndView result;
+		try {
+			this.projectService.deleteAdmin(projectId);
+			result = new ModelAndView("redirect:/project/administrator/list.do");
+		} catch (final Throwable oops) {
+			String messageError = "project.delete.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = new ModelAndView("redirect:/project/administrator/list.do");
+			result.addObject("message", messageError);
+		}
+		return result;
+	}
+
 }

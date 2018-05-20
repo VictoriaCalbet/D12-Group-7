@@ -17,3 +17,24 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<form:form action="${requestURI}" modelAttribute="projectForm">
+
+	<!-- Hidden attributes -->
+	<form:hidden path="id"/>
+	
+	<!-- Editable attributes -->
+	
+	<acme:textbox code="project.title" path="title"/>
+	<acme:textarea code="project.description" path="description"/>
+	<acme:textbox code="project.economicGoal" path="economicGoal"/>
+	<acme:textbox code="project.minimumPatronageAmount" path="minimumPatronageAmount"/>
+	<acme:date code="project.dueDate" path="dueDate"/>	
+	<acme:checkbox code="project.isDraft" path="isDraft"/>
+	<acme:select items="${categories}" itemLabel="name" code="project.category" path="category"/>
+	
+		<!-- Action buttons -->
+	<acme:submit name="save" code="project.save" /> &nbsp;
+	<acme:cancel url="/" code="project.cancel" /> <br/>
+
+</form:form>

@@ -21,8 +21,13 @@
 		<put-attribute name="body" value="/views/project/list.jsp" />
 	</definition>
 	
-	<definition name="project/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar proyecto" />
+	<definition name="project/user/create" extends="master.page">	
+		<put-attribute name="title" value="Crear un proyecto" />
+		<put-attribute name="body" value="/views/project/edit.jsp" />
+	</definition>
+	
+	<definition name="project/user/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar un proyecto" />
 		<put-attribute name="body" value="/views/project/edit.jsp" />
 	</definition>
 	
