@@ -37,6 +37,7 @@ public class ProjectFormService {
 
 	public ProjectForm create() {
 		ProjectForm res;
+
 		res = new ProjectForm();
 
 		return res;

@@ -22,15 +22,15 @@
 
 	<!-- Hidden attributes -->
 	<form:hidden path="id"/>
-	
+		
 	<!-- Editable attributes -->
 	
 	<acme:textbox code="project.title" path="title"/>
 	<acme:textarea code="project.description" path="description"/>
 	<acme:textbox code="project.economicGoal" path="economicGoal"/>
 	<acme:textbox code="project.minimumPatronageAmount" path="minimumPatronageAmount"/>
-	<acme:date code="project.dueDate" path="dueDate"/>	
-	<acme:checkbox code="project.isDraft" path="isDraft"/>
+	<acme:date code="project.dueDate" path="dueDate"/>
+	<acme:checkbox code="project.isDraft" path="isDraft" />
 	<acme:select items="${categories}" itemLabel="name" code="project.category" path="category"/>
 	
 		<!-- Action buttons -->

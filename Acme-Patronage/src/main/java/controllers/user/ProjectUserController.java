@@ -136,7 +136,8 @@ public class ProjectUserController extends AbstractController {
 		return result;
 	}
 
-	// Cancel
+	// Cancel -----------------------------------------------------------------
+
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView cancel(@RequestParam final int projectId) {
 		ModelAndView result;
@@ -154,7 +155,8 @@ public class ProjectUserController extends AbstractController {
 		return result;
 	}
 
-	// Delete
+	// Delete -----------------------------------------------------------------
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int projectId) {
 		ModelAndView result;
@@ -172,7 +174,8 @@ public class ProjectUserController extends AbstractController {
 		return result;
 	}
 
-	// Ancillaty methods
+	// Ancillaty methods ------------------------------------------------------
+
 	protected ModelAndView createModelAndView(final ProjectForm projectForm) {
 		ModelAndView result;
 
