@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,12 @@ import org.springframework.util.Assert;
 import repositories.UserRepository;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
+import domain.Announcement;
+import domain.Comment;
+import domain.Patronage;
+import domain.Project;
+import domain.Report;
 import domain.User;
 
 @Service
@@ -20,10 +27,16 @@ public class UserService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private UserRepository	userRepository;
-
+	private UserRepository		userRepository;
 
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserAccountService	userAccountService;
+
+	@Autowired
+	private ActorService		actorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -33,9 +46,19 @@ public class UserService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: User - create
 	public User create() {
-		final User result = null;
+		User result;
+		UserAccount userAccount;
+
+		result = new User();
+		result.setAnnouncements(new HashSet<Announcement>());
+		result.setComments(new HashSet<Comment>());
+		result.setPatronages(new HashSet<Patronage>());
+		result.setProjects(new HashSet<Project>());
+		result.setReports(new HashSet<Report>());
+
+		userAccount = this.userAccountService.create("USER");
+		result.setUserAccount(userAccount);
 
 		return result;
 	}
@@ -53,22 +76,58 @@ public class UserService {
 	}
 
 	public User save(final User user) {
-		Assert.notNull(user);
+		Assert.notNull(user, "message.error.user.null");
 		User result = null;
 		result = this.userRepository.save(user);
 		return result;
 	}
 
-	// TODO: User - saveFromCreate
-	public User saveFromCreate() {
-		final User result = null;
+	public User saveFromCreate(final User user) {
+		Assert.notNull(user, "message.error.user.null");
+
+		final User result;
+
+		// Check unlogged
+		Assert.isTrue(!this.actorService.checkLogin(), "message.error.user.unlogged");
+
+		// Check authority
+		boolean isUser;
+		isUser = this.actorService.checkAuthority(user, "USER");
+		Assert.isTrue(isUser, "message.error.user.authority.wrong");
+
+		// Check repeated username
+		UserAccount possibleRepeated;
+		possibleRepeated = this.userAccountService.findByUsername(user.getUserAccount().getUsername());
+		Assert.isNull(possibleRepeated, "message.error.user.username.repeated");
+
+		result = this.save(user);
 
 		return result;
 	}
 
-	// TODO: User - saveFromEdit
-	public User saveFromEdit() {
-		final User result = null;
+	public User saveFromEdit(final User user) {
+		Assert.notNull(user, "message.error.user.null");
+
+		User result;
+		User principal;
+
+		// Check principal
+		principal = this.findByPrincipal();
+		Assert.notNull(principal, "message.error.user.principal.null");
+		Assert.isTrue(principal.getId() == user.getId(), "message.error.user.principal.self");
+
+		// Check authority
+		boolean isUser;
+		isUser = this.actorService.checkAuthority(user, "USER");
+		Assert.isTrue(isUser, "message.error.user.authority.wrong");
+
+		// Encoding password
+		UserAccount userAccount;
+		userAccount = user.getUserAccount();
+		userAccount = this.userAccountService.modifyPassword(userAccount);
+		user.setUserAccount(userAccount);
+
+		result = this.save(user);
 
 		return result;
 	}

@@ -85,4 +85,17 @@ public class ActorService {
 		return result;
 	}
 
+	public boolean checkLogin() {
+		boolean result;
+
+		result = true;
+
+		try {
+			this.findByPrincipal();
+		} catch (final Throwable e) {
+			result = false;
+		}
+		return result;
+	}
+
 }

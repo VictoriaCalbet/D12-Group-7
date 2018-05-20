@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,9 @@ import org.springframework.util.Assert;
 import repositories.CorporationRepository;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
 import domain.Corporation;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -22,8 +25,14 @@ public class CorporationService {
 	@Autowired
 	private CorporationRepository	corporationRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserAccountService		userAccountService;
+
+	@Autowired
+	private ActorService			actorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -33,9 +42,15 @@ public class CorporationService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Corporation - create
 	public Corporation create() {
-		final Corporation result = null;
+		Corporation result;
+		UserAccount userAccount;
+
+		result = new Corporation();
+		result.setSponsorships(new HashSet<Sponsorship>());
+
+		userAccount = this.userAccountService.create("CORPORATION");
+		result.setUserAccount(userAccount);
 
 		return result;
 	}
@@ -59,16 +74,52 @@ public class CorporationService {
 		return result;
 	}
 
-	// TODO: Corporation - saveFromCreate
-	public Corporation saveFromCreate() {
-		final Corporation result = null;
+	public Corporation saveFromCreate(final Corporation corporation) {
+		Assert.notNull(corporation, "message.error.corporation.null");
+
+		final Corporation result;
+
+		// Check unlogged
+		Assert.isTrue(!this.actorService.checkLogin(), "message.error.user.unlogged");
+
+		// Check authority
+		boolean isCorporation;
+		isCorporation = this.actorService.checkAuthority(corporation, "CORPORATION");
+		Assert.isTrue(isCorporation, "message.error.corporation.authority.wrong");
+
+		// Check repeated username
+		UserAccount possibleRepeated;
+		possibleRepeated = this.userAccountService.findByUsername(corporation.getUserAccount().getUsername());
+		Assert.isNull(possibleRepeated, "message.error.corporation.username.repeated");
+
+		result = this.save(corporation);
 
 		return result;
 	}
 
-	// TODO: Corporation - saveFromEdit
-	public Corporation saveFromEdit() {
-		final Corporation result = null;
+	public Corporation saveFromEdit(final Corporation corporation) {
+		Assert.notNull(corporation, "message.error.corporation.null");
+
+		Corporation result;
+		Corporation principal;
+
+		// Check principal
+		principal = this.findByPrincipal();
+		Assert.notNull(principal, "message.error.corporation.principal.null");
+		Assert.isTrue(principal.getId() == corporation.getId(), "message.error.corporation.principal.self");
+
+		// Check authority
+		boolean isCorporation;
+		isCorporation = this.actorService.checkAuthority(corporation, "CORPORATION");
+		Assert.isTrue(isCorporation, "message.error.corporation.authority.wrong");
+
+		// Encoding password
+		UserAccount userAccount;
+		userAccount = corporation.getUserAccount();
+		userAccount = this.userAccountService.modifyPassword(userAccount);
+		corporation.setUserAccount(userAccount);
+
+		result = this.save(corporation);
 
 		return result;
 	}
