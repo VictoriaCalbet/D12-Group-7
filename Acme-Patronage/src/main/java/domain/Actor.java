@@ -49,7 +49,6 @@ public abstract class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBio() {
 		return this.bio;
@@ -59,7 +58,6 @@ public abstract class Actor extends DomainEntity {
 		this.bio = bio;
 	}
 
-	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTelephone() {
 		return this.telephone;
