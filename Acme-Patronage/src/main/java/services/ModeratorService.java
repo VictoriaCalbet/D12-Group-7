@@ -69,7 +69,7 @@ public class ModeratorService {
 	}
 
 	public Moderator save(final Moderator moderator) {
-		Assert.notNull(moderator);
+		Assert.notNull(moderator, "message.error.moderator.null");
 		Moderator result = null;
 		result = this.moderatorRepository.save(moderator);
 		return result;

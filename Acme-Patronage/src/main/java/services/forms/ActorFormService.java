@@ -131,7 +131,7 @@ public class ActorFormService {
 			Administrator principal;
 
 			principal = this.administratorService.findByPrincipal();
-			Assert.isTrue(this.actorService.checkAuthority(principal, "ÄDMIN"), "message.error.actor.admin.login");
+			Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.actor.admin.login");
 
 			final Moderator moderator;
 			UserAccount userAccount;
