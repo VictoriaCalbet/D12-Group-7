@@ -51,7 +51,7 @@ public class ProjectUserController extends AbstractController {
 		if (word == null || word.equals(""))
 			projects = u.getProjects();
 		else
-			projects = this.projectService.findProjectByKeyWord(word);
+			projects = this.projectService.findProjectByKeyWordByUser(word, u.getId());
 
 		result = new ModelAndView("project/list");
 		result.addObject("projects", projects);

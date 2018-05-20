@@ -178,4 +178,8 @@ public class ProjectService {
 		return this.projectRepository.isProjectLegitComplaint(projectId);
 	}
 
+	public Collection<Project> findProjectByKeyWordByUser(final String keyWord, final int userId) {
+		return this.projectRepository.findProjectByKeyWordByUser(keyWord, userId);
+	}
+
 }

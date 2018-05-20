@@ -21,6 +21,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) order by p.creationMoment desc")
 	Collection<Project> findProjectByKeyWordByAdmin(String keyWord);
 
+	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.creator.id = ?2 order by p.creationMoment desc")
+	Collection<Project> findProjectByKeyWordByUser(String keyWord, int userId);
+
 	@Query("select p from Project p order by p.creationMoment desc")
 	Collection<Project> findAllOrdered();
 
