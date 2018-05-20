@@ -68,7 +68,7 @@ public class CorporationService {
 	}
 
 	public Corporation save(final Corporation corporation) {
-		Assert.notNull(corporation);
+		Assert.notNull(corporation, "message.error.corporation.null");
 		Corporation result = null;
 		result = this.corporationRepository.save(corporation);
 		return result;
@@ -80,7 +80,7 @@ public class CorporationService {
 		final Corporation result;
 
 		// Check unlogged
-		Assert.isTrue(!this.actorService.checkLogin(), "message.error.user.unlogged");
+		Assert.isTrue(!this.actorService.checkLogin(), "message.error.corporation.unlogged");
 
 		// Check authority
 		boolean isCorporation;
