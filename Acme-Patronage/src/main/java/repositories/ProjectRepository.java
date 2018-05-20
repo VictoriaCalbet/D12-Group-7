@@ -27,6 +27,12 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p order by p.creationMoment desc")
 	Collection<Project> findAllOrdered();
 
+	@Query("select p from Project p where p.creator.id = ?1 and p.isDraft IS FALSE and p.isCancelled is FALSE")
+	Collection<Project> findAllCreatedbyUser(int userId);
+
+	@Query("select distinct(p.project) from Patronage p where p.user.id = ?1")
+	Collection<Project> findAllFundedByUser(int userId);
+
 	@Query("select count(r) from Project p join p.reports r where r.isLegit = true and p.id = ?1")
 	Integer isProjectLegitComplaint(int projectId);
 

@@ -16,7 +16,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <div>
-	<acme:image imageURL="images/logo.jpg" height="200" width="400" codeError=""/>
+	<a href=""><img src="images/logo.jpg"
+		alt="Acme-Patronage Co., Inc." height="200"/></a>
 </div>
 
 <div>
@@ -35,7 +36,7 @@
 		</security:authorize>
 
 		<security:authorize access="permitAll">
-		
+			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user"/></a></li>
 			<li><a class="fNiv" href="project/list.do"><spring:message code="master.page.project"/></a></li>
 			<li><a class="fNiv" href="category/list.do"><spring:message code="master.page.category"/></a></li>
 		</security:authorize>

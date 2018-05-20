@@ -182,4 +182,12 @@ public class ProjectService {
 		return this.projectRepository.findProjectByKeyWordByUser(keyWord, userId);
 	}
 
+	public Collection<Project> findAllCreatedByUser(final int userId) {
+		return this.projectRepository.findAllCreatedbyUser(userId);
+	}
+
+	public Collection<Project> findAllFundedByUser(final int userId) {
+		return this.projectRepository.findAllFundedByUser(userId);
+	}
+
 }
