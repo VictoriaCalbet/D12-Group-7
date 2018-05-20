@@ -65,6 +65,16 @@
 		</security:authorize>
 
 		<security:authorize access="isAnonymous()">
+			<li><a class="fNiv"><spring:message
+						code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="user/create.do"><spring:message
+								code="master.page.user.create" /></a></li>
+					<li><a href="corporation/create.do"><spring:message
+								code="master.page.corporation.create" /></a></li>
+				</ul>
+			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
 		</security:authorize>

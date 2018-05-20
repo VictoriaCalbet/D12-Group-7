@@ -80,7 +80,7 @@ public class ActorFormService {
 		Assert.notNull(actorForm, "message.error.actor.null");
 		Assert.isTrue(actorForm.getPassword().equals(actorForm.getRepeatedPassword()), "message.error.actor.password.mismatch");
 		Assert.isTrue(actorForm.getAcceptTerms(), "message.error.actor.acceptTerms.false");
-		Assert.isTrue(actorForm.getId() == 0, "message.error.actorForm.id");
+		Assert.isTrue(actorForm.getId() == 0, "message.error.actor.id");
 
 		switch (authority) {
 		case "ADMIN": {
