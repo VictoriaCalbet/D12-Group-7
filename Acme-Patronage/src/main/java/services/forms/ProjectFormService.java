@@ -2,7 +2,6 @@
 package services.forms;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -69,8 +68,9 @@ public class ProjectFormService {
 
 		final Project p = this.projectService.create();
 
-		Assert.notNull(projectForm, "message.error.project.null");
-		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.notNull(projectForm, "message.error.project.null");
+		//		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.isTrue(projectForm.getMinimumPatronageAmount() < projectForm.getEconomicGoal(), "message.error.project.cash");
 
 		p.setTitle(projectForm.getTitle());
 		p.setDescription(projectForm.getDescription());
@@ -80,7 +80,7 @@ public class ProjectFormService {
 		p.setCategory(projectForm.getCategory());
 		p.setIsDraft(projectForm.getIsDraft());
 
-		final Project project = this.projectService.save(p);
+		final Project project = this.projectService.saveFromCreate(p);
 
 		final User u = this.userService.findByPrincipal();
 		final Collection<Project> projects = u.getProjects();
@@ -94,12 +94,13 @@ public class ProjectFormService {
 	public Project saveFromEdit(final ProjectForm projectForm) {
 
 		final Project p = this.projectService.findOne(projectForm.getId());
-		final User u = this.userService.findByPrincipal();
+		//		final User u = this.userService.findByPrincipal();
 		Assert.isTrue(p.getIsDraft(), "message.error.project.isDraft");
-		Assert.notNull(p, "message.error.project.null");
-		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
-		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
-		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.notNull(p, "message.error.project.null");
+		//		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
+		//		Assert.isTrue(projectForm.getMinimumPatronageAmount() < projectForm.getEconomicGoal(), "message.error.project.cash");
+		//		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
+		//		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
 
 		p.setTitle(projectForm.getTitle());
 		p.setDescription(projectForm.getDescription());
@@ -109,7 +110,7 @@ public class ProjectFormService {
 		p.setIsDraft(projectForm.getIsDraft());
 		p.setCategory(projectForm.getCategory());
 
-		return p;
+		return this.projectService.saveFromEdit(p);
 	}
 
 }

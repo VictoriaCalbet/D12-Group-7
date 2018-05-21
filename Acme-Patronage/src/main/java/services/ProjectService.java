@@ -95,7 +95,7 @@ public class ProjectService {
 		Assert.notNull(p, "message.error.project.null");
 		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
 		Assert.isTrue(p.getDueDate().after(new Date()), "message.error.project.dueDate.future");
-		Assert.isTrue(p.getIsDraft(), "message.error.project.isDraft");
+		//		Assert.isTrue(p.getIsDraft(), "message.error.project.isDraft");
 		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
 		Assert.isTrue(p.getPatronages().size() == 0, "message.error.project.patronages");
 
@@ -112,7 +112,7 @@ public class ProjectService {
 		Assert.notNull(p, "message.error.project.null");
 		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
 		Assert.isTrue(p.getDueDate().after(new Date()), "message.error.project.dueDate.future");
-		Assert.isTrue(p.getIsDraft(), "message.error.project.isDraft");
+		Assert.isTrue(!p.getIsDraft(), "message.error.project.isDraft");
 		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
 		Assert.isTrue(p.getPatronages().size() != 0, "message.error.project.patronagesContains");
 
@@ -139,16 +139,29 @@ public class ProjectService {
 	}
 
 	// TODO: Project - saveFromCreate
-	public Project saveFromCreate() {
-		final Project result = null;
+	public Project saveFromCreate(final Project p) {
+		final Project result;
 
+		Assert.notNull(p, "message.error.project.null");
+		Assert.isTrue(p.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		Assert.isTrue(p.getMinimumPatronageAmount() < p.getEconomicGoal(), "message.error.project.cash");
+
+		result = this.projectRepository.save(p);
 		return result;
 	}
 
 	// TODO: Project - saveFromEdit
-	public Project saveFromEdit() {
-		final Project result = null;
+	public Project saveFromEdit(final Project p) {
+		final Project result;
 
+		final User u = this.userService.findByPrincipal();
+		Assert.notNull(p, "message.error.project.null");
+		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
+		Assert.isTrue(p.getMinimumPatronageAmount() < p.getEconomicGoal(), "message.error.project.cash");
+		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
+		Assert.isTrue(p.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+
+		result = this.projectRepository.save(p);
 		return result;
 	}
 
@@ -188,6 +201,10 @@ public class ProjectService {
 
 	public Collection<Project> findAllFundedByUser(final int userId) {
 		return this.projectRepository.findAllFundedByUser(userId);
+	}
+
+	public Collection<Project> projectUser(final int userId) {
+		return this.projectRepository.projectUser(userId);
 	}
 
 }
