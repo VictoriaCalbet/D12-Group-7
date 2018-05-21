@@ -954,7 +954,8 @@
 	
 		<bean id="report1" class="domain.Report">
 		
-			<property name="reason" value="I hate this user."/>
+			<property name="complaint" value="I hate this user."/>
+			<property name="reason" value="It's childish"/>
 			<property name="isLegit" value="false"/>
 			<property name="user" ref="user3"/>
 			<property name="project" ref="project2"/>
@@ -962,7 +963,8 @@
 		
 		<bean id="report2" class="domain.Report">
 		
-			<property name="reason" value="This project is inappropriate because reasons."/>
+			<property name="complaint" value="This project is inappropriate because reasons."/>
+			<property name="reason" value="The reasons are so goods, I'm happy."/>
 			<property name="isLegit" value="true"/>
 			<property name="user" ref="user1"/>
 			<property name="project" ref="project4"/>

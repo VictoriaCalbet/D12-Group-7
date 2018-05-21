@@ -18,9 +18,21 @@ public class Report extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
+	private String	complaint;
 	private String	reason;
 	private boolean	isLegit;
 
+
+	@NotNull
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getComplaint() {
+		return this.complaint;
+	}
+
+	public String setComplaint(final String complaint) {
+		return this.complaint = complaint;
+	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
