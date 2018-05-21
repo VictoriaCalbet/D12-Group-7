@@ -2,7 +2,6 @@
 package services.forms;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import services.PatronageService;
 import services.ProjectService;
 import services.UserService;
 import domain.Project;
@@ -24,9 +24,11 @@ public class ProjectFormService {
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ProjectService	projectService;
+	private ProjectService		projectService;
 	@Autowired
-	private UserService		userService;
+	private UserService			userService;
+	@Autowired
+	private PatronageService	patronageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -57,7 +59,7 @@ public class ProjectFormService {
 		pF.setDueDate(p.getDueDate());
 		pF.setEconomicGoal(p.getEconomicGoal());
 		pF.setMinimumPatronageAmount(p.getMinimumPatronageAmount());
-		pF.setDraft(p.getIsDraft());
+		pF.setIsDraft(p.getIsDraft());
 		pF.setCategory(p.getCategory());
 		pF.setId(p.getId());
 
@@ -69,8 +71,9 @@ public class ProjectFormService {
 
 		final Project p = this.projectService.create();
 
-		Assert.notNull(projectForm, "message.error.project.null");
-		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.notNull(projectForm, "message.error.project.null");
+		//		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.isTrue(projectForm.getMinimumPatronageAmount() < projectForm.getEconomicGoal(), "message.error.project.cash");
 
 		p.setTitle(projectForm.getTitle());
 		p.setDescription(projectForm.getDescription());
@@ -80,7 +83,13 @@ public class ProjectFormService {
 		p.setCategory(projectForm.getCategory());
 		p.setIsDraft(projectForm.getIsDraft());
 
-		final Project project = this.projectService.save(p);
+		final Project project = this.projectService.saveFromCreate(p);
+
+		//		final Collection<Patronage> patronages = new ArrayList<Patronage>();
+		//		final Patronage patronage = this.patronageService.create(project);
+		//		final Patronage patronageSave = this.patronageService.save(patronage);
+		//		patronages.add(patronageSave);
+		//		project.setPatronages(patronages);
 
 		final User u = this.userService.findByPrincipal();
 		final Collection<Project> projects = u.getProjects();
@@ -94,12 +103,13 @@ public class ProjectFormService {
 	public Project saveFromEdit(final ProjectForm projectForm) {
 
 		final Project p = this.projectService.findOne(projectForm.getId());
-		final User u = this.userService.findByPrincipal();
+		//		final User u = this.userService.findByPrincipal();
 		Assert.isTrue(p.getIsDraft(), "message.error.project.isDraft");
-		Assert.notNull(p, "message.error.project.null");
-		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
-		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
-		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
+		//		Assert.notNull(p, "message.error.project.null");
+		//		Assert.isTrue(p.getCreator().equals(u), "message.error.project.principal.owner");
+		//		Assert.isTrue(projectForm.getMinimumPatronageAmount() < projectForm.getEconomicGoal(), "message.error.project.cash");
+		//		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
+		//		Assert.isTrue(projectForm.getDueDate().after(new Date()), "message.error.project.dueDate.future");
 
 		p.setTitle(projectForm.getTitle());
 		p.setDescription(projectForm.getDescription());
@@ -109,7 +119,7 @@ public class ProjectFormService {
 		p.setIsDraft(projectForm.getIsDraft());
 		p.setCategory(projectForm.getCategory());
 
-		return p;
+		return this.projectService.saveFromEdit(p);
 	}
 
 }

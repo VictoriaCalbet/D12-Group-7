@@ -49,7 +49,7 @@ public class ProjectUserController extends AbstractController {
 		final User u = this.userService.findByPrincipal();
 
 		if (word == null || word.equals(""))
-			projects = u.getProjects();
+			projects = this.projectService.projectUser(u.getId());
 		else
 			projects = this.projectService.findProjectByKeyWordByUser(word, u.getId());
 

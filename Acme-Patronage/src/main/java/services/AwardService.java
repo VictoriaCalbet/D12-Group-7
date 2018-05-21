@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.util.Assert;
 
 import repositories.AwardRepository;
 import domain.Award;
+import domain.AwardComment;
+import domain.User;
 
 @Service
 @Transactional
@@ -20,8 +23,11 @@ public class AwardService {
 	@Autowired
 	private AwardRepository	awardRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserService		userService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -33,7 +39,10 @@ public class AwardService {
 
 	// TODO: Award - create
 	public Award create() {
-		final Award result = null;
+		Award result = null;
+
+		result = new Award();
+		result.setAwardComments(new ArrayList<AwardComment>());
 
 		return result;
 	}
@@ -57,16 +66,43 @@ public class AwardService {
 		return result;
 	}
 
-	// TODO: Award - saveFromCreate
-	public Award saveFromCreate() {
-		final Award result = null;
+	public Award saveFromCreate(final Award award) {
+		Award result = null;
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		Assert.notNull(award, "message.error.award.null");
+		Assert.notNull(user, "message.error.award.principal.null");
+		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
+
+		// Paso 1: realizo la entidad del servicio Award
+
+		result = this.save(award);
+
+		// Paso 2: persisto el resto de relaciones a las que el objeto Award esta relacionada.
+
+		result.getProject().getAwards().add(result);
 
 		return result;
 	}
 
-	// TODO: Award - saveFromEdit
-	public Award saveFromEdit() {
-		final Award result = null;
+	public Award saveFromEdit(final Award award) {
+		Award result = null;
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		Assert.notNull(award, "message.error.award.null");
+		Assert.notNull(user, "message.error.award.principal.null");
+		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(!award.getProject().getIsDraft(), "message.error.award.project.notPublished");
+		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
+
+		// Paso 1: realizo la entidad del servicio Award
+
+		result = this.save(award);
 
 		return result;
 	}
@@ -76,5 +112,4 @@ public class AwardService {
 	}
 
 	// Other business methods -------------------------------------------------
-
 }
