@@ -203,13 +203,12 @@ public class ProjectService {
 		return this.projectRepository.findAllFundedByUser(userId);
 	}
 
-<<<<<<< HEAD
 	public Collection<Project> findDraftProjects() {
 		return this.projectRepository.findDraftProjects();
-=======
+	}
 	public Collection<Project> projectUser(final int userId) {
 		return this.projectRepository.projectUser(userId);
->>>>>>> 6c3aac767854838db84e236acfd620b7d9c87480
+
 	}
 
 }
