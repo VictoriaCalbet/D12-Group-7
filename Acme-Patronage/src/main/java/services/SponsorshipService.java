@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
+import domain.Corporation;
 import domain.Sponsorship;
 
 @Service
@@ -19,6 +20,9 @@ public class SponsorshipService {
 
 	@Autowired
 	private SponsorshipRepository	sponsorshipRepository;
+
+	@Autowired
+	private CorporationService		corporationService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -34,7 +38,7 @@ public class SponsorshipService {
 	// TODO: Sponsorship - create
 	public Sponsorship create() {
 		final Sponsorship result = null;
-
+		result.setCorporation(this.isCorporationAunthenticate());
 		return result;
 	}
 
@@ -57,18 +61,33 @@ public class SponsorshipService {
 		return result;
 	}
 
-	// TODO: Sponsorship - saveFromCreate
-	public Sponsorship saveFromCreate() {
-		final Sponsorship result = null;
+	public Sponsorship saveFromCreate(final Sponsorship sponsorship) {
+		Assert.notNull(sponsorship, "message.error.sponsorship.null");
+		sponsorship.setCorporation(this.isCorporationAunthenticate());
+		Assert.notNull(sponsorship.getBannerURL(), "message.error.sponsorship.null.banner");
+		Assert.notNull(sponsorship.getPageURL(), "message.error.sponsorship.null.page");
+		Assert.notNull(sponsorship.getProject(), "message.error.sponsorship.null.project");
+		Sponsorship sponsorshipInDB;
+		sponsorshipInDB = this.sponsorshipRepository.save(sponsorship);
 
-		return result;
+		return sponsorshipInDB;
 	}
 
-	// TODO: Sponsorship - saveFromEdit
-	public Sponsorship saveFromEdit() {
-		final Sponsorship result = null;
+	public Sponsorship saveFromEdit(final Sponsorship sponsorship) {
+		Assert.notNull(sponsorship.getCorporation());
+		this.isCorrectCorporationAunthenticate(sponsorship.getCorporation().getId());
+		Assert.notNull(sponsorship, "message.error.advertisement.null");
+		Assert.notNull(sponsorship.getBannerURL(), "message.error.sponsorship.null.banner");
+		Assert.notNull(sponsorship.getPageURL(), "message.error.sponsorship.null.page");
+		Assert.notNull(sponsorship.getProject(), "message.error.sponsorship.null.project");
+		Sponsorship sponsorshipInDB;
+		sponsorshipInDB = this.findOne(sponsorship.getId());
+		Assert.notNull(sponsorshipInDB);
+		this.isCorrectCorporationAunthenticate(sponsorshipInDB.getCorporation().getId());
 
-		return result;
+		sponsorshipInDB = this.sponsorshipRepository.save(sponsorship);
+
+		return sponsorshipInDB;
 	}
 
 	public void flush() {
@@ -76,5 +95,19 @@ public class SponsorshipService {
 	}
 
 	// Other business methods -------------------------------------------------
+	//Auxiliar method ---------------------------------------------------------
+	private Corporation isCorporationAunthenticate() {
+		Corporation actor;
+		actor = this.corporationService.findByPrincipal();
+		Assert.notNull(actor);
+		String authority;
+		authority = actor.getUserAccount().getAuthorities().iterator().next().getAuthority();
+		Assert.isTrue(authority.equals("CORPORATION"), "message.error.advertisement.notcorporation");
+		return actor;
+	}
+
+	private void isCorrectCorporationAunthenticate(final int corporationId) {
+		Assert.isTrue(this.isCorporationAunthenticate().getId() == corporationId, "message.error.advertisement.badcorporation");
+	}
 
 }
