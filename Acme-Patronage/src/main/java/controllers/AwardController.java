@@ -17,7 +17,7 @@ import domain.Award;
 import domain.Project;
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/award")
 public class AwardController extends AbstractController {
 
 	// Services -------------------------------------------------------------
