@@ -36,4 +36,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select count(r) from Project p join p.reports r where r.isLegit = true and p.id = ?1")
 	Integer isProjectLegitComplaint(int projectId);
 
+	@Query("select p from Project p where p.isDraft=true")
+	Collection<Project> findDraftProjects();
+
 }

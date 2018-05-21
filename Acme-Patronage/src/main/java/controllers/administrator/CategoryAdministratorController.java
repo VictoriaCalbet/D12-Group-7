@@ -59,7 +59,9 @@ public class CategoryAdministratorController extends AbstractController {
 		final ModelAndView result;
 		final CategoryForm categoryForm;
 		categoryForm = this.categoryFormService.create(categoryId);
+
 		result = this.createEditModelAndView(categoryForm);
+
 		return result;
 	}
 	//Saving 
@@ -119,6 +121,7 @@ public class CategoryAdministratorController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("category/administrator/edit");
+
 		result.addObject("categoryForm", categoryForm);
 		result.addObject("message", message);
 		result.addObject("requestURI", "category/administrator/edit.do");

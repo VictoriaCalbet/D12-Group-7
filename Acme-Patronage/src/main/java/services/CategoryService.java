@@ -51,6 +51,7 @@ public class CategoryService {
 		Assert.notNull(category, "message.error.category.null");
 		Category result;
 		final Administrator principal = this.administratorService.findByPrincipal();
+
 		Assert.isTrue(category.getProjects().isEmpty(), "message.error.category.inUse");
 		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.save.admin");
 		result = this.categoryRepository.save(category);
@@ -61,7 +62,12 @@ public class CategoryService {
 		Assert.notNull(category, "message.error.category.null");
 
 		final Category result;
-
+		final Collection<Category> categories = this.categoryRepository.findAll();
+		Boolean check = true;
+		for (final Category c : categories)
+			if (category.getName().equals(c.getName()))
+				check = false;
+		Assert.isTrue(check, "message.error.category.nameAlreadyInDB");
 		final Administrator principal = this.administratorService.findByPrincipal();
 
 		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.create.admin");
@@ -75,6 +81,13 @@ public class CategoryService {
 
 		Category result;
 		final Administrator principal = this.administratorService.findByPrincipal();
+		final Collection<Category> categories = this.categoryRepository.findAll();
+		Boolean check = true;
+		categories.remove(category);
+		for (final Category c : categories)
+			if (category.getName().equals(c.getName()))
+				check = false;
+		Assert.isTrue(check, "message.error.category.nameAlreadyInDB");
 		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.save.admin");
 		Assert.isTrue(category.getProjects().isEmpty(), "message.error.category.inUse");
 		result = this.save(category);
@@ -84,6 +97,7 @@ public class CategoryService {
 		Assert.notNull(category, "message.error.category.null");
 
 		final Administrator principal = this.administratorService.findByPrincipal();
+		Assert.isTrue(category.getProjects().isEmpty(), "message.error.category.inUse");
 		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.delete.admin");
 		this.categoryRepository.delete(category);
 	}

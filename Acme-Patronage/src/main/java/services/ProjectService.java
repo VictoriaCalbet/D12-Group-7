@@ -190,4 +190,8 @@ public class ProjectService {
 		return this.projectRepository.findAllFundedByUser(userId);
 	}
 
+	public Collection<Project> findDraftProjects() {
+		return this.projectRepository.findDraftProjects();
+	}
+
 }

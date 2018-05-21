@@ -28,7 +28,7 @@
  		sortable="false" style="${style}" />
 
 	<spring:message code="category.description" var="descriptionHeader" />
-	<display:column property="description" title="${bodyHeader}" 
+	<display:column property="description" title="${descriptionHeader}" 
 		sortable="false" style="${style}" />
 
 	
@@ -53,8 +53,16 @@
 	<security:authorize access="hasRole('ADMIN')">
 	<spring:message code="category.delete" var="deleteCategoryHeader" />
 	<display:column title="${deleteCategoryHeader}" style="${style}">
-			<spring:message var="categoryDeleteLink" code="category.delete"/>
- 			<a href="category/administrator/delete.do?categoryId=${row.id}"><jstl:out value="${categoryDeleteLink}"/></a>
+		<jstl:choose>
+			<jstl:when test="${(fn:length(row.projects) == 0)}">
+				<spring:message var="categoryDeleteLink" code="category.delete"/>
+ 				<a href="category/administrator/delete.do?categoryId=${row.id}"><jstl:out value="${categoryDeleteLink}"/></a>
+			</jstl:when>
+			<jstl:otherwise>
+					<spring:message code="category.notDeletable" var="categoryNotDeletableMessage" />
+					<jstl:out value="${categoryNotDeletableMessage}"/>
+				</jstl:otherwise>
+			</jstl:choose>
 	</display:column>
 	</security:authorize>
 	
