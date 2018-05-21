@@ -57,7 +57,7 @@ public class ProjectFormService {
 		pF.setDueDate(p.getDueDate());
 		pF.setEconomicGoal(p.getEconomicGoal());
 		pF.setMinimumPatronageAmount(p.getMinimumPatronageAmount());
-		pF.setDraft(p.getIsDraft());
+		pF.setIsDraft(p.getIsDraft());
 		pF.setCategory(p.getCategory());
 		pF.setId(p.getId());
 

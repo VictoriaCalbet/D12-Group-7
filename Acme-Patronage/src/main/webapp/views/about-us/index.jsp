@@ -19,11 +19,11 @@
 
 <spring:message code="aboutUs.group"/>: 007
 <br/>
-<spring:message code="aboutUs.name"/>: Sample-Project-1.13
+<spring:message code="aboutUs.name"/>: Acme-Patronage
 <br/>
 <spring:message code="aboutUs.address"/>: <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2993.3493465414317!2d-5.987127351096952!3d37.35805735514961!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0xcd36f2ab95e92c3b!2sReina+Mercedes+(E.S.I.+Inform%C3%A1tica)!5e0!3m2!1ses!2ses!4v1456428038447" width="600" height="450" style="border:0"></iframe>
 <br/>
-<spring:message code="aboutUs.email"/>: sample@us.es
+<spring:message code="aboutUs.email"/>: acme@acme.es
 <br/>
 <spring:message code="aboutUs.phone"/>: +34 954 55 68 17
 <br/>
