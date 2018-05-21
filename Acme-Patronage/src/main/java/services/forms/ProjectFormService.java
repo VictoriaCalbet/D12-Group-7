@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import services.PatronageService;
 import services.ProjectService;
 import services.UserService;
 import domain.Project;
@@ -23,9 +24,11 @@ public class ProjectFormService {
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ProjectService	projectService;
+	private ProjectService		projectService;
 	@Autowired
-	private UserService		userService;
+	private UserService			userService;
+	@Autowired
+	private PatronageService	patronageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -81,6 +84,12 @@ public class ProjectFormService {
 		p.setIsDraft(projectForm.getIsDraft());
 
 		final Project project = this.projectService.saveFromCreate(p);
+
+		//		final Collection<Patronage> patronages = new ArrayList<Patronage>();
+		//		final Patronage patronage = this.patronageService.create(project);
+		//		final Patronage patronageSave = this.patronageService.save(patronage);
+		//		patronages.add(patronageSave);
+		//		project.setPatronages(patronages);
 
 		final User u = this.userService.findByPrincipal();
 		final Collection<Project> projects = u.getProjects();
