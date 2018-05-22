@@ -42,7 +42,10 @@ public class ProjectController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
+		String awardURI = null;
 		Collection<Project> projects = new ArrayList<Project>();
+
+		awardURI = "award/list.do?projectId=";
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDate();
@@ -51,6 +54,7 @@ public class ProjectController extends AbstractController {
 
 		result = new ModelAndView("project/list");
 		result.addObject("projects", projects);
+		result.addObject("awardURI", awardURI);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/list.do");
 
