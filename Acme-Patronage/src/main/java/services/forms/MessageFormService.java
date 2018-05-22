@@ -49,7 +49,7 @@ public class MessageFormService {
 		Actor sender;
 		Actor recipient;
 
-		sender = this.actorService.findOne(messageForm.getSenderId());
+		sender = this.actorService.findByPrincipal();
 		recipient = this.actorService.findOne(messageForm.getRecipientId());
 
 		Assert.notNull(sender, "message.error.message.sender.null");
