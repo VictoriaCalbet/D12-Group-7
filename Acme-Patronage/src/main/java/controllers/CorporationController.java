@@ -1,6 +1,9 @@
 
 package controllers;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CorporationService;
 import services.forms.ActorFormService;
+import domain.Corporation;
 import domain.forms.ActorForm;
 
 @Controller
@@ -22,11 +27,28 @@ public class CorporationController {
 	@Autowired
 	private ActorFormService	actorFormService;
 
+	@Autowired
+	private CorporationService	corporationService;
+
 
 	// Constructor ------------------------------------------------------------
 
 	public CorporationController() {
 		super();
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		final ModelAndView result;
+		Collection<Corporation> corporations = new HashSet<Corporation>();
+
+		corporations = this.corporationService.findAll();
+
+		result = new ModelAndView("corporation/list");
+		result.addObject("corporations", corporations);
+		result.addObject("requestURI", "corporation/list.do");
+
+		return result;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

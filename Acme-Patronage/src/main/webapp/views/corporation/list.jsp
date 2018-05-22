@@ -17,3 +17,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<display:table name="corporations" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="corporation.fullName" var="fullNameHeader" />
+	<display:column property="fullName" title="${fullNameHeader}" sortable="true" />
+	
+	<spring:message code="corporation.email" var="emailHeader" />
+	<display:column property="email" title="${emailHeader}" sortable="true" />
+	
+	<spring:message code="corporation.bio" var="bioHeader" />
+	<display:column property="bio" title="${bioHeader}" sortable="true" />
+	
+	<spring:message code="corporation.telephone" var="telephoneHeader" />
+	<display:column property="telephone" title="${telephoneHeader}" sortable="true" />
+	
+	<spring:message code="corporation.username" var="usernameHeader" />
+	<display:column property="userAccount.username" title="${usernameHeader}" sortable="true" />
+
+</display:table>

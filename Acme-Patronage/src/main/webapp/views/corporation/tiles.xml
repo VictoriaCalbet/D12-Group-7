@@ -20,10 +20,5 @@
 		<put-attribute name="title" value="List of corporations" />
 		<put-attribute name="body" value="/views/corporation/list.jsp" />
 	</definition>
-	
-	<definition name="corporation/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit corporation" />
-		<put-attribute name="body" value="/views/corporation/edit.jsp" />
-	</definition>
-	
+
 </tiles-definitions>
