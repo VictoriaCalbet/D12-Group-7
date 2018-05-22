@@ -50,19 +50,6 @@
 			</li>
 		</security:authorize>
 
-
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.customer" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message
-								code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message
-								code="master.page.customer.action.2" /></a></li>
-				</ul></li>
-		</security:authorize>
-
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.register" /></a>
@@ -79,6 +66,19 @@
 		</security:authorize>
 
 		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv"><spring:message
+						code="message.messages" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="message/actor/outbox.do"><spring:message
+								code="master.page.message.outbox" /></a></li>
+					<li><a href="message/actor/inbox.do"><spring:message
+								code="master.page.message.inbox" /></a></li>
+					<li><a href="message/actor/create.do"><spring:message
+								code="master.page.message.create" /></a></li>
+				</ul>
+			</li>
+			
 			<li><a class="fNiv"> <spring:message
 						code="master.page.profile" /> (<security:authentication
 						property="principal.username" />)

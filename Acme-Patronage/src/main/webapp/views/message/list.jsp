@@ -17,3 +17,27 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<display:table name="messages" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="message.header" var="headerHeader" />
+	<display:column property="header" title="${headerHeader}" sortable="true" />
+	
+	<spring:message code="message.body" var="bodyHeader" />
+	<display:column property="body" title="${bodyHeader}" sortable="true" />
+	
+	<spring:message code="message.attachmentLink" var="attachmentLinkHeader" />
+	<display:column property="attachmentLink" title="${attachmentLinkHeader}" sortable="true" />
+	
+	<jstl:choose>
+		<jstl:when test="${requestURI == 'message/actor/outbox.do'}">
+			<spring:message code="message.recipient" var="recipientHeader" />
+			<display:column property="recipient.userAccount.username" title="${recipientHeader}" sortable="true" />
+		</jstl:when>
+		<jstl:when test="${requestURI == 'message/actor/inbox.do'}">
+			<spring:message code="message.sender" var="senderHeader" />
+			<display:column property="sender.userAccount.username" title="${senderHeader}" sortable="true" />
+		</jstl:when>
+	</jstl:choose>
+	
+</display:table>

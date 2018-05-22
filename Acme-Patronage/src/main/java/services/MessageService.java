@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
+import domain.Actor;
 import domain.Message;
 
 @Service
@@ -20,8 +21,11 @@ public class MessageService {
 	@Autowired
 	private MessageRepository	messageRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private ActorService		actorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -31,9 +35,10 @@ public class MessageService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Message - create
 	public Message create() {
-		final Message result = null;
+		Message result;
+
+		result = new Message();
 
 		return result;
 	}
@@ -51,22 +56,20 @@ public class MessageService {
 	}
 
 	public Message save(final Message message) {
-		Assert.notNull(message);
+		Assert.notNull(message, "message.error.message.null");
 		Message result = null;
 		result = this.messageRepository.save(message);
 		return result;
 	}
 
-	// TODO: Message - saveFromCreate
-	public Message saveFromCreate() {
-		final Message result = null;
+	public Message saveFromCreate(final Message message) {
+		Assert.notNull(message, "message.error.message.null");
 
-		return result;
-	}
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(message.getSender().getId() == principal.getId(), "message.error.message.sender.principal");
+		Assert.isTrue(message.getRecipient().getId() != principal.getId(), "message.error.message.recipient.principal");
 
-	// TODO: Message - saveFromEdit
-	public Message saveFromEdit() {
-		final Message result = null;
+		final Message result = this.save(message);
 
 		return result;
 	}
@@ -77,4 +80,11 @@ public class MessageService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<Message> findAllSentByActorId(final int actorId) {
+		return this.messageRepository.findAllSentByActorId(actorId);
+	}
+
+	public Collection<Message> findAllReceivedByActorId(final int actorId) {
+		return this.messageRepository.findAllReceivedByActorId(actorId);
+	}
 }
