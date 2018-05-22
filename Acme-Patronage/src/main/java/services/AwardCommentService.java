@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class AwardCommentService {
 
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -58,8 +62,18 @@ public class AwardCommentService {
 	}
 
 	// TODO: AnnouncementComment - saveFromCreate
-	public AwardComment saveFromCreate() {
-		final AwardComment result = null;
+	public AwardComment saveFromCreate(final AwardComment aC) {
+		
+		Assert.notNull(aC);
+		Assert.notNull(aC.getRating());
+		Assert.notNull(aC.getText());
+		Assert.notNull(aC.getAward());
+		
+		aC.setUser(this.userService.findByPrincipal());
+		
+		aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
+		
+		final AwardComment result = this.awardCommentRepository.save(aC);
 
 		return result;
 	}
@@ -77,4 +91,20 @@ public class AwardCommentService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<AwardComment> listAllAwardComments(int awardId){
+		
+		Collection<AwardComment> result = this.awardCommentRepository.listAllAwardComments(awardId);
+		
+		return result;
+		
+	}
+	
+public Collection<AwardComment> listAllAwardCommentsOfUser(int userId){
+		
+		Collection<AwardComment> result = this.awardCommentRepository.listAllAwardCommentsOfUser(userId);
+		
+		return result;
+		
+	}
+	
 }
