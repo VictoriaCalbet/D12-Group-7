@@ -22,13 +22,13 @@
 
 	<!-- Hidden attributes -->
 	<form:hidden path="id"/>
+	<form:hidden path="creationMoment"/>
 	
 	<acme:textbox code="awardComment.text" path="text"/>
-	<form:select code="awardComment.rating" path="rating">
-  		<form:options items="${numbers}"/>
-	</form:select>
 	
-	<acme:submit name="save" code="commentForm.save" />
-	<acme:cancel url="/" code="commentForm.cancel" /> 	
+	<acme:textbox code="awardComment.rating" path="rating"/>
+	<br/>
+	<acme:submit name="save" code="awardComment.save" />
+	<acme:cancel url="/" code="awardComment.cancel" /> 	
 	
 </form:form>	

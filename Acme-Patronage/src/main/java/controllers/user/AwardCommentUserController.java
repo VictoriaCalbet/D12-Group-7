@@ -113,12 +113,12 @@ public class AwardCommentUserController extends AbstractController{
 
 			Collection<Integer> numbers = new ArrayList<Integer>();
 			
-			for(int ind=1;ind<4;ind++){
+			for(int ind=1;ind<6;ind++){
 				
 				numbers.add(ind);
 			}
 			
-			result = new ModelAndView("awardComment/user/create");
+			result = new ModelAndView("awardComment/edit");
 			result.addObject("commentForm", commentForm);
 			result.addObject("numbers", numbers);
 			result.addObject("message", message);

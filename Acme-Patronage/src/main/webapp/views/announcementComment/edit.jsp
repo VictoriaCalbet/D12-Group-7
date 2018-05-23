@@ -28,7 +28,7 @@
   		<form:options items="${numbers}"/>
 	</form:select>
 	
-	<acme:submit name="save" code="commentForm.save" />
-	<acme:cancel url="/" code="commentForm.cancel" /> 	
+	<acme:submit name="save" code="announcementComment.save" />
+	<acme:cancel url="/" code="announcementComment.cancel" /> 	
 	
 </form:form>	
