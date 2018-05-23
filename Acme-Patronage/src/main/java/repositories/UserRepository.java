@@ -26,4 +26,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query("select u from User u join u.projects p where p.patronages.size > (select avg(p2.patronages.size)*1.1 from User u2 join u2.projects p2) group by u")
 	Collection<User> findAllWith10PercentMorePatronagesThanAvg();
+
+	// Req 33.3.5: The average and standard deviation of banned users.
+
+	// Req 33.3.6: The ratio of banned users.
 }
