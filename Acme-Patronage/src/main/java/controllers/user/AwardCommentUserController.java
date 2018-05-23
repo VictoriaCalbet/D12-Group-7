@@ -21,10 +21,8 @@ import services.forms.CommentFormService;
 import controllers.AbstractController;
 import domain.AwardComment;
 import domain.Category;
-import domain.Project;
 import domain.User;
 import domain.forms.CommentForm;
-import domain.forms.ProjectForm;
 
 
 @Controller
@@ -91,7 +89,7 @@ public class AwardCommentUserController extends AbstractController{
 					this.commentFormService.saveFromCreate(commentForm, "AWARD",awardId);
 					result = new ModelAndView("redirect:/awardComment/user/list.do");
 				} catch (final Throwable oops) {
-					String messageError = "project.commit.error";
+					String messageError = "awardComment.commit.error";
 					if (oops.getMessage().contains("message.error"))
 						messageError = oops.getMessage();
 					result = this.createModelAndView(commentForm, messageError);
