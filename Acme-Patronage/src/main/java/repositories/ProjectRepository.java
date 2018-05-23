@@ -27,8 +27,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p order by p.creationMoment desc")
 	Collection<Project> findAllOrdered();
 
-	@Query("select p from Project p where p.creator.id = ?1 and p.isDraft IS FALSE and p.isCancelled is FALSE")
-	Collection<Project> findAllCreatedbyUser(int userId);
+	@Query("select p from Project p where p.creator.id = ?1 and p.isDraft is ?2 and p.isCancelled is ?3")
+	Collection<Project> findProjects(int userId, boolean isDraft, boolean isCancelled);
 
 	@Query("select distinct(p.project) from Patronage p where p.user.id = ?1")
 	Collection<Project> findAllFundedByUser(int userId);
@@ -41,5 +41,4 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 	@Query("select p from Project p where p.creator.id = ?1 order by p.creationMoment desc")
 	Collection<Project> projectUser(int userId);
-
 }
