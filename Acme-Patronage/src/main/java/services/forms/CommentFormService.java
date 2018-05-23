@@ -3,6 +3,7 @@ package services.forms;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import domain.Announcement;
@@ -27,6 +28,7 @@ import services.ProjectCommentService;
 import services.ProjectService;
 import services.UserService;
 
+@Service
 public class CommentFormService {
 	
 	// Managed repository -----------------------------------------------------
