@@ -42,11 +42,9 @@
 </jstl:choose>
 
 <display:table name="projects" id="row" requestURI="${requestURI}" pagesize="5">
-
-
 	
-	<jstl:set var="isDraft" value="${row.isDraft}" />	
-	<jstl:set var="isCancelled" value="${row.isCancelled}"/>	
+	<jstl:set var="isDraft" value="${row.isDraft}" />
+	<jstl:set var="isCancelled" value="${row.isCancelled}"/>
 	
 	<jstl:if test="${isDraft eq true}">
 		<jstl:set var="style" value="background-color:Khaki;" />
@@ -73,6 +71,22 @@
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
 	</display:column>
 	
+	<spring:message code="project.awards" var="awardsHeader" />	
+	<spring:message code="project.showAwards" var="showAwardsLink" />
+	<display:column title="${awardsHeader}" style="${style}">
+	
+		<security:authorize access="hasRole('USER')">
+			<a href="award/user/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
+		</security:authorize>
+		<security:authorize access="hasRole('ADMIN')">
+			<a href="award/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
+		</security:authorize>
+		<security:authorize access="isAnonymous()">
+			<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
+		</security:authorize>
+
+	</display:column>
+	
 	<spring:message code="project.economicGoal" var="economicGoalHeader" />
 	<display:column title="${economicGoalHeader}" style="${style}">
         <fmt:formatNumber value = "${row.economicGoal}" currencySymbol="&euro;" pattern="${patternCurrency}" type = "currency"  minFractionDigits="2"/>
@@ -93,6 +107,8 @@
 	<display:column title="${categoryHeader}" style="${style}">
 		<jstl:out value="${row.category.name}" />
 	</display:column>
+	
+	
 	
 	<security:authorize access="hasRole('USER')">
 	
