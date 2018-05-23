@@ -45,11 +45,8 @@ public class ProjectUserController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
-		String awardURI = null;
 		Collection<Project> projects = new ArrayList<Project>();
 		final User u = this.userService.findByPrincipal();
-
-		awardURI = "award/user/list.do?projectId=";
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.projectUser(u.getId());
@@ -58,7 +55,6 @@ public class ProjectUserController extends AbstractController {
 
 		result = new ModelAndView("project/list");
 		result.addObject("projects", projects);
-		result.addObject("awardURI", awardURI);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/user/list.do");
 
