@@ -17,3 +17,29 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<display:table name="announcementComment" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="announcementComment.user" var="aCUser" />	
+	<display:column property="user" title="${aCUser}"/>
+
+	<spring:message code="announcementComment.text" var="aCText" />	
+	<display:column property="text" title="${aCText}"/>
+	
+	<spring:message code="announcementComment.rating" var="aCRating" />
+	<display:column property="rating" title="${aCRating}"/>
+	
+	<spring:message code="announcementComment.creationMoment" var="aCCreationMoment" />
+	<spring:message code="announcementComment.creationMoment.pattern" var="datePattern"/>
+	<display:column title="${aCCreationMoment}">
+		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+
+</display:table>
+
+<security:authorize access="hasRole('USER')">
+
+	<a href="announcementComment/user/create.do"> 
+			<spring:message code="announcementComment.create"/></a>
+
+</security:authorize>
