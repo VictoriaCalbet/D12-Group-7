@@ -58,16 +58,14 @@ public class ProjectCommentService {
 	}
 
 	// TODO: ProjectComment - saveFromCreate
-	public ProjectComment saveFromCreate() {
-		final ProjectComment result = null;
+	public ProjectComment saveFromCreate(final ProjectComment pC) {
+		
+		final ProjectComment result;
 
-		return result;
-	}
-
-	// TODO: ProjectComment - saveFromEdit
-	public ProjectComment saveFromEdit() {
-		final ProjectComment result = null;
-
+		Assert.notNull(pC);
+		
+		result = this.projectCommentRepository.save(pC);
+		
 		return result;
 	}
 
@@ -77,4 +75,18 @@ public class ProjectCommentService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<ProjectComment> listAllProjectComments(int projectId){
+		
+		Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectComments(projectId);
+		
+		return result;
+	}
+	
+public Collection<ProjectComment> listAllProjectCommentsOfUser(int userId){
+		
+		Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectCommentsOfUser(userId);
+		
+		return result;
+	}
+	
 }

@@ -76,5 +76,12 @@ public class PatronageService {
 	}
 
 	// Other business methods -------------------------------------------------
+	
+	public Collection<Patronage> getPatronagesOfProjectByUser(int userId, int projectId){
+		
+		Collection<Patronage> patro = this.patronageRepository.getPatronagesOfProjectByUser(userId, projectId);
+		
+		return patro;
+	}
 
 }
