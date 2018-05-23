@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.AwardRepository;
 import domain.Award;
 import domain.AwardComment;
+import domain.Project;
 import domain.User;
 
 @Service
@@ -28,6 +29,9 @@ public class AwardService {
 	@Autowired
 	private UserService		userService;
 
+	@Autowired
+	private ProjectService	projectService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -37,11 +41,14 @@ public class AwardService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Award - create
-	public Award create() {
+	public Award create(final int projectId) {
 		Award result = null;
+		Project project = null;
 
 		result = new Award();
+		project = this.projectService.findOne(projectId);
+
+		result.setProject(project);
 		result.setAwardComments(new ArrayList<AwardComment>());
 
 		return result;

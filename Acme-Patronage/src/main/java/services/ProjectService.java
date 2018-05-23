@@ -46,7 +46,6 @@ public class ProjectService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Project - create
 	public Project create() {
 		final Project result = new Project();
 		final User u = this.userService.findByPrincipal();
@@ -138,7 +137,6 @@ public class ProjectService {
 
 	}
 
-	// TODO: Project - saveFromCreate
 	public Project saveFromCreate(final Project p) {
 		final Project result;
 
@@ -150,7 +148,6 @@ public class ProjectService {
 		return result;
 	}
 
-	// TODO: Project - saveFromEdit
 	public Project saveFromEdit(final Project p) {
 		final Project result;
 
@@ -196,7 +193,7 @@ public class ProjectService {
 	}
 
 	public Collection<Project> findAllCreatedByUser(final int userId) {
-		return this.projectRepository.findAllCreatedbyUser(userId);
+		return this.projectRepository.findProjects(userId, false, false);
 	}
 
 	public Collection<Project> findAllFundedByUser(final int userId) {
@@ -208,7 +205,9 @@ public class ProjectService {
 	}
 	public Collection<Project> projectUser(final int userId) {
 		return this.projectRepository.projectUser(userId);
-
 	}
 
+	public Collection<Project> findProjects(final int userId, final boolean isDraft, final boolean isCancelled) {
+		return this.findProjects(userId, isDraft, isCancelled);
+	}
 }

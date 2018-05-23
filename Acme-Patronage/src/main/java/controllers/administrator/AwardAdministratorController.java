@@ -50,9 +50,6 @@ public class AwardAdministratorController {
 		requestURI = "award/administrator/list.do";
 		displayURI = "award/administrator/display.do?awardId=";
 
-		Assert.isTrue(!project.getIsDraft());
-		Assert.isTrue(!project.getIsCancelled());
-
 		awards = project.getAwards();
 
 		result = new ModelAndView("award/list");
@@ -74,8 +71,6 @@ public class AwardAdministratorController {
 		award = this.awardService.findOne(awardId);
 		cancelURI = "award/admimistrator/list.do?projectId=" + award.getProject().getId();
 		Assert.notNull(award);
-		Assert.isTrue(!award.getProject().getIsDraft());
-		Assert.isTrue(!award.getProject().getIsCancelled());
 
 		result = new ModelAndView("award/display");
 		result.addObject("award", award);
