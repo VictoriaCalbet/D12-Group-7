@@ -66,4 +66,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 	@Query("select pt.project from Patronage pt where pt.project.dueDate < CURRENT_TIMESTAMP group by pt.project order by sum(pt.amount) desc")
 	Collection<Project> top5DueProjectsWithMoreRaisedMoney();
+
+	// Req 25.2.4: The projects that have, at least, a 10% more sponsorships than the average.
+
+	@Query("select p from Project p where p.sponsorships.size > (select avg(p2.sponsorships.size)*1.1 from Project p2)")
+	Collection<Project> findAllWith10PercentMoreSponsorshipsThanAvg();
 }

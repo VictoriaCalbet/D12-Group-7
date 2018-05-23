@@ -18,4 +18,14 @@ public interface ProjectCommentRepository extends JpaRepository<ProjectComment, 
 	@Query("select p from ProjectComment p where p.user.id=?1")
 	public Collection<ProjectComment> listAllProjectCommentsOfUser(int userId);
 
+	// Dashboard --------------------------------------------------------------
+
+	// Req 25.2.3: The average and standard deviation of comments per project.
+
+	@Query("select avg(p.projectComments.size) from Project p")
+	Double avgCommentsPerProject();
+
+	@Query("select sqrt(sum(p.projectComments.size * p.projectComments.size) / count(p.projectComments.size) - (avg(p.projectComments.size) * avg(p.projectComments.size))) from Project p")
+	Double stdCommentsPerProject();
+
 }
