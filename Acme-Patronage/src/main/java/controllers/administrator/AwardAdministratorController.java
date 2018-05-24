@@ -1,5 +1,5 @@
 
-package controllers;
+package controllers.administrator;
 
 import java.util.Collection;
 
@@ -17,8 +17,8 @@ import domain.Award;
 import domain.Project;
 
 @Controller
-@RequestMapping("/award")
-public class AwardController extends AbstractController {
+@RequestMapping("/award/administrator")
+public class AwardAdministratorController {
 
 	// Services -------------------------------------------------------------
 
@@ -31,7 +31,7 @@ public class AwardController extends AbstractController {
 
 	// Constructors ---------------------------------------------------------
 
-	public AwardController() {
+	public AwardAdministratorController() {
 		super();
 	}
 
@@ -47,11 +47,8 @@ public class AwardController extends AbstractController {
 
 		project = this.projectService.findOne(projectId);
 
-		requestURI = "award/list.do";
-		displayURI = "award/display.do?awardId=";
-
-		Assert.isTrue(!project.getIsDraft());
-		Assert.isTrue(!project.getIsCancelled());
+		requestURI = "award/administrator/list.do";
+		displayURI = "award/administrator/display.do?awardId=";
 
 		awards = project.getAwards();
 
@@ -72,10 +69,8 @@ public class AwardController extends AbstractController {
 		String cancelURI = null;
 
 		award = this.awardService.findOne(awardId);
-		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+		cancelURI = "award/admimistrator/list.do?projectId=" + award.getProject().getId();
 		Assert.notNull(award);
-		Assert.isTrue(!award.getProject().getIsDraft());
-		Assert.isTrue(!award.getProject().getIsCancelled());
 
 		result = new ModelAndView("award/display");
 		result.addObject("award", award);

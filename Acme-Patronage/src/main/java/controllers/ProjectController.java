@@ -43,7 +43,6 @@ public class ProjectController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Project> projects = new ArrayList<Project>();
-
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDate();
 		else

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class AwardCommentService {
 
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -33,7 +37,9 @@ public class AwardCommentService {
 
 	// TODO: AwardComment - create
 	public AwardComment create() {
-		final AwardComment result = null;
+		final AwardComment result = new AwardComment();
+		
+		result.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
@@ -58,15 +64,19 @@ public class AwardCommentService {
 	}
 
 	// TODO: AnnouncementComment - saveFromCreate
-	public AwardComment saveFromCreate() {
-		final AwardComment result = null;
-
-		return result;
-	}
-
-	// TODO: AnnouncementComment - saveFromEdit
-	public AwardComment saveFromEdit() {
-		final AwardComment result = null;
+	public AwardComment saveFromCreate(final AwardComment aC) {
+		
+		Assert.isTrue(aC.getId()==0);
+		Assert.notNull(aC,"message.error.awardComment.null ");
+		Assert.notNull(aC.getRating(),"message.error.awardComment.rating.null");
+		Assert.notNull(aC.getText(),"message.error.awardComment.text.null");
+		Assert.notNull(aC.getAward(),"message.error.awardComment.award.null");
+		
+		aC.setUser(this.userService.findByPrincipal());
+		
+		aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
+		
+		final AwardComment result = this.awardCommentRepository.save(aC);
 
 		return result;
 	}
@@ -77,4 +87,20 @@ public class AwardCommentService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<AwardComment> listAllAwardComments(int awardId){
+		
+		Collection<AwardComment> result = this.awardCommentRepository.listAllAwardComments(awardId);
+		
+		return result;
+		
+	}
+	
+public Collection<AwardComment> listAllAwardCommentsOfUser(int userId){
+		
+		Collection<AwardComment> result = this.awardCommentRepository.listAllAwardCommentsOfUser(userId);
+		
+		return result;
+		
+	}
+	
 }

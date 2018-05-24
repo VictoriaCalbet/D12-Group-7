@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AnnouncementCommentRepository;
+import domain.Announcement;
 import domain.AnnouncementComment;
 
 @Service
@@ -23,6 +25,9 @@ public class AnnouncementCommentService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private UserService userService;
+	
 	// Constructors -----------------------------------------------------------
 
 	public AnnouncementCommentService() {
@@ -33,7 +38,8 @@ public class AnnouncementCommentService {
 
 	// TODO: AnnouncementComment - create
 	public AnnouncementComment create() {
-		final AnnouncementComment result = null;
+		final AnnouncementComment result = new AnnouncementComment();
+		result.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
@@ -58,18 +64,22 @@ public class AnnouncementCommentService {
 	}
 
 	// TODO: AnnouncementComment - saveFromCreate
-	public AnnouncementComment saveFromCreate() {
-		final AnnouncementComment result = null;
-
+	public AnnouncementComment saveFromCreate(AnnouncementComment anC) {
+		
+		Assert.notNull(anC);
+		Assert.notNull(anC.getText());
+		Assert.notNull(anC.getRating());
+		Assert.notNull(anC.getAnnouncement());
+		
+		anC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
+		anC.setUser(this.userService.findByPrincipal());
+		
+		final AnnouncementComment result = this.announcementCommentRepository.save(anC);
+		
 		return result;
 	}
 
-	// TODO: AnnouncementComment - saveFromEdit
-	public AnnouncementComment saveFromEdit() {
-		final AnnouncementComment result = null;
-
-		return result;
-	}
+	
 
 	public void flush() {
 		this.announcementCommentRepository.flush();
@@ -77,4 +87,18 @@ public class AnnouncementCommentService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<AnnouncementComment> listAllAnnouncementComments(int announcementId){
+		
+		Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementComments(announcementId);
+	
+		return result;
+	}
+	
+	public Collection<AnnouncementComment> listAllAnnouncementCommentsOfUser(int userId){
+		
+		Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementCommentsOfUser(userId);
+	
+		return result;
+	}
+	
 }
