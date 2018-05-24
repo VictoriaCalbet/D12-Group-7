@@ -208,6 +208,6 @@ public class ProjectService {
 	}
 
 	public Collection<Project> findProjects(final int userId, final boolean isDraft, final boolean isCancelled) {
-		return this.findProjects(userId, isDraft, isCancelled);
+		return this.projectRepository.findProjects(userId, isDraft, isCancelled);
 	}
 }
