@@ -37,7 +37,9 @@ public class AwardCommentService {
 
 	// TODO: AwardComment - create
 	public AwardComment create() {
-		final AwardComment result = null;
+		final AwardComment result = new AwardComment();
+		
+		result.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
@@ -64,23 +66,17 @@ public class AwardCommentService {
 	// TODO: AnnouncementComment - saveFromCreate
 	public AwardComment saveFromCreate(final AwardComment aC) {
 		
-		Assert.notNull(aC);
-		Assert.notNull(aC.getRating());
-		Assert.notNull(aC.getText());
-		Assert.notNull(aC.getAward());
+		Assert.isTrue(aC.getId()==0);
+		Assert.notNull(aC,"message.error.awardComment.null ");
+		Assert.notNull(aC.getRating(),"message.error.awardComment.rating.null");
+		Assert.notNull(aC.getText(),"message.error.awardComment.text.null");
+		Assert.notNull(aC.getAward(),"message.error.awardComment.award.null");
 		
 		aC.setUser(this.userService.findByPrincipal());
 		
 		aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 		
 		final AwardComment result = this.awardCommentRepository.save(aC);
-
-		return result;
-	}
-
-	// TODO: AnnouncementComment - saveFromEdit
-	public AwardComment saveFromEdit() {
-		final AwardComment result = null;
 
 		return result;
 	}

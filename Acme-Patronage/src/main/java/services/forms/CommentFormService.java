@@ -3,6 +3,7 @@ package services.forms;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import domain.Announcement;
@@ -27,6 +28,7 @@ import services.ProjectCommentService;
 import services.ProjectService;
 import services.UserService;
 
+@Service
 public class CommentFormService {
 	
 	// Managed repository -----------------------------------------------------
@@ -102,14 +104,16 @@ public class CommentFormService {
 		public Comment saveFromCreate(CommentForm anC,final String type, int id) {
 			
 			Assert.notNull(type);
+			Assert.isTrue(anC.getId()==0);
 			
 			int userId = this.userService.findByPrincipal().getId();
 			
 			//TODO: Check that the user who is going to post a comment has funded the proyect 
 			
 			
-			Assert.notNull(anC);
-			Assert.notNull(anC.getText());
+			Assert.notNull(anC,"message.error.projectComment.null");
+			Assert.notNull(anC.getText(),"message.error.projectComment.text.null");
+			Assert.notNull(anC.getRating(),"message.error.projectComment.rating.null");
 			
 			anC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 			
