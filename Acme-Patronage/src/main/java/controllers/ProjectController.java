@@ -97,8 +97,6 @@ public class ProjectController extends AbstractController {
 		Collection<Project> projects = new ArrayList<Project>();
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDateOrdered();
-		else
-			projects = this.projectService.findProjectByKeyWordOrdered(word);
 
 		User principal = null;
 		if (this.actorService.checkLogin()) {
@@ -128,8 +126,6 @@ public class ProjectController extends AbstractController {
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectByCategory(c.getId());
-		else
-			projects = this.projectService.findProjectByKeyWordCategory(word, c.getId());
 
 		User principal = null;
 		if (this.actorService.checkLogin()) {
