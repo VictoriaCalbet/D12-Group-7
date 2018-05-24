@@ -122,7 +122,7 @@ public class AwardService {
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 
-		Assert.notNull(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 
 		// Paso 1: actualizamos el resto de relaciones con la entidad Award
 
