@@ -61,6 +61,7 @@ public class AwardUserController {
 		String createURI = null;
 		String deleteURI = null;
 		boolean canCreate = false;
+		boolean canDelete = false;
 
 		project = this.projectService.findOne(projectId);
 		user = this.userService.findByPrincipal();
@@ -69,8 +70,10 @@ public class AwardUserController {
 		Assert.notNull(project);
 
 		if (project.getCreator().equals(user)) {
-			Assert.isTrue(!project.getIsDraft() || !project.getIsCancelled());
+			Assert.isTrue(!project.getIsDraft());
+			Assert.isTrue(!project.getIsCancelled());
 			canCreate = true;
+			canDelete = true;
 		}
 
 		requestURI = "award/user/list.do";
@@ -87,6 +90,7 @@ public class AwardUserController {
 		result.addObject("createURI", createURI);
 		result.addObject("deleteURI", deleteURI);
 		result.addObject("canCreate", canCreate);
+		result.addObject("canDelete", canDelete);
 
 		return result;
 	}
@@ -122,7 +126,8 @@ public class AwardUserController {
 		Assert.notNull(award);
 
 		if (award.getProject().getCreator().equals(user)) {
-			Assert.isTrue(!award.getProject().getIsDraft() || !award.getProject().getIsCancelled());
+			Assert.isTrue(!award.getProject().getIsDraft());
+			Assert.isTrue(!award.getProject().getIsCancelled());
 			if (award.getProject().getIsDraft())
 				canEdit = true;
 		}
@@ -138,7 +143,6 @@ public class AwardUserController {
 
 		return result;
 	}
-
 	// Edition    -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -190,10 +194,14 @@ public class AwardUserController {
 	public ModelAndView delete(@RequestParam final int awardId) {
 		ModelAndView result = null;
 		Award award = null;
+		User user = null;
 
 		award = this.awardService.findOne(awardId);
+		user = this.userService.findByPrincipal();
 
 		try {
+			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+
 			this.awardService.delete(award);
 			result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
 			result.addObject("message", "award.delete.success");

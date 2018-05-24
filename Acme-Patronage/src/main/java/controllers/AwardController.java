@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.AwardService;
 import services.ProjectService;
-import domain.Actor;
 import domain.Award;
 import domain.Project;
 
@@ -30,9 +28,6 @@ public class AwardController extends AbstractController {
 	@Autowired
 	private ProjectService	projectService;
 
-	@Autowired
-	private ActorService	actorService;
-
 
 	// Constructors ---------------------------------------------------------
 
@@ -46,7 +41,6 @@ public class AwardController extends AbstractController {
 	public ModelAndView list(@RequestParam final int projectId) {
 		ModelAndView result = null;
 		Collection<Award> awards = null;
-		Actor actor = null;
 		Project project = null;
 		String requestURI = null;
 		String displayURI = null;
@@ -55,17 +49,8 @@ public class AwardController extends AbstractController {
 
 		Assert.notNull(project);
 
-		if (this.actorService.checkLogin()) {
-
-			actor = this.actorService.findByPrincipal();
-
-			if (this.actorService.checkAuthority(actor, "USER"))
-				if (!project.getCreator().equals(actor))
-					Assert.isTrue(!project.getIsDraft() || !project.getIsCancelled());
-		} else {
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
-		}
+		Assert.isTrue(!project.getIsDraft());
+		Assert.isTrue(!project.getIsCancelled());
 
 		requestURI = "award/list.do";
 		displayURI = "award/display.do?awardId=";
@@ -85,7 +70,6 @@ public class AwardController extends AbstractController {
 	public ModelAndView display(@RequestParam final int awardId) {
 		ModelAndView result = null;
 		Award award = null;
-		Actor actor = null;
 		Project project = null;
 		String cancelURI = null;
 
@@ -94,18 +78,8 @@ public class AwardController extends AbstractController {
 		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
 
 		Assert.notNull(award);
-
-		if (this.actorService.checkLogin()) {
-
-			actor = this.actorService.findByPrincipal();
-
-			if (this.actorService.checkAuthority(actor, "USER"))
-				if (!project.getCreator().equals(actor))
-					Assert.isTrue(!project.getIsDraft() || !project.getIsCancelled());
-		} else {
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
-		}
+		Assert.isTrue(!project.getIsDraft());
+		Assert.isTrue(!project.getIsCancelled());
 
 		result = new ModelAndView("award/display");
 		result.addObject("award", award);
