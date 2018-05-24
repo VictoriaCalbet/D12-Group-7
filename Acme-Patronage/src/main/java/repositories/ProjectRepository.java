@@ -48,6 +48,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.category.id = ?2 and p.isDraft = false")
 	Collection<Project> findProjectByKeyWordCategory(String word, int categoryId);
 
+	@Query("select p from Project p join p.reports r where r.isLegit = true")
+	Collection<Project> findProjectWithReportLegit();
+
 	// Dashboard --------------------------------------------------------------
 
 	// Req 12.2.1: The average and standard deviation of projects per user.

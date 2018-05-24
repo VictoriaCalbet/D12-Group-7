@@ -175,9 +175,9 @@
 	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
 		<display:column title="${deleteHeader}">	
 			<jstl:choose>
-				<jstl:when test="${report.isLegit == true}">	
+				<jstl:when test="${projectReports.contains(row)}">
 					<a href="project/administrator/delete.do?projectId=${row.id}">
-					 	<spring:message code="project.deleteButton" />
+						<spring:message code="project.deleteButton" />
 					</a>
 				</jstl:when>
 				<jstl:otherwise>

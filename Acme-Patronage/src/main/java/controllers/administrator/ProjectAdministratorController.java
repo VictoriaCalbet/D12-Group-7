@@ -37,6 +37,8 @@ public class ProjectAdministratorController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Project> projects = new ArrayList<Project>();
+		Collection<Project> projectReports = new ArrayList<Project>();
+		projectReports = this.projectService.findProjectWithReportLegit();
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.findAll();
@@ -50,6 +52,7 @@ public class ProjectAdministratorController extends AbstractController {
 		result.addObject("projects", projects);
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("message", message);
+		result.addObject("projectReports", projectReports);
 		result.addObject("requestURI", "project/administrator/list.do");
 
 		return result;
