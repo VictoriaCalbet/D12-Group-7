@@ -9,7 +9,10 @@ import org.springframework.util.Assert;
 
 import services.PatronageService;
 import services.ProjectService;
+import services.UserService;
 import domain.Patronage;
+import domain.Project;
+import domain.User;
 import domain.forms.PatronageForm;
 
 @Service
@@ -23,6 +26,9 @@ public class PatronageFormService {
 
 	@Autowired
 	private ProjectService		projectService;
+
+	@Autowired
+	private UserService			userService;
 
 
 	//Constructor
@@ -44,8 +50,11 @@ public class PatronageFormService {
 
 		final Patronage p = this.patronageService.create(projectId);
 
+		final Project project = this.projectService.findOne(projectId);
 		final PatronageForm patronageForm = new PatronageForm();
 
+		final User principal = this.userService.findByPrincipal();
+		Assert.isTrue(principal != project.getCreator());
 		patronageForm.setId(p.getId());
 
 		patronageForm.setAmount(p.getAmount());
