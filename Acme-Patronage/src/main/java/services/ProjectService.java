@@ -220,4 +220,8 @@ public class ProjectService {
 	public Collection<Project> findProjectByKeyWordCategory(final String word, final int categoryId) {
 		return this.projectRepository.findProjectByKeyWordCategory(word, categoryId);
 	}
+
+	public Collection<Project> findProjectWithReportLegit() {
+		return this.projectRepository.findProjectWithReportLegit();
+	}
 }
