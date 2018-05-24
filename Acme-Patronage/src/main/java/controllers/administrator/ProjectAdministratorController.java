@@ -33,7 +33,7 @@ public class ProjectAdministratorController extends AbstractController {
 		Collection<Project> projects = new ArrayList<Project>();
 
 		if (word == null || word.equals(""))
-			projects = this.projectService.findAllOrdered();
+			projects = this.projectService.findAll();
 		else
 			projects = this.projectService.findProjectByKeyWordByAdmin(word);
 

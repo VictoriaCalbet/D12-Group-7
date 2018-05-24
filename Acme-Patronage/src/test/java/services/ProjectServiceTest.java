@@ -104,7 +104,7 @@ public class ProjectServiceTest extends AbstractTest {
 		try {
 			this.authenticate(principal);
 
-			final Collection<Project> projects = this.projectService.projectUser(this.userService.findByPrincipal().getId());
+			final Collection<Project> projects = this.userService.findByPrincipal().getProjects();
 			Assert.isTrue(projects.size() == 3);
 
 			this.unauthenticate();

@@ -12,20 +12,23 @@ import domain.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
-	@Query("select p from Project p where p.dueDate > CURRENT_TIMESTAMP and p.isCancelled = false and p.isDraft = false order by p.creationMoment desc")
+	@Query("select p from Project p where p.dueDate > CURRENT_TIMESTAMP and p.isCancelled = false and p.isDraft = false")
 	Collection<Project> findProjectFutureDueDate();
 
+	@Query("select p from Project p where p.dueDate > CURRENT_TIMESTAMP and p.isCancelled = false and p.isDraft = false order by p.creationMoment desc")
+	Collection<Project> findProjectFutureDueDateOrdered();
+
 	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.isDraft = false order by p.creationMoment desc")
+	Collection<Project> findProjectByKeyWordOrdered(String keyWord);
+
+	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.isDraft = false")
 	Collection<Project> findProjectByKeyWord(String keyWord);
 
-	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) order by p.creationMoment desc")
+	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%)")
 	Collection<Project> findProjectByKeyWordByAdmin(String keyWord);
 
-	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.creator.id = ?2 order by p.creationMoment desc")
+	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.creator.id = ?2")
 	Collection<Project> findProjectByKeyWordByUser(String keyWord, int userId);
-
-	@Query("select p from Project p order by p.creationMoment desc")
-	Collection<Project> findAllOrdered();
 
 	@Query("select p from Project p where p.creator.id = ?1 and p.isDraft is ?2 and p.isCancelled is ?3")
 	Collection<Project> findProjects(int userId, boolean isDraft, boolean isCancelled);
@@ -39,8 +42,11 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p where p.isDraft=true")
 	Collection<Project> findDraftProjects();
 
-	@Query("select p from Project p where p.creator.id = ?1 order by p.creationMoment desc")
-	Collection<Project> projectUser(int userId);
+	@Query("select p from Project p where p.category.id=?1 and p.dueDate > CURRENT_TIMESTAMP and p.isCancelled = false and p.isDraft = false")
+	Collection<Project> findProjectByCategory(int categoryId);
+
+	@Query("select p from Project p where (p.title like %?1% or p.description like %?1%) and p.category.id = ?2 and p.isDraft = false")
+	Collection<Project> findProjectByKeyWordCategory(String word, int categoryId);
 
 	// Dashboard --------------------------------------------------------------
 
