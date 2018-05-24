@@ -21,20 +21,21 @@
 <form:form action="${actionURI}" modelAttribute="award">
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
+	<form:hidden path="project"/>
+	<form:hidden path="awardComments"/>
 	
-	<jstl:choose>
-		<jstl:when test="${newForm eq true}">
-			<acme:select items="${availableProjects}" itemLabel="title" code="award.project.title" path="project.id"/>
-		</jstl:when>
-		<jstl:otherwise>
-			<form:hidden path="project.id"/>
-		</jstl:otherwise>
-	</jstl:choose>
+	<fieldset>
+		<legend>
+			<spring:message code="award.project.title" var="awardProjectTitleLegend"/>
+			<h2><b><jstl:out value="${awardProjectTitleLegend}"/>:&nbsp;</b> <jstl:out value="${award.project.title}"/></h2>
+		</legend>
+		
+		<acme:textbox code="award.name" path="name"/>
+		<acme:textbox code="award.description" path="description"/>
+		<acme:textbox code="award.moneyGoal" path="moneyGoal"/>
+	</fieldset>
 	
-	<acme:textbox code="award.name" path="name"/>
-	<acme:textbox code="award.description" path="description"/>
-	<acme:textarea code="award.moneyGoal" path="moneyGoal"/>
-	
+	<br/>
 	<acme:submit name="save" code="award.save"/> &nbsp;
 	<acme:cancel url="${cancelURI}" code="award.cancel"/>
 	<br/>
