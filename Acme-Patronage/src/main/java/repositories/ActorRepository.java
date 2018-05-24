@@ -16,4 +16,7 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a where a.userAccount.username = ?1")
 	Actor findOneByUsername(String username);
 
+	@Query("select case when (count(r) > 0) then true else false end from Report r where r.isLegit IS TRUE and r.project.creator.id = ?1")
+	Boolean hasLegitReports(int userId);
+
 }

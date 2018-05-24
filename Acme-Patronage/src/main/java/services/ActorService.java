@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.User;
 
 @Service
 @Transactional
@@ -34,6 +37,13 @@ public class ActorService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
+	public Actor save(final Actor actor) {
+		Assert.notNull(actor, "message.error.actor.null");
+		Actor result;
+		result = this.actorRepository.save(actor);
+		return result;
+	}
+
 	public Collection<Actor> findAll() {
 		Collection<Actor> result;
 		result = this.actorRepository.findAll();
@@ -52,6 +62,29 @@ public class ActorService {
 		return result;
 	}
 
+	public void ban(final int actorId) {
+
+		final Actor actor = this.findOne(actorId);
+		Assert.notNull(actor, "message.error.actor.null");
+		Assert.isTrue(actor.getUserAccount().getIsEnabled(), "message.error.actor.enabled");
+		Assert.isTrue(this.hasLegitReports(actorId), "message.error.actor.report.legit");
+
+		actor.getUserAccount().setIsEnabled(false);
+
+		this.save(actor);
+	}
+
+	public void unban(final int actorId) {
+
+		final Actor actor = this.findOne(actorId);
+		Assert.notNull(actor, "message.error.actor.null");
+		Assert.isTrue(!actor.getUserAccount().getIsEnabled(), "message.error.actor.disabled");
+
+		actor.getUserAccount().setIsEnabled(true);
+
+		this.save(actor);
+
+	}
 	// Other business methods -------------------------------------------------
 
 	public Actor findByPrincipal() {
@@ -95,6 +128,23 @@ public class ActorService {
 		} catch (final Throwable e) {
 			result = false;
 		}
+		return result;
+	}
+
+	public Boolean hasLegitReports(final int userId) {
+		return this.actorRepository.hasLegitReports(userId);
+	}
+
+	public Map<Integer, Boolean> hasLegitReports(final Collection<User> users) {
+		Assert.notNull(users);
+
+		final Map<Integer, Boolean> result = new HashMap<>();
+
+		for (final User u : users) {
+			final Boolean hasLegitReports = this.hasLegitReports(u.getId());
+			result.put(u.getId(), hasLegitReports);
+		}
+
 		return result;
 	}
 

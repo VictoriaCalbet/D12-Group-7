@@ -41,5 +41,23 @@
 	
 	<spring:message code="user.username" var="usernameHeader" />
 	<display:column property="userAccount.username" title="${usernameHeader}" sortable="true" />
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<spring:message code="user.ban.unban" var="banUnbanHeader" />
+		<display:column title="${banUnbanHeader}">
+			<jstl:choose>
+				<jstl:when test="${!row.userAccount.isEnabled}">
+					<a href="user/administrator/unban.do?userId=${row.id}">
+		 				<spring:message code="user.unban" />
+					</a>
+				</jstl:when>
+				<jstl:when test="${hasLegitReports[row.id]}">
+					<a href="user/administrator/ban.do?userId=${row.id}">
+		 				<spring:message code="user.ban" />
+					</a>
+				</jstl:when>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>
 
 </display:table>
