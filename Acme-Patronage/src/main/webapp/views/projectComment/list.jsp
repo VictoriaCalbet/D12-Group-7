@@ -18,10 +18,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table name="projectComment" id="row" requestURI="${requestURI}" pagesize="5">
+<display:table name="projectComments" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<spring:message code="projectComment.user" var="aCUser" />	
-	<display:column property="user" title="${aCUser}"/>
+	<display:column property="user.fullName" title="${aCUser}"/>
 
 	<spring:message code="projectComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
