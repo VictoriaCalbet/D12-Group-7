@@ -158,17 +158,17 @@ public class PatronageService {
 		return result;
 	}
 	// Other business methods -------------------------------------------------
-<<<<<<< HEAD
+
 	public Collection<Patronage> findAllPatronagesToUserProjects(final int userId) {
 		return this.patronageRepository.findAllPatronagesToUserProjects(userId);
-=======
-	
-	public Collection<Patronage> getPatronagesOfProjectByUser(int userId, int projectId){
-		
-		Collection<Patronage> patro = this.patronageRepository.getPatronagesOfProjectByUser(userId, projectId);
-		
+	}
+
+	public Collection<Patronage> getPatronagesOfProjectByUser(final int userId, final int projectId) {
+
+		final Collection<Patronage> patro = this.patronageRepository.getPatronagesOfProjectByUser(userId, projectId);
+
 		return patro;
->>>>>>> c584e2ea7bb1a6eab9777273eedc1fad8d86ec96
+
 	}
 
 	public Double findTotalAmount(final int projectId) {
