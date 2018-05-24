@@ -111,8 +111,5 @@ public class CommentAdministratorController extends AbstractController{
 
 		return result;
 	}
-		
-		
-	
 
 }
