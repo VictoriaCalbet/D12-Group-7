@@ -114,6 +114,23 @@ public class AwardService {
 		return result;
 	}
 
+	public void delete(final Award award) {
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		Assert.notNull(award, "message.error.award.null");
+		Assert.notNull(user, "message.error.award.principal.null");
+
+		Assert.notNull(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+
+		// Paso 1: actualizamos el resto de relaciones con la entidad Award
+
+		// Paso 2: borramos el objeto
+
+		this.awardRepository.delete(award);
+	}
+
 	public void flush() {
 		this.awardRepository.flush();
 	}
