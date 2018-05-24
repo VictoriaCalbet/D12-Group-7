@@ -160,12 +160,22 @@
 	
 	<security:authorize access="hasRole('ADMIN')">
 	
-	<spring:message code="project.delete" var="deleteHeader" />	
+	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
 		<display:column title="${deleteHeader}">	
-			<a href="project/administrator/delete.do?projectId=${row.id}">
-			 	<spring:message code="project.deleteButton" />
-			</a>
-		</display:column>
+			<jstl:choose>
+				<jstl:when test="${report.isLegit == true}">	
+					<a href="project/administrator/delete.do?projectId=${row.id}">
+					 	<spring:message code="project.deleteButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notDeleteAdmin" var="projectNotDeleteAdmin"/>
+						<jstl:out value="${projectNotDeleteAdmin}"/> 
+				</jstl:otherwise>
+			</jstl:choose>	
+	
+	</display:column>
+	
 	
 	</security:authorize>
 	

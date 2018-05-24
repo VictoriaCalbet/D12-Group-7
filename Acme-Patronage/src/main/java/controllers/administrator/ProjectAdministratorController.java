@@ -49,6 +49,7 @@ public class ProjectAdministratorController extends AbstractController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int projectId) {
 		ModelAndView result;
+
 		try {
 			this.projectService.deleteAdmin(projectId);
 			result = new ModelAndView("redirect:/project/administrator/list.do");
