@@ -4,6 +4,8 @@ package services;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -178,5 +180,18 @@ public class PatronageService {
 
 	public Double findTotalAmount(final int projectId) {
 		return this.patronageRepository.findTotalAmount(projectId);
+	}
+
+	public Map<Integer, Double> findTotalAmount(final Collection<Project> projects) {
+		Assert.notNull(projects);
+
+		final Map<Integer, Double> result = new HashMap<>();
+
+		for (final Project p : projects) {
+			final Double totalAmount = this.findTotalAmount(p.getId());
+			result.put(p.getId(), totalAmount);
+		}
+
+		return result;
 	}
 }

@@ -24,6 +24,15 @@
 		<spring:message code="award.display" var="awardDisplayLink"/>
 		<a href="${displayURI}${row.id}"><jstl:out value="${awardDisplayLink}"/></a>
 	</display:column>
+	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${canDelete eq true}">
+			<display:column>
+				<spring:message code="award.delete" var="awardDeleteLink"/>
+				<a href="${deleteURI}${row.id}"><jstl:out value="${awardDeleteLink}"/></a>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
 
 	<spring:message code="award.name" var="awardNameHeader"/>
 	<display:column property="name" title="${awardNameHeader}"/>
@@ -31,17 +40,11 @@
 	<spring:message code="award.moneyGoal" var="awardMoneyGoalHeader" />
 	<spring:message code="award.moneyGoal.setLocale" var="setLocale"/>
 	<spring:message code="award.moneyGoal.patternCurrency" var="patternCurrency" />
+	
 	<display:column title="${awardMoneyGoalHeader}" style="${style}">
 		<fmt:setLocale value="${setLocale}"/>
         <fmt:formatNumber value = "${row.moneyGoal}" currencySymbol="&euro;" pattern="${patternCurrency}" type="currency"  minFractionDigits="2"/>
 	</display:column>
-	
-	<security:authorize access="hasRole('USER')">
-	<display:column>
-	<a href="awardComment/user/create.do?awardId=${row.id}"> 
-			<spring:message code="awardComment.create"/></a>
-	</display:column>
-</security:authorize>
 	
 </display:table>
 

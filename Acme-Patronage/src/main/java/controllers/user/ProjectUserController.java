@@ -3,6 +3,8 @@ package controllers.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
+import services.PatronageService;
 import services.ProjectService;
 import services.UserService;
 import services.forms.ProjectFormService;
@@ -37,6 +40,9 @@ public class ProjectUserController extends AbstractController {
 	@Autowired
 	private CategoryService		categoryService;
 
+	@Autowired
+	private PatronageService	patronageService;
+
 
 	public ProjectUserController() {
 		super();
@@ -49,12 +55,16 @@ public class ProjectUserController extends AbstractController {
 		final User u = this.userService.findByPrincipal();
 
 		if (word == null || word.equals(""))
-			projects = this.projectService.projectUser(u.getId());
+			projects = u.getProjects();
 		else
 			projects = this.projectService.findProjectByKeyWordByUser(word, u.getId());
 
+		Map<Integer, Double> totalAmounts = new HashMap<>();
+		totalAmounts = this.patronageService.findTotalAmount(projects);
+
 		result = new ModelAndView("project/list");
 		result.addObject("principal", u);
+		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("projects", projects);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/user/list.do");

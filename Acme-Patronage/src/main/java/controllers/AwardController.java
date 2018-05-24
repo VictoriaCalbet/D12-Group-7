@@ -47,11 +47,13 @@ public class AwardController extends AbstractController {
 
 		project = this.projectService.findOne(projectId);
 
-		requestURI = "award/list.do";
-		displayURI = "award/display.do?awardId=";
+		Assert.notNull(project);
 
 		Assert.isTrue(!project.getIsDraft());
 		Assert.isTrue(!project.getIsCancelled());
+
+		requestURI = "award/list.do";
+		displayURI = "award/display.do?awardId=";
 
 		awards = project.getAwards();
 
@@ -62,20 +64,22 @@ public class AwardController extends AbstractController {
 
 		return result;
 	}
-
 	// Display --------------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int awardId) {
 		ModelAndView result = null;
 		Award award = null;
+		Project project = null;
 		String cancelURI = null;
 
 		award = this.awardService.findOne(awardId);
+		project = award.getProject();
 		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+
 		Assert.notNull(award);
-		Assert.isTrue(!award.getProject().getIsDraft());
-		Assert.isTrue(!award.getProject().getIsCancelled());
+		Assert.isTrue(!project.getIsDraft());
+		Assert.isTrue(!project.getIsCancelled());
 
 		result = new ModelAndView("award/display");
 		result.addObject("award", award);

@@ -18,11 +18,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${actionURI}" modelAttribute="award">
+<form:form action="${actionURI}" modelAttribute="awardForm">
 	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-	<form:hidden path="project"/>
-	<form:hidden path="awardComments"/>
+	<form:hidden path="projectId"/>
+	<form:hidden path="userId"/>
 	
 	<fieldset>
 		<legend>

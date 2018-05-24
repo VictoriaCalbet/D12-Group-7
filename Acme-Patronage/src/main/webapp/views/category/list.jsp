@@ -31,6 +31,12 @@
 	<display:column property="description" title="${descriptionHeader}" 
 		sortable="false" style="${style}" />
 
+	<spring:message code="project.project" var="projectHeader" />	
+		<display:column title="${projectHeader}">	
+			<a href="project/listByCategory.do?categoryId=${row.id}">
+			 	<spring:message code="project.showProject" />
+			</a>
+		</display:column>
 	
 	
 	<security:authorize access="hasRole('ADMIN')">
