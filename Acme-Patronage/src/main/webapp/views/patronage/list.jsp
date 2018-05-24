@@ -53,8 +53,6 @@
 				</jstl:otherwise>
 			</jstl:choose>
 		</display:column>
-		
-	
 	</security:authorize>
 	
 </display:table>
