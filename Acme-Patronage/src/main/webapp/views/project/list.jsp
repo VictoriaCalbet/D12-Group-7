@@ -201,6 +201,11 @@
 			 	<spring:message code="project.patronageButton" />
 			</a>
 		</jstl:when>
+		<jstl:otherwise>
+
+			<spring:message code= "project.patronage.notPatronizable" var="projectNotPatronizable"/>
+			<jstl:out value="${projectNotPatronizable}"/> 
+		</jstl:otherwise>
 		</jstl:choose>
 	</display:column>
 	

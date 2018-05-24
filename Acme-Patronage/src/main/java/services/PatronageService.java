@@ -87,8 +87,8 @@ public class PatronageService {
 		cal.setTime(patronage.getProject().getDueDate());
 
 		if ((patronage.getCreditCard().getExpirationYear()) == (cal.get(Calendar.YEAR)))
-			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1));
-
+			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1), "message.error.patronage.dates");
+		Assert.isTrue(patronage.getProject().getIsCancelled() == false, "message.error.patronage.cancelled");
 		Assert.isTrue((patronage.getCreditCard().getExpirationYear()) >= (cal.get(Calendar.YEAR)), "message.error.patronage.dates");
 		final User principal = this.userService.findByPrincipal();
 		Assert.isTrue(!(principal == project.getCreator()), "message.error.patronage.create.userCreator");
@@ -116,18 +116,6 @@ public class PatronageService {
 		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.principal.owner ");
 		result = this.save(patronage);
 		return result;
-	}
-
-	public void cancelPatronage(final Patronage patronage) {
-		Assert.notNull(patronage, "message.error.patronage.null");
-		final User principal = this.userService.findByPrincipal();
-
-		Assert.isTrue(principal == patronage.getUser(), "message.error.cancel.patronage.notOwner");
-		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.principal.owner ");
-		Assert.isTrue(principal.getPatronages().contains(patronage), "message.error.cancel.patronage.notOwner");
-		patronage.setIsCancelled(true);
-		this.save(patronage);
-
 	}
 
 	public void flush() {

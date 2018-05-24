@@ -39,21 +39,6 @@
 	<display:column property="amount" title="${amountHeader}"
  		sortable="false" style="${style}" />
 	
-	<security:authorize access="hasRole('USER')">
-	<spring:message code="patronage.cancel" var="cancelHeader" />
-		<display:column title="${cancelHeader}" style="${style}">
-			<jstl:choose>
-				<jstl:when test="${(principal== row.user and row.isCancelled eq false)}">
-					<spring:message var="patronageCancelLink" code="patronage.cancel"/>
-					<a href="patronage/user/cancel.do?patronageId=${row.id}"><jstl:out value="${patronageCancelLink}"/></a>
-				</jstl:when>
-				<jstl:otherwise>
-					<spring:message code="patronage.notCancellable" var="patronageNotCancelableMessage" />
-					<jstl:out value="${patronageNotCancelableMessage}"/>
-				</jstl:otherwise>
-			</jstl:choose>
-		</display:column>
-	</security:authorize>
 	
 </display:table>
 

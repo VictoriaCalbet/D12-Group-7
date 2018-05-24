@@ -114,7 +114,8 @@ public class ProjectService {
 		Assert.isTrue(!p.getIsDraft(), "message.error.project.isDraft");
 		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
 		Assert.isTrue(p.getPatronages().size() != 0, "message.error.project.patronagesContains");
-
+		for (final Patronage pat : p.getPatronages())
+			pat.setIsCancelled(true);
 		p.setIsCancelled(true);
 
 		this.projectRepository.save(p);
