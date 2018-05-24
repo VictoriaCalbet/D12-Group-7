@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AwardService;
 import services.ProjectService;
 import services.UserService;
+import services.forms.AwardFormService;
 import domain.Award;
 import domain.Project;
 import domain.User;
+import domain.forms.AwardForm;
 
 @Controller
 @RequestMapping("/award/user")
@@ -28,13 +30,16 @@ public class AwardUserController {
 	// Services -------------------------------------------------------------
 
 	@Autowired
-	private AwardService	awardService;
+	private AwardService		awardService;
 
 	@Autowired
-	private ProjectService	projectService;
+	private AwardFormService	awardFormService;
 
 	@Autowired
-	private UserService		userService;
+	private ProjectService		projectService;
+
+	@Autowired
+	private UserService			userService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -54,6 +59,7 @@ public class AwardUserController {
 		String requestURI = null;
 		String displayURI = null;
 		String createURI = null;
+		String deleteURI = null;
 		boolean canCreate = false;
 
 		project = this.projectService.findOne(projectId);
@@ -70,6 +76,7 @@ public class AwardUserController {
 		requestURI = "award/user/list.do";
 		displayURI = "award/user/display.do?awardId=";
 		createURI = "award/user/create.do?projectId=" + projectId;
+		deleteURI = "award/user/delete.do?awardId=";
 
 		awards = project.getAwards();
 
@@ -78,6 +85,7 @@ public class AwardUserController {
 		result.addObject("requestURI", requestURI);
 		result.addObject("displayURI", displayURI);
 		result.addObject("createURI", createURI);
+		result.addObject("deleteURI", deleteURI);
 		result.addObject("canCreate", canCreate);
 
 		return result;
@@ -88,10 +96,10 @@ public class AwardUserController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int projectId) {
 		ModelAndView result = null;
-		Award award = null;
+		AwardForm awardForm = null;
 
-		award = this.awardService.create(projectId);
-		result = this.createEditModelAndView(award);
+		awardForm = this.awardFormService.createFromCreate(projectId);
+		result = this.createEditModelAndView(awardForm);
 
 		return result;
 	}
@@ -136,6 +144,7 @@ public class AwardUserController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int awardId) {
 		ModelAndView result = null;
+		AwardForm awardForm = null;
 		Award award = null;
 		User user = null;
 
@@ -145,46 +154,73 @@ public class AwardUserController {
 		Assert.isTrue(award.getProject().getCreator().equals(user));
 		Assert.isTrue(award.getProject().getIsDraft() || !award.getProject().getIsCancelled());
 
-		result = this.createEditModelAndView(award);
+		awardForm = this.awardFormService.createFromEdit(awardId);
+		result = this.createEditModelAndView(awardForm);
 
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Award award, final BindingResult bindingResult) {
+	public ModelAndView save(@Valid final AwardForm awardForm, final BindingResult bindingResult) {
 		ModelAndView result = null;
 
 		if (bindingResult.hasErrors())
-			result = this.createEditModelAndView(award);
+			result = this.createEditModelAndView(awardForm);
 		else
 			try {
-				if (award.getId() == 0)
-					this.awardService.saveFromCreate(award);
+				if (awardForm.getId() == 0)
+					this.awardFormService.saveFromCreate(awardForm);
 				else
-					this.awardService.saveFromEdit(award);
+					this.awardFormService.saveFromEdit(awardForm);
 
-				result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
+				result = new ModelAndView("redirect:/award/user/list.do?projectId=" + awardForm.getProjectId());
 
 			} catch (final Throwable oops) {
 				String messageError = "award.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
-				result = this.createEditModelAndView(award, messageError);
+				result = this.createEditModelAndView(awardForm, messageError);
 			}
+
+		return result;
+	}
+
+	// Delete    ------------------------------------------------------------
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int awardId) {
+		ModelAndView result = null;
+		Award award = null;
+
+		award = this.awardService.findOne(awardId);
+
+		try {
+			this.awardService.delete(award);
+			result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
+			result.addObject("message", "award.delete.success");
+		} catch (final Throwable oops) {
+			String messageError = "award.delete.error";
+
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+
+			result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
+			result.addObject("message", messageError);
+		}
 
 		return result;
 	}
 
 	// Other actions --------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Award award) {
+	protected ModelAndView createEditModelAndView(final AwardForm awardForm) {
 		ModelAndView result = null;
 
-		result = this.createEditModelAndView(award, null);
+		result = this.createEditModelAndView(awardForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Award award, final String message) {
+	protected ModelAndView createEditModelAndView(final AwardForm awardForm, final String message) {
 		ModelAndView result = null;
 		Collection<Project> availableProjects = null;
 		String actionURI = null;
@@ -197,16 +233,16 @@ public class AwardUserController {
 
 		availableProjects = this.projectService.findProjects(user.getId(), false, false);
 
-		if (award.getId() == 0) {
+		if (awardForm.getId() == 0) {
 			result = new ModelAndView("award/create");
 			cancelURI = "project/list.do";
 		} else {
 			result = new ModelAndView("award/edit");
-			cancelURI = "award/user/list.do?projectId=" + award.getProject().getId();
+			cancelURI = "award/user/list.do?projectId=" + awardForm.getProjectId();
 		}
 
 		result.addObject("user", user);
-		result.addObject("award", award);
+		result.addObject("awardForm", awardForm);
 		result.addObject("actionURI", actionURI);
 		result.addObject("cancelURI", cancelURI);
 		result.addObject("availableProjects", availableProjects);
