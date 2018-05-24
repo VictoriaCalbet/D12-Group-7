@@ -24,6 +24,13 @@
 		<spring:message code="award.display" var="awardDisplayLink"/>
 		<a href="${displayURI}${row.id}"><jstl:out value="${awardDisplayLink}"/></a>
 	</display:column>
+	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+			<spring:message code="award.delete" var="awardDeleteLink"/>
+			<a href="${deleteURI}${row.id}"><jstl:out value="${awardDeleteLink}"/></a>
+		</display:column>
+	</security:authorize>
 
 	<spring:message code="award.name" var="awardNameHeader"/>
 	<display:column property="name" title="${awardNameHeader}"/>
@@ -37,12 +44,11 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-	<display:column>
-	<a href="awardComment/user/create.do?awardId=${row.id}"> 
-			<spring:message code="awardComment.create"/></a>
-	</display:column>
-</security:authorize>
-	
+		<display:column>
+			<a href="awardComment/user/create.do?awardId=${row.id}"> <spring:message code="awardComment.create"/></a>
+		</display:column>
+	</security:authorize>
+		
 </display:table>
 
 <security:authorize access="hasRole('USER')">
