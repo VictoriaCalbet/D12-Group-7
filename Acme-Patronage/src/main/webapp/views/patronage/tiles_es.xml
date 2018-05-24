@@ -20,8 +20,16 @@
 		<put-attribute name="title" value="Listado de patrocinios" />
 		<put-attribute name="body" value="/views/patronage/list.jsp" />
 	</definition>
+	<definition name="patronage/user/list" extends="master.page">	
+		<put-attribute name="title" value="Mis patrocinios" />
+		<put-attribute name="body" value="/views/patronage/list.jsp" />
+	</definition>
+	<definition name="patronage/user/listPatronagesToMyProjects" extends="master.page">	
+		<put-attribute name="title" value="Patrocinios a mis proyectos" />
+		<put-attribute name="body" value="/views/patronage/listPatronagesToMyProjects.jsp" />
+	</definition>
 	
-	<definition name="patronage/edit" extends="master.page">	
+	<definition name="patronage/user/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar patronage" />
 		<put-attribute name="body" value="/views/patronage/edit.jsp" />
 	</definition>

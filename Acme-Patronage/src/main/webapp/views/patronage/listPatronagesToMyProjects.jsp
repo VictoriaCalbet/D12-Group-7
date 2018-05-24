@@ -19,7 +19,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-
+<security:authorize access="hasRole('USER')">
+	
 <display:table name="patronages" id="row" requestURI="${requestURI}" pagesize="5">
 	
 	<jstl:set var="isCancelled" value="${row.isCancelled}"/>	
@@ -31,6 +32,11 @@
 		<jstl:set var="style" value="background-color:white;" />
 	</jstl:if>
 	
+	
+	<spring:message code="patronage.user" var="userHeader" />
+	<display:column property="user.userAccount.username" title="${userHeader}"
+ 		sortable="false" style="${style}" />
+ 		
  	<spring:message code="patronage.project" var="projectHeader" />
 	<display:column property="project.title" title="${projectHeader}"
  		sortable="false" style="${style}" />
@@ -39,29 +45,12 @@
 	<display:column property="amount" title="${amountHeader}"
  		sortable="false" style="${style}" />
 	
-	<security:authorize access="hasRole('USER')">
-	<spring:message code="patronage.cancel" var="cancelHeader" />
-		<display:column title="${cancelHeader}" style="${style}">
-			<jstl:choose>
-				<jstl:when test="${(row.user == principal)}">
-					<spring:message var="patronageCancelLink" code="patronage.cancel"/>
-					<a href="patronage/user/cancel.do?patronageId=${row.id}"><jstl:out value="${patronageCancelLink}"/></a>
-				</jstl:when>
-				<jstl:otherwise>
-					<spring:message code="patronage.notCancellable" var="patronageNotCancelableMessage" />
-					<jstl:out value="${patronageNotCancelableMessage}"/>
-				</jstl:otherwise>
-			</jstl:choose>
-		</display:column>
-	</security:authorize>
-	
 </display:table>
 
-<security:authorize access="isAuthenticated()">
+
 	<jstl:if test="${not empty patronages}">
 		<span style="background-color:Crimson; border-radius: 15px 50px;">&nbsp;&nbsp;<spring:message code="patronage.cancelled"/>&nbsp;&nbsp;</span>
 	</jstl:if>
 </security:authorize>
-
 
 

@@ -21,11 +21,20 @@
 		<put-attribute name="body" value="/views/patronage/list.jsp" />
 	</definition>
 	
-	<definition name="patronage/edit" extends="master.page">	
+	<definition name="patronage/user/list" extends="master.page">	
+		<put-attribute name="title" value="My patronages" />
+		<put-attribute name="body" value="/views/patronage/list.jsp" />
+	</definition>
+	
+	<definition name="patronage/user/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit patronage" />
 		<put-attribute name="body" value="/views/patronage/edit.jsp" />
 	</definition>
 	
+	<definition name="patronage/user/listPatronagesToMyProjects" extends="master.page">	
+		<put-attribute name="title" value="Patronages to my projects" />
+		<put-attribute name="body" value="/views/patronage/listPatronagesToMyProjects.jsp" />
+	</definition>
 	<definition name="patronage/display" extends="master.page">	
 		<put-attribute name="title" value="Show patronage" />
 		<put-attribute name="body" value="/views/patronage/display.jsp" />
