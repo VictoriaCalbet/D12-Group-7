@@ -43,7 +43,7 @@
 	<spring:message code="patronage.cancel" var="cancelHeader" />
 		<display:column title="${cancelHeader}" style="${style}">
 			<jstl:choose>
-				<jstl:when test="${(row.user == principal)}">
+				<jstl:when test="${(principal== row.user and row.isCancelled eq false)}">
 					<spring:message var="patronageCancelLink" code="patronage.cancel"/>
 					<a href="patronage/user/cancel.do?patronageId=${row.id}"><jstl:out value="${patronageCancelLink}"/></a>
 				</jstl:when>
@@ -53,15 +53,13 @@
 				</jstl:otherwise>
 			</jstl:choose>
 		</display:column>
+		
+	
 	</security:authorize>
 	
 </display:table>
 
-<security:authorize access="isAuthenticated()">
+
 	<jstl:if test="${not empty patronages}">
 		<span style="background-color:Crimson; border-radius: 15px 50px;">&nbsp;&nbsp;<spring:message code="patronage.cancelled"/>&nbsp;&nbsp;</span>
 	</jstl:if>
-</security:authorize>
-
-
-

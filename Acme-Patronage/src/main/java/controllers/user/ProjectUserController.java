@@ -54,6 +54,7 @@ public class ProjectUserController extends AbstractController {
 			projects = this.projectService.findProjectByKeyWordByUser(word, u.getId());
 
 		result = new ModelAndView("project/list");
+		result.addObject("principal", u);
 		result.addObject("projects", projects);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/user/list.do");

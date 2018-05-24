@@ -169,7 +169,38 @@
 	
 	</security:authorize>
 	
+	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
+	<display:column title="${totalAmountsHeader}" >
 	
+	<jstl:forEach var="amount" items="${totalAmounts}" >
+
+   	<jstl:out value="${amount}">
+   		
+ 	 </jstl:out>
+
+	</jstl:forEach>
+    
+		
+		
+		
+	
+	</display:column>
+	
+	
+	<security:authorize access="hasRole('USER')">
+	
+	<spring:message code="project.patronage" var="patronageHeader" />	
+	<display:column title="${patronageHeader}">	
+		<jstl:choose>
+		<jstl:when test="${row.creator != principal}">
+			<a href="patronage/user/edit.do?projectId=${row.id}">
+			 	<spring:message code="project.patronageButton" />
+			</a>
+		</jstl:when>
+		</jstl:choose>
+	</display:column>
+	
+	</security:authorize>
 </display:table>
 
 <security:authorize access="hasRole('USER')">

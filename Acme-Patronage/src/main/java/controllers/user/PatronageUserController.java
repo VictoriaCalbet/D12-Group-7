@@ -80,7 +80,7 @@ public class PatronageUserController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/listPatronagesToMyProject", method = RequestMethod.GET)
+	@RequestMapping(value = "/listPatronagesToMyProjects", method = RequestMethod.GET)
 	public ModelAndView listPatronagesToMyProjects() {
 		final ModelAndView result;
 
@@ -90,7 +90,7 @@ public class PatronageUserController extends AbstractController {
 		final Collection<Patronage> patronages = this.patronageService.findAllPatronagesToUserProjects(principal.getId());
 		result = new ModelAndView("patronage/user/listPatronagesToMyProjects");
 
-		result.addObject("requestURI", "patronage/user/listPatronagesToMyProject.do");
+		result.addObject("requestURI", "patronage/user/listPatronagesToMyProjects.do");
 
 		result.addObject("principal", principal);
 		result.addObject("patronages", patronages);

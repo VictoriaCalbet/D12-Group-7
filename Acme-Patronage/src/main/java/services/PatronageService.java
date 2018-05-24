@@ -87,7 +87,7 @@ public class PatronageService {
 			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1));
 		Assert.isTrue((patronage.getCreditCard().getExpirationYear()) >= (cal.get(Calendar.YEAR)));
 		final User principal = this.userService.findByPrincipal();
-
+		Assert.isTrue(!(principal == patronage.getProject().getCreator()), "message.error.patronage.create.user");
 		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.create.user");
 
 		result = this.save(patronage);
