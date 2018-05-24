@@ -3,9 +3,12 @@ package controllers.user;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,6 +104,8 @@ public class AwardUserController {
 		Award award = null;
 		User user = null;
 		String cancelURI = null;
+		String editURI = null;
+		boolean canEdit = false;
 
 		user = this.userService.findByPrincipal();
 		award = this.awardService.findOne(awardId);
@@ -108,14 +113,63 @@ public class AwardUserController {
 		Assert.notNull(user);
 		Assert.notNull(award);
 
-		if (!award.getProject().getCreator().equals(user))
+		if (award.getProject().getCreator().equals(user)) {
 			Assert.isTrue(!award.getProject().getIsDraft() || !award.getProject().getIsCancelled());
+			if (award.getProject().getIsDraft())
+				canEdit = true;
+		}
 
 		cancelURI = "award/user/list.do?projectId=" + award.getProject().getId();
+		editURI = "award/user/edit.do?awardId=" + award.getId();
 
 		result = new ModelAndView("award/display");
 		result.addObject("award", award);
 		result.addObject("cancelURI", cancelURI);
+		result.addObject("editURI", editURI);
+		result.addObject("canEdit", canEdit);
+
+		return result;
+	}
+
+	// Edition    -----------------------------------------------------------
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int awardId) {
+		ModelAndView result = null;
+		Award award = null;
+		User user = null;
+
+		award = this.awardService.findOne(awardId);
+		user = this.userService.findByPrincipal();
+
+		Assert.isTrue(award.getProject().getCreator().equals(user));
+		Assert.isTrue(award.getProject().getIsDraft() || !award.getProject().getIsCancelled());
+
+		result = this.createEditModelAndView(award);
+
+		return result;
+	}
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final Award award, final BindingResult bindingResult) {
+		ModelAndView result = null;
+
+		if (bindingResult.hasErrors())
+			result = this.createEditModelAndView(award);
+		else
+			try {
+				if (award.getId() == 0)
+					this.awardService.saveFromCreate(award);
+				else
+					this.awardService.saveFromEdit(award);
+
+				result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
+
+			} catch (final Throwable oops) {
+				String messageError = "award.commit.error";
+				if (oops.getMessage().contains("message.error"))
+					messageError = oops.getMessage();
+				result = this.createEditModelAndView(award, messageError);
+			}
 
 		return result;
 	}
