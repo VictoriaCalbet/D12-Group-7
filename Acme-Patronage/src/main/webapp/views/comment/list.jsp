@@ -17,3 +17,64 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<display:table name="announcementComments" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="announcementComment.user" var="aCUser" />	
+	<display:column property="user.fullName" title="${aCUser}"/>
+
+	<spring:message code="announcementComment.text" var="aCText" />	
+	<display:column property="text" title="${aCText}"/>
+	
+	<spring:message code="announcementComment.rating" var="aCRating" />
+	<display:column property="rating" title="${aCRating}"/>
+	
+	<spring:message code="announcementComment.creationMoment" var="aCCreationMoment" />
+	<spring:message code="announcementComment.creationMoment.pattern" var="datePattern"/>
+	<display:column title="${aCCreationMoment}">
+		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+
+</display:table>
+
+<display:table name="awardComments" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="awardComment.user" var="aCUser" />	
+	<display:column property="user.fullName" title="${aCUser}"/>
+
+	<spring:message code="awardComment.text" var="aCText" />	
+	<display:column property="text" title="${aCText}"/>
+	
+	<spring:message code="awardComment.rating" var="aCRating" />
+	<display:column property="rating" title="${aCRating}"/>
+	
+	<spring:message code="awardComment.creationMoment" var="aCCreationMoment" />
+	<spring:message code="awardComment.creationMoment.pattern" var="datePattern"/>
+	<display:column title="${aCCreationMoment}">
+		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+	
+	<display:column>
+		<a href="comment/administrator/deleteAwardComment.do?awardCommentId=${row.id}"><spring:message code="awardComment.delete"/></a>
+	</display:column>
+
+</display:table>
+
+<display:table name="projectComments" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="projectComment.user" var="aCUser" />	
+	<display:column property="user.fullName" title="${aCUser}"/>
+
+	<spring:message code="projectComment.text" var="aCText" />	
+	<display:column property="text" title="${aCText}"/>
+	
+	<spring:message code="projectComment.rating" var="aCRating" />
+	<display:column property="rating" title="${aCRating}"/>
+	
+	<spring:message code="projectComment.creationMoment" var="aCCreationMoment" />
+	<spring:message code="projectComment.creationMoment.pattern" var="datePattern"/>
+	<display:column title="${aCCreationMoment}">
+		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+
+</display:table>

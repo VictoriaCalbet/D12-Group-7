@@ -46,6 +46,14 @@
         <fmt:formatNumber value = "${row.moneyGoal}" currencySymbol="&euro;" pattern="${patternCurrency}" type="currency"  minFractionDigits="2"/>
 	</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+		<spring:message code="awardComment.create" var="awardComment"/>
+		<a href="awardComment/user/create.do?awardId=${row.id}"><jstl:out value="${awardComment}"/></a>
+		</display:column>
+	
+</security:authorize>
+	
 </display:table>
 
 <security:authorize access="hasRole('USER')">

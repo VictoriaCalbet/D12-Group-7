@@ -143,7 +143,9 @@ public class CommentFormService {
 				
 				final Award a = this.awardService.findOne(id);
 				
-				Assert.notNull(a);
+				Assert.notNull(a,"message.error.awardComment.award.null");
+				
+				Assert.isTrue(!a.getProject().getIsDraft(),"message.error.awardComment.draftProject");
 				
 				final AwardComment aC = this.awardCommentService.create();
 				
