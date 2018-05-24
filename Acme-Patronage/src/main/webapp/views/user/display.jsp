@@ -56,7 +56,7 @@
 		<fmt:formatDate value="${row.dueDate}" pattern="${datePattern}"/>
 	</display:column>
 	
-</display:table>
+</display:table><br>
 
 <b><spring:message code="user.fundedProjects" />: </b><br>
 
@@ -79,4 +79,4 @@
 		<fmt:formatDate value="${row.dueDate}" pattern="${datePattern}"/>
 	</display:column>
 	
-</display:table>
+</display:table><br>
