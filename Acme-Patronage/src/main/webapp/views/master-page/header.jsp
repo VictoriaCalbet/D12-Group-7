@@ -38,10 +38,7 @@
 		<security:authorize access="hasRole('USER')">
 			<li><a class="fNiv" href="project/user/list.do"><spring:message code="master.page.project.user.list" /></a></li>
 			<li><a class="fNiv" href="patronage/user/listPatronagesToMyProjects.do"><spring:message code="master.page.patronagesToMyProjects.user.list" /></a></li>	
-<<<<<<< HEAD
-			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>	
 			<li><a class="fNiv" href="report/user/create.do"><spring:message code="master.page.report.user.create" /></a></li>		
-=======
 			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>			
 			<li><a class="fNiv" href="awardComment/user/list.do"><spring:message code="awardComment.list"/></a></li>			
 		</security:authorize>
@@ -53,7 +50,6 @@
 					<li><a href="announcement/user/list.do"><spring:message code="master.page.showStreamOfAnnouncements" /></a></li>
 				</ul>
 			</li>
->>>>>>> d257c9405f754a7e5513bd774ae2fe93878502e9
 		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
