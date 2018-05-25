@@ -148,4 +148,34 @@ public class ReportService {
 		Assert.isTrue(authority.equals("MODERATOR"), "message.error.report.notmoderator");
 		return actor;
 	}
+
+	// Dashboard --------------------------------------------------------------
+
+	// Req 33.3.1: The average and standard deviation of complaints per project.
+
+	public Double avgReportsPerProject() {
+		return this.reportRepository.avgReportsPerProject();
+	}
+
+	public Double stdReportsPerProject() {
+		return this.reportRepository.stdReportsPerProject();
+	}
+
+	// Req 33.3.2: The ratio of complaints per project.
+
+	public Double ratioReportsPerProject() {
+		return this.reportRepository.ratioReportsPerProject();
+	}
+
+	// Req 33.3.3: The ratio of complaints per user.
+
+	public Double ratioReportsPerUser() {
+		return this.reportRepository.ratioReportsPerUser();
+	}
+
+	// Req 33.3.4: The ratio of legit complaints.
+
+	public Double ratioLegitReports() {
+		return this.reportRepository.ratioLegitReports();
+	}
 }

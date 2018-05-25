@@ -185,5 +185,53 @@
 			</tr>
 		</jstl:forEach>
 	</table>
+	
+	<!-- LEVEL A -->
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.avgReportsPerProject"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgReportsPerProject}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdReportsPerProject}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.ratioReportsPerProject"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioReportsPerProject}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.ratioReportsPerUser"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioReportsPerUser}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.ratioLegitReports"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioLegitReports}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.ratioBannedUsers"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioBannedUsers}"/></td>
+		</tr>
+	</table>
 
 </security:authorize>

@@ -13,6 +13,7 @@ import services.AwardService;
 import services.CorporationService;
 import services.ProjectCommentService;
 import services.ProjectService;
+import services.ReportService;
 import services.SponsorshipService;
 import services.UserService;
 import controllers.AbstractController;
@@ -43,6 +44,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 	@Autowired
 	private CorporationService		corporationService;
+
+	@Autowired
+	private ReportService			reportService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -142,6 +146,36 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Collection<Corporation> findAllCorporationWith10PercentMoreSponsorshipsThanAvg = this.corporationService.findAllWith10PercentMoreSponsorshipsThanAvg();
 		result.addObject("findAllCorporationWith10PercentMoreSponsorshipsThanAvg", findAllCorporationWith10PercentMoreSponsorshipsThanAvg);
+
+		// LEVEL A:
+
+		// Req 33.3.1: The average and standard deviation of complaints per project.
+
+		final Double avgReportsPerProject = this.reportService.avgReportsPerProject();
+		result.addObject("avgReportsPerProject", avgReportsPerProject);
+
+		final Double stdReportsPerProject = this.reportService.stdReportsPerProject();
+		result.addObject("stdReportsPerProject", stdReportsPerProject);
+
+		// Req 33.3.2: The ratio of complaints per project.
+
+		final Double ratioReportsPerProject = this.reportService.ratioReportsPerProject();
+		result.addObject("ratioReportsPerProject", ratioReportsPerProject);
+
+		// Req 33.3.3: The ratio of complaints per user.
+
+		final Double ratioReportsPerUser = this.reportService.ratioReportsPerUser();
+		result.addObject("ratioReportsPerUser", ratioReportsPerUser);
+
+		// Req 33.3.4: The ratio of legit complaints.
+
+		final Double ratioLegitReports = this.reportService.ratioLegitReports();
+		result.addObject("ratioLegitReports", ratioLegitReports);
+
+		// Req 33.3.6: The ratio of banned users.
+
+		final Double ratioBannedUsers = this.userService.ratioBannedUsers();
+		result.addObject("ratioBannedUsers", ratioBannedUsers);
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 		return result;

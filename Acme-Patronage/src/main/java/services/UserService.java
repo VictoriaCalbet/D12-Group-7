@@ -163,4 +163,10 @@ public class UserService {
 	public Collection<User> findAllWith10PercentMorePatronagesThanAvg() {
 		return this.userRepository.findAllWith10PercentMorePatronagesThanAvg();
 	}
+
+	// Req 33.3.6: The ratio of banned users.
+
+	public Double ratioBannedUsers() {
+		return this.userRepository.ratioBannedUsers();
+	}
 }
