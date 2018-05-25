@@ -71,9 +71,9 @@ public class AwardUserController extends AbstractController {
 		Assert.notNull(project);
 
 		if (!project.getCreator().equals(user)) {      // Si user no es el creador del proyecto...
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
-		} else
+			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+		} else if (!project.getIsCancelled())
 			canCreate = true;
 
 		requestURI = "award/user/list.do";
@@ -112,6 +112,7 @@ public class AwardUserController extends AbstractController {
 		Assert.notNull(user);
 		Assert.notNull(project);
 		Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 
 		awardForm = this.awardFormService.createFromCreate(projectId);
 		result = this.createEditModelAndView(awardForm);
@@ -138,8 +139,8 @@ public class AwardUserController extends AbstractController {
 		Assert.notNull(award);
 
 		if (!project.getCreator().equals(user)) {      // Si user no es el creador del proyecto...
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
+			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 		}
 
 		cancelURI = "award/user/list.do?projectId=" + award.getProject().getId();
@@ -166,8 +167,8 @@ public class AwardUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 
 		Assert.isTrue(award.getProject().getCreator().equals(user));
-		Assert.isTrue(award.getProject().getIsDraft());
-		Assert.isTrue(!award.getProject().getIsCancelled());
+		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
+		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 
 		awardForm = this.awardFormService.createFromEdit(awardId);
 		result = this.createEditModelAndView(awardForm);
@@ -211,7 +212,8 @@ public class AwardUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 
 		try {
-			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+			Assert.isTrue(award.getProject().getCreator().equals(user));
+			Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
 			this.awardService.delete(award);

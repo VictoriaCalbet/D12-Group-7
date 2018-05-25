@@ -69,12 +69,12 @@ public class AwardFormService {
 		result.setName(award.getName());
 		result.setDescription(award.getDescription());
 		result.setMoneyGoal(award.getMoneyGoal());
+		result.setMinimumPatronageAmount(award.getProject().getMinimumPatronageAmount());
 		result.setUserId(award.getProject().getCreator().getId());
 		result.setProjectId(award.getProject().getId());
 
 		return result;
 	}
-
 	// Reconstrucción de objetos (Reconstruct) --------------------------------
 
 	public Award saveFromCreate(final AwardForm awardForm) {

@@ -62,8 +62,8 @@ public class AwardController extends AbstractController {
 
 			Assert.notNull(project);
 
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
+			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 
 			requestURI = "award/list.do";
 			displayURI = "award/display.do?awardId=";
@@ -102,8 +102,8 @@ public class AwardController extends AbstractController {
 			project = award.getProject();
 			cancelURI = "award/list.do?projectId=" + award.getProject().getId();
 
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
+			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 
 			result = new ModelAndView("award/display");
 			result.addObject("award", award);
