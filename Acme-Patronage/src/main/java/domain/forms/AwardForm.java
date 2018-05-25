@@ -9,7 +9,8 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 public class AwardForm {
 
-	// Attributes
+	// Attributes -------------------------------------------------------------
+
 	private int		id;
 	private String	name;
 	private String	description;
