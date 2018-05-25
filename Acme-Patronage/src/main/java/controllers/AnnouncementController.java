@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.AnnouncementService;
 import services.ProjectService;
 import domain.Actor;
 import domain.Announcement;
@@ -25,13 +24,10 @@ public class AnnouncementController {
 	// Services -------------------------------------------------------------
 
 	@Autowired
-	private AnnouncementService	announcementService;
+	private ProjectService	projectService;
 
 	@Autowired
-	private ProjectService		projectService;
-
-	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 
 	// Constructors ---------------------------------------------------------

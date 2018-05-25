@@ -13,7 +13,6 @@ import org.springframework.util.Assert;
 import repositories.AnnouncementRepository;
 import domain.Announcement;
 import domain.AnnouncementComment;
-import domain.Project;
 import domain.User;
 
 @Service
@@ -30,9 +29,6 @@ public class AnnouncementService {
 	@Autowired
 	private UserService				userService;
 
-	@Autowired
-	private ProjectService			projectService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -44,10 +40,8 @@ public class AnnouncementService {
 
 	public Announcement create(final int projectId) {
 		Announcement result = null;
-		Project project = null;
 
 		result = new Announcement();
-		project = this.projectService.findOne(projectId);
 		result.setAnnouncementComments(new ArrayList<AnnouncementComment>());
 		result.setCreationMoment(new Date());
 
@@ -82,7 +76,6 @@ public class AnnouncementService {
 		Assert.notNull(announcement, "message.error.announcement.null");
 		Assert.notNull(user, "message.error.announcement.principal.null");
 		Assert.isTrue(announcement.getProject().getCreator().equals(user), "message.error.announcement.user.owner");
-		Assert.isTrue(!announcement.getProject().getIsCancelled(), "message.error.announcement.project.isCancelled");
 
 		announcement.setCreationMoment(new Date());
 

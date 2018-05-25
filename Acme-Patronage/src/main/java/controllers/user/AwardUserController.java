@@ -102,6 +102,15 @@ public class AwardUserController {
 	public ModelAndView create(@RequestParam final int projectId) {
 		ModelAndView result = null;
 		AwardForm awardForm = null;
+		User user = null;
+		Project project = null;
+
+		user = this.userService.findByPrincipal();
+		project = this.projectService.findOne(projectId);
+
+		Assert.notNull(user);
+		Assert.notNull(project);
+		Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
 
 		awardForm = this.awardFormService.createFromCreate(projectId);
 		result = this.createEditModelAndView(awardForm);
@@ -223,9 +232,7 @@ public class AwardUserController {
 
 	protected ModelAndView createEditModelAndView(final AwardForm awardForm) {
 		ModelAndView result = null;
-
 		result = this.createEditModelAndView(awardForm, null);
-
 		return result;
 	}
 

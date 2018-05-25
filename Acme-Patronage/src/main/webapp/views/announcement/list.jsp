@@ -18,6 +18,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<security:authentication property="principal" var="loggedactor"/>
 
 <display:table name="announcements" id="row" requestURI="${requestURI}" pagesize="5">
 
@@ -36,10 +37,8 @@
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-	<jstl:if test="${canCreate eq true}">
-		<spring:message code="announcement.create" var="announcementCreateLink"/>
-		<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
-		<br/>
-		<br/>
-	</jstl:if>
+	<spring:message code="announcement.create" var="announcementCreateLink"/>
+	<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
+	<br/>
+	<br/>
 </security:authorize>
