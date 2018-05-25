@@ -51,7 +51,7 @@ public class AwardUserController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int projectId) {
+	public ModelAndView list(@RequestParam final int projectId, @RequestParam(required = false) final String message) {
 		ModelAndView result = null;
 		Collection<Award> awards = null;
 		Project project = null;
@@ -59,9 +59,9 @@ public class AwardUserController {
 		String requestURI = null;
 		String displayURI = null;
 		String createURI = null;
+		String editURI = null;
 		String deleteURI = null;
 		boolean canCreate = false;
-		boolean canDelete = false;
 
 		project = this.projectService.findOne(projectId);
 		user = this.userService.findByPrincipal();
@@ -69,16 +69,16 @@ public class AwardUserController {
 		Assert.notNull(user);
 		Assert.notNull(project);
 
-		if (project.getCreator().equals(user)) {
+		if (!project.getCreator().equals(user)) {      // Si user no es el creador del proyecto...
 			Assert.isTrue(!project.getIsDraft());
 			Assert.isTrue(!project.getIsCancelled());
+		} else
 			canCreate = true;
-			canDelete = true;
-		}
 
 		requestURI = "award/user/list.do";
 		displayURI = "award/user/display.do?awardId=";
 		createURI = "award/user/create.do?projectId=" + projectId;
+		editURI = "award/user/edit.do?awardId=";
 		deleteURI = "award/user/delete.do?awardId=";
 
 		awards = project.getAwards();
@@ -88,9 +88,10 @@ public class AwardUserController {
 		result.addObject("requestURI", requestURI);
 		result.addObject("displayURI", displayURI);
 		result.addObject("createURI", createURI);
+		result.addObject("editURI", editURI);
 		result.addObject("deleteURI", deleteURI);
 		result.addObject("canCreate", canCreate);
-		result.addObject("canDelete", canDelete);
+		result.addObject("message", message);
 
 		return result;
 	}
@@ -114,22 +115,21 @@ public class AwardUserController {
 	public ModelAndView display(@RequestParam final int awardId) {
 		ModelAndView result = null;
 		Award award = null;
+		Project project = null;
 		User user = null;
 		String cancelURI = null;
 		String editURI = null;
-		boolean canEdit = false;
 
 		user = this.userService.findByPrincipal();
 		award = this.awardService.findOne(awardId);
+		project = award.getProject();
 
 		Assert.notNull(user);
 		Assert.notNull(award);
 
-		if (award.getProject().getCreator().equals(user)) {
-			Assert.isTrue(!award.getProject().getIsDraft());
-			Assert.isTrue(!award.getProject().getIsCancelled());
-			if (award.getProject().getIsDraft())
-				canEdit = true;
+		if (!project.getCreator().equals(user)) {      // Si user no es el creador del proyecto...
+			Assert.isTrue(!project.getIsDraft());
+			Assert.isTrue(!project.getIsCancelled());
 		}
 
 		cancelURI = "award/user/list.do?projectId=" + award.getProject().getId();
@@ -139,10 +139,10 @@ public class AwardUserController {
 		result.addObject("award", award);
 		result.addObject("cancelURI", cancelURI);
 		result.addObject("editURI", editURI);
-		result.addObject("canEdit", canEdit);
 
 		return result;
 	}
+
 	// Edition    -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -156,7 +156,8 @@ public class AwardUserController {
 		user = this.userService.findByPrincipal();
 
 		Assert.isTrue(award.getProject().getCreator().equals(user));
-		Assert.isTrue(award.getProject().getIsDraft() || !award.getProject().getIsCancelled());
+		Assert.isTrue(award.getProject().getIsDraft());
+		Assert.isTrue(!award.getProject().getIsCancelled());
 
 		awardForm = this.awardFormService.createFromEdit(awardId);
 		result = this.createEditModelAndView(awardForm);
@@ -201,6 +202,7 @@ public class AwardUserController {
 
 		try {
 			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
 			this.awardService.delete(award);
 			result = new ModelAndView("redirect:/award/user/list.do?projectId=" + award.getProject().getId());
@@ -217,7 +219,6 @@ public class AwardUserController {
 
 		return result;
 	}
-
 	// Other actions --------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final AwardForm awardForm) {
@@ -230,7 +231,6 @@ public class AwardUserController {
 
 	protected ModelAndView createEditModelAndView(final AwardForm awardForm, final String message) {
 		ModelAndView result = null;
-		Collection<Project> availableProjects = null;
 		String actionURI = null;
 		String cancelURI = null;
 		User user = null;
@@ -238,8 +238,6 @@ public class AwardUserController {
 		actionURI = "award/user/edit.do";
 
 		user = this.userService.findByPrincipal();
-
-		availableProjects = this.projectService.findProjects(user.getId(), false, false);
 
 		if (awardForm.getId() == 0) {
 			result = new ModelAndView("award/create");
@@ -253,7 +251,6 @@ public class AwardUserController {
 		result.addObject("awardForm", awardForm);
 		result.addObject("actionURI", actionURI);
 		result.addObject("cancelURI", cancelURI);
-		result.addObject("availableProjects", availableProjects);
 		result.addObject("message", message);
 
 		return result;
