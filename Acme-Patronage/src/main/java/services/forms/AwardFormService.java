@@ -65,6 +65,7 @@ public class AwardFormService {
 		result.setId(award.getId());
 		result.setName(award.getName());
 		result.setDescription(award.getDescription());
+		result.setMoneyGoal(award.getMoneyGoal());
 		result.setUserId(award.getProject().getCreator().getId());
 		result.setProjectId(award.getProject().getId());
 
@@ -86,6 +87,7 @@ public class AwardFormService {
 		award.setId(awardForm.getId());
 		award.setName(awardForm.getName());
 		award.setDescription(awardForm.getDescription());
+		award.setMoneyGoal(awardForm.getMoneyGoal());
 		award.setProject(project);
 
 		result = this.awardService.saveFromCreate(award);
@@ -106,6 +108,7 @@ public class AwardFormService {
 		award.setId(awardForm.getId());
 		award.setName(awardForm.getName());
 		award.setDescription(awardForm.getDescription());
+		award.setMoneyGoal(awardForm.getMoneyGoal());
 		award.setProject(project);
 
 		result = this.awardService.saveFromEdit(award);
