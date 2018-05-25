@@ -2,7 +2,9 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.AdministratorService;
 import services.ProjectService;
 import services.UserService;
 import services.forms.ActorFormService;
@@ -22,18 +26,24 @@ import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 
 	@Autowired
-	private UserService			userService;
+	private UserService				userService;
 
 	@Autowired
-	private ProjectService		projectService;
+	private ProjectService			projectService;
 
 	@Autowired
-	private ActorFormService	actorFormService;
+	private ActorFormService		actorFormService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Constructor ------------------------------------------------------------
@@ -46,11 +56,20 @@ public class UserController {
 	public ModelAndView list() {
 		final ModelAndView result;
 		Collection<User> users = new HashSet<User>();
+		Map<Integer, Boolean> hasLegitReports = new HashMap<>();
 
 		users = this.userService.findAll();
 
+		try {
+			this.administratorService.findByPrincipal();
+			hasLegitReports = this.actorService.hasLegitReports(users);
+		} catch (final Exception e) {
+			// TODO: handle exception
+		}
+
 		result = new ModelAndView("user/list");
 		result.addObject("users", users);
+		result.addObject("hasLegitReports", hasLegitReports);
 		result.addObject("requestURI", "user/list.do");
 
 		return result;
@@ -109,6 +128,7 @@ public class UserController {
 
 		return result;
 	}
+
 	// Ancillary methods
 
 	public ModelAndView createEditModelAndView(final ActorForm actorForm) {

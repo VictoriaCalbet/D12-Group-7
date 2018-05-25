@@ -12,6 +12,8 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +47,7 @@ public class ProjectController extends AbstractController {
 
 	@Autowired
 	private UserService			userService;
+
 	@Autowired
 	private CategoryService		categoryService;
 
@@ -72,9 +75,10 @@ public class ProjectController extends AbstractController {
 			if (this.actorService.checkAuthority(a, "USER"))
 				principal = this.userService.findByPrincipal();
 		}
-		final Collection<Double> totalAmounts = new ArrayList<Double>();
-		for (final Project p : projects)
-			totalAmounts.add(this.patronageService.findTotalAmount(p.getId()));
+
+		Map<Integer, Double> totalAmounts = new HashMap<>();
+		totalAmounts = this.patronageService.findTotalAmount(projects);
+
 		result = new ModelAndView("project/list");
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("principal", principal);
@@ -93,8 +97,6 @@ public class ProjectController extends AbstractController {
 		Collection<Project> projects = new ArrayList<Project>();
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDateOrdered();
-		else
-			projects = this.projectService.findProjectByKeyWordOrdered(word);
 
 		User principal = null;
 		if (this.actorService.checkLogin()) {
@@ -102,9 +104,10 @@ public class ProjectController extends AbstractController {
 			if (this.actorService.checkAuthority(a, "USER"))
 				principal = this.userService.findByPrincipal();
 		}
-		final Collection<Double> totalAmounts = new ArrayList<Double>();
-		for (final Project p : projects)
-			totalAmounts.add(this.patronageService.findTotalAmount(p.getId()));
+
+		Map<Integer, Double> totalAmounts = new HashMap<>();
+		totalAmounts = this.patronageService.findTotalAmount(projects);
+
 		result = new ModelAndView("project/list");
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("principal", principal);
@@ -123,8 +126,6 @@ public class ProjectController extends AbstractController {
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectByCategory(c.getId());
-		else
-			projects = this.projectService.findProjectByKeyWordCategory(word, c.getId());
 
 		User principal = null;
 		if (this.actorService.checkLogin()) {
@@ -132,9 +133,9 @@ public class ProjectController extends AbstractController {
 			if (this.actorService.checkAuthority(a, "USER"))
 				principal = this.userService.findByPrincipal();
 		}
-		final Collection<Double> totalAmounts = new ArrayList<Double>();
-		for (final Project p : projects)
-			totalAmounts.add(this.patronageService.findTotalAmount(p.getId()));
+
+		Map<Integer, Double> totalAmounts = new HashMap<>();
+		totalAmounts = this.patronageService.findTotalAmount(projects);
 
 		result = new ModelAndView("project/list");
 		result.addObject("projects", projects);

@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.forms.ActorFormService;
+import controllers.AbstractController;
 import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/user/user")
-public class UserUserController {
+public class UserUserController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

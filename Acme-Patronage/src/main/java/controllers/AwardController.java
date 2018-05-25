@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.AwardService;
 import services.ProjectService;
+import domain.Actor;
 import domain.Award;
 import domain.Project;
 
@@ -28,6 +30,9 @@ public class AwardController extends AbstractController {
 	@Autowired
 	private ProjectService	projectService;
 
+	@Autowired
+	private ActorService	actorService;
+
 
 	// Constructors ---------------------------------------------------------
 
@@ -42,28 +47,38 @@ public class AwardController extends AbstractController {
 		ModelAndView result = null;
 		Collection<Award> awards = null;
 		Project project = null;
+		Actor actor = null;
 		String requestURI = null;
 		String displayURI = null;
 
-		project = this.projectService.findOne(projectId);
+		if (this.actorService.checkLogin()) {
+			actor = this.actorService.findByPrincipal();
 
-		Assert.notNull(project);
+			if (this.actorService.checkAuthority(actor, "USER"))
+				result = new ModelAndView("redirect:/award/user/list.do?projectId=" + projectId);
 
-		Assert.isTrue(!project.getIsDraft());
-		Assert.isTrue(!project.getIsCancelled());
+		} else {
+			project = this.projectService.findOne(projectId);
 
-		requestURI = "award/list.do";
-		displayURI = "award/display.do?awardId=";
+			Assert.notNull(project);
 
-		awards = project.getAwards();
+			Assert.isTrue(!project.getIsDraft());
+			Assert.isTrue(!project.getIsCancelled());
 
-		result = new ModelAndView("award/list");
-		result.addObject("awards", awards);
-		result.addObject("requestURI", requestURI);
-		result.addObject("displayURI", displayURI);
+			requestURI = "award/list.do";
+			displayURI = "award/display.do?awardId=";
+
+			awards = project.getAwards();
+
+			result = new ModelAndView("award/list");
+			result.addObject("awards", awards);
+			result.addObject("requestURI", requestURI);
+			result.addObject("displayURI", displayURI);
+		}
 
 		return result;
 	}
+
 	// Display --------------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -71,19 +86,29 @@ public class AwardController extends AbstractController {
 		ModelAndView result = null;
 		Award award = null;
 		Project project = null;
+		Actor actor = null;
 		String cancelURI = null;
 
 		award = this.awardService.findOne(awardId);
-		project = award.getProject();
-		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
-
 		Assert.notNull(award);
-		Assert.isTrue(!project.getIsDraft());
-		Assert.isTrue(!project.getIsCancelled());
 
-		result = new ModelAndView("award/display");
-		result.addObject("award", award);
-		result.addObject("cancelURI", cancelURI);
+		if (this.actorService.checkLogin()) {
+			actor = this.actorService.findByPrincipal();
+
+			if (this.actorService.checkAuthority(actor, "USER"))
+				result = new ModelAndView("redirect:/award/user/display.do?awardId=" + awardId);
+
+		} else {
+			project = award.getProject();
+			cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+
+			Assert.isTrue(!project.getIsDraft());
+			Assert.isTrue(!project.getIsCancelled());
+
+			result = new ModelAndView("award/display");
+			result.addObject("award", award);
+			result.addObject("cancelURI", cancelURI);
+		}
 
 		return result;
 	}

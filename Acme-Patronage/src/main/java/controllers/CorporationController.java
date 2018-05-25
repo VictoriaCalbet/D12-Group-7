@@ -20,7 +20,7 @@ import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/corporation")
-public class CorporationController {
+public class CorporationController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

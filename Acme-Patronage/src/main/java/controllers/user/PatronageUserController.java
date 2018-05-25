@@ -104,11 +104,17 @@ public class PatronageUserController extends AbstractController {
 
 		Assert.notNull(projectId);
 
-		final ModelAndView result;
+		ModelAndView result;
 		final PatronageForm patronageForm;
-		patronageForm = this.patronageFormService.create(projectId);
-
-		result = this.createEditModelAndView(patronageForm);
+		try {
+			patronageForm = this.patronageFormService.create(projectId);
+			result = this.createEditModelAndView(patronageForm);
+		} catch (final Throwable oops) {
+			String messageError = "patronage.commit.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = this.listModelAndView("redirect:/project/user/list.do", messageError);
+		}
 
 		return result;
 	}
@@ -127,7 +133,7 @@ public class PatronageUserController extends AbstractController {
 				else
 					this.patronageFormService.saveFromCreate(patronageForm);
 
-				result = new ModelAndView("redirect:/project/user/list.do");
+				result = new ModelAndView("redirect:/patronage/user/list.do");
 
 			} catch (final Throwable oops) {
 				String messageError = "patronage.commit.error";
@@ -139,23 +145,7 @@ public class PatronageUserController extends AbstractController {
 
 		return result;
 	}
-	//Cancel
-	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
-	public ModelAndView cancel(@RequestParam final int patronageId) {
-		ModelAndView result;
-		final Patronage patronage = this.patronageService.findOne(patronageId);
-		try {
-			this.patronageService.cancelPatronage(patronage);
-			result = new ModelAndView("redirect:/patronage/user/list.do");
-		} catch (final Throwable oops) {
-			String messageError = "patronage.cancel.error";
-			if (oops.getMessage().contains("message.error"))
-				messageError = oops.getMessage();
-			result = new ModelAndView("redirect:/patronage/user/list.do");
-			result.addObject("messageError", messageError);
-		}
-		return result;
-	}
+
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final PatronageForm patronageForm) {
@@ -174,6 +164,24 @@ public class PatronageUserController extends AbstractController {
 		result.addObject("patronageForm", patronageForm);
 		result.addObject("message", message);
 		result.addObject("requestURI", "patronage/user/edit.do");
+		return result;
+	}
+
+	protected ModelAndView listModelAndView(final String url) {
+		ModelAndView result;
+
+		result = this.listModelAndView(url, null);
+
+		return result;
+	}
+
+	protected ModelAndView listModelAndView(final String url, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView(url);
+
+		result.addObject("message", message);
+		result.addObject("requestURI", url);
 		return result;
 	}
 }

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import org.springframework.util.Assert;
 
 import repositories.AnnouncementRepository;
 import domain.Announcement;
+import domain.AnnouncementComment;
+import domain.User;
 
 @Service
 @Transactional
@@ -20,8 +24,11 @@ public class AnnouncementService {
 	@Autowired
 	private AnnouncementRepository	announcementRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserService				userService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -31,9 +38,12 @@ public class AnnouncementService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Announcement - create
-	public Announcement create() {
-		final Announcement result = null;
+	public Announcement create(final int projectId) {
+		Announcement result = null;
+
+		result = new Announcement();
+		result.setAnnouncementComments(new ArrayList<AnnouncementComment>());
+		result.setCreationMoment(new Date());
 
 		return result;
 	}
@@ -57,16 +67,23 @@ public class AnnouncementService {
 		return result;
 	}
 
-	// TODO: AnnouncementComment - saveFromCreate
-	public Announcement saveFromCreate() {
-		final Announcement result = null;
+	public Announcement saveFromCreate(final Announcement announcement) {
+		Announcement result = null;
+		User user = null;
 
-		return result;
-	}
+		user = this.userService.findByPrincipal();
 
-	// TODO: AnnouncementComment - saveFromEdit
-	public Announcement saveFromEdit() {
-		final Announcement result = null;
+		Assert.notNull(announcement, "message.error.announcement.null");
+		Assert.notNull(user, "message.error.announcement.principal.null");
+		Assert.isTrue(announcement.getProject().getCreator().equals(user), "message.error.announcement.user.owner");
+
+		announcement.setCreationMoment(new Date());
+
+		// Paso 1: realizo la entidad del servicio Announcement
+
+		result = this.save(announcement);
+
+		// Paso 2: persisto el resto de relaciones a las que el objeto Announcement esta relacionada.
 
 		return result;
 	}

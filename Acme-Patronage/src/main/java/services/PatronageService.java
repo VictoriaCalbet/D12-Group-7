@@ -4,6 +4,8 @@ package services;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.util.Assert;
 import repositories.PatronageRepository;
 import domain.CreditCard;
 import domain.Patronage;
+import domain.Project;
 import domain.User;
 
 @Service
@@ -48,9 +51,13 @@ public class PatronageService {
 		final Patronage result = new Patronage();
 		result.setCreationDate(new Date(System.currentTimeMillis() - 1));
 		result.setIsCancelled(false);
-		result.setProject(this.projectService.findOne(projectId));
+		final Project project = this.projectService.findOne(projectId);
+		result.setProject(project);
 		final User principal = this.userService.findByPrincipal();
 		result.setUser(principal);
+		Assert.isTrue(project.getIsCancelled() == false, "message.error.patronage.cancelled");
+		Assert.isTrue(project.getIsDraft() == false, "message.error.patronage.project.draft");
+		Assert.isTrue(project.getCreator() != principal, "message.error.patronage.create.userCreator");
 		return result;
 	}
 
@@ -78,18 +85,26 @@ public class PatronageService {
 		Assert.isTrue(this.checkCreditCard(patronage.getCreditCard()), "message.error.patronage.invalidCreditCard");
 
 		Patronage result;
-
+		final Project project = patronage.getProject();
 		//Check that credit card expires after the project due date
 		final Calendar cal = Calendar.getInstance();
 		cal.setTime(patronage.getProject().getDueDate());
 
 		if ((patronage.getCreditCard().getExpirationYear()) == (cal.get(Calendar.YEAR)))
-			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1));
-		Assert.isTrue((patronage.getCreditCard().getExpirationYear()) >= (cal.get(Calendar.YEAR)));
+			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1), "message.error.patronage.dates");
+		Assert.isTrue(project.getIsCancelled() == false, "message.error.patronage.cancelled");
+		Assert.isTrue(project.getIsDraft() == false, "message.error.patronage.project.draft");
+		Assert.isTrue((patronage.getCreditCard().getExpirationYear()) >= (cal.get(Calendar.YEAR)), "message.error.patronage.dates");
 		final User principal = this.userService.findByPrincipal();
-		Assert.isTrue(!(principal == patronage.getProject().getCreator()), "message.error.patronage.create.user");
-		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.create.user");
-
+		Assert.isTrue(!(principal == project.getCreator()), "message.error.patronage.create.userCreator");
+		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.create.onlyUsers");
+		Double totalAcumulation = 0.0;
+		totalAcumulation = this.patronageRepository.findTotalAmount(project.getId());
+		if (totalAcumulation == null)
+			totalAcumulation = 0.0;
+		totalAcumulation = totalAcumulation + patronage.getAmount();
+		Assert.isTrue(totalAcumulation < project.getEconomicGoal(), "message.error.patronage.reachedAmount");
+		Assert.isTrue(patronage.getAmount() > project.getMinimumPatronageAmount(), "message.error.patronage.minimumAmount");
 		result = this.save(patronage);
 
 		return result;
@@ -109,18 +124,6 @@ public class PatronageService {
 		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.principal.owner ");
 		result = this.save(patronage);
 		return result;
-	}
-
-	public void cancelPatronage(final Patronage patronage) {
-		Assert.notNull(patronage, "message.error.patronage.null");
-		final User principal = this.userService.findByPrincipal();
-
-		Assert.isTrue(principal == patronage.getUser(), "message.error.cancel.patronage.notOwner");
-		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.principal.owner ");
-		Assert.isTrue(principal.getPatronages().contains(patronage), "message.error.cancel.patronage.notOwner");
-		patronage.setIsCancelled(true);
-		this.save(patronage);
-
 	}
 
 	public void flush() {
@@ -173,5 +176,18 @@ public class PatronageService {
 
 	public Double findTotalAmount(final int projectId) {
 		return this.patronageRepository.findTotalAmount(projectId);
+	}
+
+	public Map<Integer, Double> findTotalAmount(final Collection<Project> projects) {
+		Assert.notNull(projects);
+
+		final Map<Integer, Double> result = new HashMap<>();
+
+		for (final Project p : projects) {
+			final Double totalAmount = this.findTotalAmount(p.getId());
+			result.put(p.getId(), totalAmount);
+		}
+
+		return result;
 	}
 }

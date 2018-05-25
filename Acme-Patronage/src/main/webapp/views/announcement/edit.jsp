@@ -17,3 +17,17 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<form:form action="${actionURI}" modelAttribute="announcementForm">
+	<form:hidden path="id"/>
+	<form:hidden path="userId"/>
+	<form:hidden path="projectId"/>
+		
+	<acme:textbox code="announcement.title" path="title"/>
+	<acme:textbox code="announcement.description" path="description"/>
+	
+	<br/>
+	<acme:submit name="save" code="announcement.save"/> &nbsp;
+	<acme:cancel url="${cancelURI}" code="announcement.cancel"/>
+	<br/>
+	</form:form>

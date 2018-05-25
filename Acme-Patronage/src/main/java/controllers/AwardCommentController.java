@@ -1,3 +1,4 @@
+
 package controllers;
 
 import java.util.Collection;
@@ -14,44 +15,44 @@ import services.AwardService;
 import services.UserService;
 import services.forms.CommentFormService;
 import domain.AwardComment;
-import domain.User;
 
 @Controller
 @RequestMapping("/awardComment")
-public class AwardCommentController {
+public class AwardCommentController extends AbstractController {
 
 	@Autowired
-	private AwardCommentService awardCommentService;
-	
+	private AwardCommentService	awardCommentService;
+
 	@Autowired
 	private UserService			userService;
-	
+
 	@Autowired
-	private AwardService			awardService;
-	
+	private AwardService		awardService;
+
 	@Autowired
-	private CommentFormService			commentFormService;
-	
-	public AwardCommentController(){
-		
+	private CommentFormService	commentFormService;
+
+
+	public AwardCommentController() {
+
 		super();
-		
+
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required=true) int awardId) {
+	public ModelAndView list(@RequestParam(required = true) final int awardId) {
 		ModelAndView result;
-		
+
 		Collection<AwardComment> awardComments;
 
 		awardComments = this.awardCommentService.listAllAwardComments(awardId);
-		
+
 		result = new ModelAndView("awardComment/list");
 		result.addObject("awardComments", awardComments);
 		result.addObject("requestURI", "awardComments/list.do");
-		
+
 		return result;
-		
+
 	}
-	
+
 }

@@ -82,7 +82,6 @@ public class AwardService {
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
-		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 
 		// Paso 1: realizo la entidad del servicio Award
 
@@ -104,9 +103,8 @@ public class AwardService {
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
-		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
-
+		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 		// Paso 1: realizo la entidad del servicio Award
 
 		result = this.save(award);
@@ -136,4 +134,26 @@ public class AwardService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	// Dashboard
+
+	// Req 12.2.2: The average and standard deviation of awards per project.
+
+	public Double avgAwardsPerProject() {
+		return this.awardRepository.avgAwardsPerProject();
+	}
+
+	public Double stdAwardsPerProject() {
+		return this.awardRepository.stdAwardsPerProject();
+	}
+
+	// Req 12.2.3: The average and standard deviation of awards per user.
+
+	public Double avgAwardsPerUser() {
+		return this.awardRepository.avgAwardsPerUser();
+	}
+
+	public Double stdAwardsPerUser() {
+		return this.awardRepository.stdAwardsPerUser();
+	}
 }

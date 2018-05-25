@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.forms.ActorFormService;
+import controllers.AbstractController;
 import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/moderator/administrator")
-public class ModeratorAdministratorController {
+public class ModeratorAdministratorController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

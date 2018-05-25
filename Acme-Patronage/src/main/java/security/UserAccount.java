@@ -50,6 +50,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 
 	private String					username;
 	private String					password;
+	private boolean					isEnabled;
 	private Collection<Authority>	authorities;
 
 
@@ -122,7 +123,19 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.isEnabled;
+	}
+
+	public void setEnabled(final boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	public boolean getIsEnabled() {
+		return this.isEnabled;
+	}
+
+	public void setIsEnabled(final boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
 }

@@ -1,20 +1,16 @@
 
 package domain.forms;
 
-import javax.validation.constraints.DecimalMin;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-public class AwardForm {
+public class AnnouncementForm {
 
-	// Attributes -------------------------------------------------------------
-
+	// Attributes
 	private int		id;
-	private String	name;
+	private String	title;
 	private String	description;
-	private double	moneyGoal;
 	private int		projectId;
 	private int		userId;
 
@@ -29,12 +25,12 @@ public class AwardForm {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getName() {
-		return this.name;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 
 	@NotBlank
@@ -45,15 +41,6 @@ public class AwardForm {
 
 	public void setDescription(final String description) {
 		this.description = description;
-	}
-
-	@DecimalMin(value = "0")
-	public double getMoneyGoal() {
-		return this.moneyGoal;
-	}
-
-	public void setMoneyGoal(final double moneyGoal) {
-		this.moneyGoal = moneyGoal;
 	}
 
 	public int getProjectId() {

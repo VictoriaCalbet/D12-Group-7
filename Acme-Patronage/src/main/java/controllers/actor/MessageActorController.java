@@ -16,13 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.MessageService;
 import services.forms.MessageFormService;
+import controllers.AbstractController;
 import domain.Actor;
 import domain.Message;
 import domain.forms.MessageForm;
 
 @Controller
 @RequestMapping("/message/actor")
-public class MessageActorController {
+public class MessageActorController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

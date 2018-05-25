@@ -17,3 +17,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<security:authentication property="principal" var="loggedactor"/>
+
+<display:table name="announcements" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="announcement.title" var="announcementTitleHeader"/>
+	<display:column property="title" title="${announcementTitleHeader}"/>
+	
+	<spring:message code="announcement.description" var="announcementDescriptionHeader"/>
+	<display:column property="description" title="${announcementDescriptionHeader}"/>
+	
+	<spring:message code="announcement.creationMoment" var="announcementCreationMomentHeader" />
+	<spring:message code="announcement.creationMoment.pattern" var="datePattern"/>
+	<display:column title="${announcementCreationMomentHeader}" style="${style}">
+		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+
+</display:table>
+
+<security:authorize access="hasRole('USER')">
+	<spring:message code="announcement.create" var="announcementCreateLink"/>
+	<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
+	<br/>
+	<br/>
+</security:authorize>

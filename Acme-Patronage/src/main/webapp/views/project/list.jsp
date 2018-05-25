@@ -86,6 +86,32 @@
 		</security:authorize>
 
 	</display:column>
+
+	<spring:message code="project.announcements" var="announcementsHeader" />	
+	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
+	<display:column title="${announcementsHeader}" style="${style}">
+		<security:authorize access="hasRole('USER')">
+			<a href="announcement/user/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
+		</security:authorize>
+		<security:authorize access="hasRole('ADMIN')">
+			<a href="announcement/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
+		</security:authorize>
+		<security:authorize access="isAnonymous()">
+			<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
+		</security:authorize>
+	</display:column>
+	
+	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
+	<display:column title="${totalAmountsHeader}" style="${style}">
+		<jstl:choose>
+			<jstl:when test="${totalAmounts[row.id] == null}">
+				<fmt:formatNumber value = "0.0" currencySymbol="&euro;" pattern = "${patternCurrency}" type = "currency"  minFractionDigits = "2"/>
+			</jstl:when>
+			<jstl:when test="${totalAmounts[row.id] != null}">
+				<fmt:formatNumber value = "${totalAmounts[row.id]}" currencySymbol="&euro;" pattern = "${patternCurrency}" type = "currency"  minFractionDigits = "2"/>
+			</jstl:when>
+		</jstl:choose>
+	</display:column>
 	
 	<spring:message code="project.economicGoal" var="economicGoalHeader" />
 	<display:column title="${economicGoalHeader}" style="${style}">
@@ -113,7 +139,7 @@
 	<security:authorize access="hasRole('USER')">
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
-		<display:column title="${deleteHeader}">
+		<display:column title="${deleteHeader}" style="${style}">
 		<jstl:choose>
 			<jstl:when test="${(row.isCancelled eq false) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username }">
 				<jstl:choose>
@@ -140,7 +166,7 @@
 		</display:column>
 		
 		<spring:message code="project.edit" var="editHeader" />	
-		<display:column title="${editHeader}">
+		<display:column title="${editHeader}" style="${style}">
 			<jstl:choose>
 			
 				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
@@ -160,43 +186,40 @@
 	
 	<security:authorize access="hasRole('ADMIN')">
 	
-	<spring:message code="project.delete" var="deleteHeader" />	
-		<display:column title="${deleteHeader}">	
-			<a href="project/administrator/delete.do?projectId=${row.id}">
-			 	<spring:message code="project.deleteButton" />
-			</a>
-		</display:column>
-	
-	</security:authorize>
-	
-	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
-	<display:column title="${totalAmountsHeader}" >
-	
-	<jstl:forEach var="amount" items="${totalAmounts}" >
-
-   	<jstl:out value="${amount}">
-   		
- 	 </jstl:out>
-
-	</jstl:forEach>
-    
-		
-		
-		
+	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
+		<display:column title="${deleteHeader}" style="${style}">	
+			<jstl:choose>
+				<jstl:when test="${projectReports.contains(row)}">
+					<a href="project/administrator/delete.do?projectId=${row.id}">
+						<spring:message code="project.deleteButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notDeleteAdmin" var="projectNotDeleteAdmin"/>
+						<jstl:out value="${projectNotDeleteAdmin}"/> 
+				</jstl:otherwise>
+			</jstl:choose>	
 	
 	</display:column>
 	
 	
+	</security:authorize>
+	
 	<security:authorize access="hasRole('USER')">
 	
 	<spring:message code="project.patronage" var="patronageHeader" />	
-	<display:column title="${patronageHeader}">	
+	<display:column title="${patronageHeader}" style="${style}">	
 		<jstl:choose>
-		<jstl:when test="${row.creator != principal}">
+		<jstl:when test="${row.creator != principal and row.isCancelled eq false and row.isDraft eq false}">
 			<a href="patronage/user/edit.do?projectId=${row.id}">
 			 	<spring:message code="project.patronageButton" />
 			</a>
 		</jstl:when>
+		<jstl:otherwise>
+
+			<spring:message code= "project.patronage.notPatronizable" var="projectNotPatronizable"/>
+			<jstl:out value="${projectNotPatronizable}"/> 
+		</jstl:otherwise>
 		</jstl:choose>
 	</display:column>
 	

@@ -59,13 +59,13 @@ public class ProjectCommentService {
 
 	// TODO: ProjectComment - saveFromCreate
 	public ProjectComment saveFromCreate(final ProjectComment pC) {
-		
+
 		final ProjectComment result;
 
 		Assert.notNull(pC);
-		
+
 		result = this.projectCommentRepository.save(pC);
-		
+
 		return result;
 	}
 
@@ -75,18 +75,30 @@ public class ProjectCommentService {
 
 	// Other business methods -------------------------------------------------
 
-	public Collection<ProjectComment> listAllProjectComments(int projectId){
-		
-		Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectComments(projectId);
-		
+	public Collection<ProjectComment> listAllProjectComments(final int projectId) {
+
+		final Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectComments(projectId);
+
 		return result;
 	}
-	
-public Collection<ProjectComment> listAllProjectCommentsOfUser(int userId){
-		
-		Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectCommentsOfUser(userId);
-		
+
+	public Collection<ProjectComment> listAllProjectCommentsOfUser(final int userId) {
+
+		final Collection<ProjectComment> result = this.projectCommentRepository.listAllProjectCommentsOfUser(userId);
+
 		return result;
 	}
-	
+
+	// Dashboard --------------------------------------------------------------
+
+	// Req 25.2.3: The average and standard deviation of comments per project.
+
+	public Double avgCommentsPerProject() {
+		return this.projectCommentRepository.avgCommentsPerProject();
+	}
+
+	public Double stdCommentsPerProject() {
+		return this.projectCommentRepository.stdCommentsPerProject();
+	}
+
 }

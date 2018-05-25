@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.forms.ActorFormService;
+import controllers.AbstractController;
 import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/corporation/corporation")
-public class CorporationCorporationController {
+public class CorporationCorporationController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

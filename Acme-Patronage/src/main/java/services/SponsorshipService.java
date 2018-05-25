@@ -111,4 +111,26 @@ public class SponsorshipService {
 		Assert.isTrue(this.isCorporationAunthenticate().getId() == corporationId, "message.error.advertisement.badcorporation");
 	}
 
+	// Dashboard --------------------------------------------------------------
+
+	// Req 25.2.1: The average and standard deviation of sponsorships per corporation.
+
+	public Double avgSponsorshipPerCorporation() {
+		return this.sponsorshipRepository.avgSponsorshipPerCorporation();
+	}
+
+	public Double stdSponsorshipPerCorporation() {
+		return this.sponsorshipRepository.stdSponsorshipPerCorporation();
+	}
+
+	// Req 25.2.2: The average and standard deviation of sponsorships per project.
+
+	public Double avgSponsorshipPerProject() {
+		return this.sponsorshipRepository.avgSponsorshipPerProject();
+	}
+
+	public Double stdSponsorshipPerProject() {
+		return this.sponsorshipRepository.stdSponsorshipPerProject();
+	}
+
 }
