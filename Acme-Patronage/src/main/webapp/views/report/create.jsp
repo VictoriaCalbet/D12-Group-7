@@ -17,3 +17,20 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<form:form action="${requestURI}" modelAttribute="report">
+
+	
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
+	<form:hidden path="user"/>
+	<form:hidden path="reason"/>
+	<form:hidden path="isLegit"/>
+	
+	<acme:select code="report.project" path="project" items="${projects}" itemLabel="title"/><br/>
+	<acme:textarea code="report.complaint" path="complaint"/>	
+	
+	<br/>
+	<input type="submit" name="save" value="<spring:message code="report.save"/>"/>
+	<acme:cancel url="/" code="report.cancel" /> <br/>
+</form:form>

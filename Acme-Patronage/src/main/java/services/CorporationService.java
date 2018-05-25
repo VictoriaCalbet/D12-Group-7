@@ -141,4 +141,12 @@ public class CorporationService {
 
 		return result;
 	}
+
+	// Dashboard --------------------------------------------------------------
+
+	// Req 25.2.5: The corporations that have, at least, a 10% more sponsorships than the average.
+
+	public Collection<Corporation> findAllWith10PercentMoreSponsorshipsThanAvg() {
+		return this.corporationRepository.findAllWith10PercentMoreSponsorshipsThanAvg();
+	}
 }

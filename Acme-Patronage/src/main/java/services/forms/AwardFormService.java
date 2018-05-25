@@ -44,12 +44,15 @@ public class AwardFormService {
 	public AwardForm createFromCreate(final int projectId) {
 		AwardForm result = null;
 		User user = null;
+		Project project = null;
 
 		result = new AwardForm();
 		user = this.userService.findByPrincipal();
+		project = this.projectService.findOne(projectId);
 
 		result.setUserId(user.getId());
 		result.setProjectId(projectId);
+		result.setMinimumPatronageAmount(project.getMinimumPatronageAmount());
 
 		return result;
 	}

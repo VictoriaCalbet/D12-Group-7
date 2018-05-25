@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -223,5 +224,73 @@ public class ProjectService {
 
 	public Collection<Project> findProjectWithReportLegit() {
 		return this.projectRepository.findProjectWithReportLegit();
+	}
+
+	// Dashboard
+
+	// Req 12.2.1: The average and standard deviation of projects per user.
+
+	public Double avgProjectsPerUser() {
+		return this.projectRepository.avgProjectsPerUser();
+	}
+
+	public Double stdProjectsPerUser() {
+		return this.projectRepository.stdProjectsPerUser();
+	}
+
+	// Req 12.2.4: The ratio of funded projects.
+
+	public Double ratioFundedProjects() {
+		return this.projectRepository.ratioFundedProjects();
+	}
+
+	// Req 12.2.7: The top-5 active projects (with a limit date not due) with more raised money.
+
+	public Collection<Project> top5ActiveProjectsWithMoreRaisedMoney() {
+		Collection<Project> result = new HashSet<Project>();
+		Collection<Project> projects = new HashSet<Project>();
+		Integer counter = 0;
+
+		projects = this.projectRepository.top5ActiveProjectsWithMoreRaisedMoney();
+
+		if (projects.size() <= 5)
+			result = projects;
+		else
+			for (final Project project : projects)
+				if (counter < 5) {
+					result.add(project);
+					counter++;
+				} else
+					break;
+
+		return result;
+	}
+
+	// Req 12.2.8: The top-5 due projects with more raised money.
+
+	public Collection<Project> top5DueProjectsWithMoreRaisedMoney() {
+		Collection<Project> result = new HashSet<Project>();
+		Collection<Project> projects = new HashSet<Project>();
+		Integer counter = 0;
+
+		projects = this.projectRepository.top5DueProjectsWithMoreRaisedMoney();
+
+		if (projects.size() <= 5)
+			result = projects;
+		else
+			for (final Project project : projects)
+				if (counter < 5) {
+					result.add(project);
+					counter++;
+				} else
+					break;
+
+		return result;
+	}
+
+	// Req 25.2.4: The projects that have, at least, a 10% more sponsorships than the average.
+
+	public Collection<Project> findAllWith10PercentMoreSponsorshipsThanAvg() {
+		return this.projectRepository.findAllWith10PercentMoreSponsorshipsThanAvg();
 	}
 }

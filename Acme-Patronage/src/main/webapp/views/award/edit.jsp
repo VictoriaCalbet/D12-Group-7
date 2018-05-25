@@ -22,10 +22,16 @@
 	<form:hidden path="id"/>
 	<form:hidden path="projectId"/>
 	<form:hidden path="userId"/>
+	<form:hidden path="minimumPatronageAmount"/>
 	
 	<acme:textbox code="award.name" path="name"/>
 	<acme:textbox code="award.description" path="description"/>
 	<acme:textbox code="award.moneyGoal" path="moneyGoal"/>
+	
+	<spring:message code="award.project.minimumPatronageAmount.information" var="awardProjectMinimumPatronageAmountInformation"/>
+	<br/>
+	<b><jstl:out value="${awardProjectMinimumPatronageAmountInformation} ${awardForm.minimumPatronageAmount}"/></b>
+	<br/>
 	
 	<br/>
 	<acme:submit name="save" code="award.save"/> &nbsp;
