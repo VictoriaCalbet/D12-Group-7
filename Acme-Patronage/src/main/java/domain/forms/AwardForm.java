@@ -16,6 +16,7 @@ public class AwardForm {
 	private String	description;
 	private double	moneyGoal;
 	private int		projectId;
+	private double	minimumPatronageAmount;
 	private int		userId;
 
 
@@ -71,4 +72,14 @@ public class AwardForm {
 	public void setUserId(final int userId) {
 		this.userId = userId;
 	}
+
+	@DecimalMin(value = "0")
+	public double getMinimumPatronageAmount() {
+		return this.minimumPatronageAmount;
+	}
+
+	public void setMinimumPatronageAmount(final double minimumPatronageAmount) {
+		this.minimumPatronageAmount = minimumPatronageAmount;
+	}
+
 }

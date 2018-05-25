@@ -82,6 +82,7 @@ public class AwardService {
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(award.getMoneyGoal() >= award.getProject().getMinimumPatronageAmount(), "message.error.award.moneyGoalIsLower");
 
 		// Paso 1: realizo la entidad del servicio Award
 
@@ -105,6 +106,7 @@ public class AwardService {
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
+		Assert.isTrue(award.getMoneyGoal() >= award.getProject().getMinimumPatronageAmount(), "message.error.award.moneyGoalIsLower");
 		// Paso 1: realizo la entidad del servicio Award
 
 		result = this.save(award);
