@@ -51,9 +51,13 @@ public class PatronageService {
 		final Patronage result = new Patronage();
 		result.setCreationDate(new Date(System.currentTimeMillis() - 1));
 		result.setIsCancelled(false);
-		result.setProject(this.projectService.findOne(projectId));
+		final Project project = this.projectService.findOne(projectId);
+		result.setProject(project);
 		final User principal = this.userService.findByPrincipal();
 		result.setUser(principal);
+		Assert.isTrue(project.getIsCancelled() == false, "message.error.patronage.cancelled");
+		Assert.isTrue(project.getIsDraft() == false, "message.error.patronage.project.draft");
+		Assert.isTrue(project.getCreator() != principal, "message.error.patronage.create.userCreator");
 		return result;
 	}
 
@@ -88,7 +92,8 @@ public class PatronageService {
 
 		if ((patronage.getCreditCard().getExpirationYear()) == (cal.get(Calendar.YEAR)))
 			Assert.isTrue((patronage.getCreditCard().getExpirationMonth()) >= (cal.get(Calendar.MONTH) + 1), "message.error.patronage.dates");
-		Assert.isTrue(patronage.getProject().getIsCancelled() == false, "message.error.patronage.cancelled");
+		Assert.isTrue(project.getIsCancelled() == false, "message.error.patronage.cancelled");
+		Assert.isTrue(project.getIsDraft() == false, "message.error.patronage.project.draft");
 		Assert.isTrue((patronage.getCreditCard().getExpirationYear()) >= (cal.get(Calendar.YEAR)), "message.error.patronage.dates");
 		final User principal = this.userService.findByPrincipal();
 		Assert.isTrue(!(principal == project.getCreator()), "message.error.patronage.create.userCreator");
