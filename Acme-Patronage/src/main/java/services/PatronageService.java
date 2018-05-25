@@ -93,8 +93,11 @@ public class PatronageService {
 		final User principal = this.userService.findByPrincipal();
 		Assert.isTrue(!(principal == project.getCreator()), "message.error.patronage.create.userCreator");
 		Assert.isTrue(this.actorService.checkAuthority(principal, "USER"), "message.error.patronage.create.onlyUsers");
-		Double totalAcumulation = this.patronageRepository.findTotalAmount(project.getId());
-		totalAcumulation += patronage.getAmount();
+		Double totalAcumulation = 0.0;
+		totalAcumulation = this.patronageRepository.findTotalAmount(project.getId());
+		if (totalAcumulation == null)
+			totalAcumulation = 0.0;
+		totalAcumulation = totalAcumulation + patronage.getAmount();
 		Assert.isTrue(totalAcumulation < project.getEconomicGoal(), "message.error.patronage.reachedAmount");
 		Assert.isTrue(patronage.getAmount() > project.getMinimumPatronageAmount(), "message.error.patronage.minimumAmount");
 		result = this.save(patronage);
