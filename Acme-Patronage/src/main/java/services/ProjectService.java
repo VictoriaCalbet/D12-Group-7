@@ -287,4 +287,10 @@ public class ProjectService {
 
 		return result;
 	}
+
+	// Req 25.2.4: The projects that have, at least, a 10% more sponsorships than the average.
+
+	public Collection<Project> findAllWith10PercentMoreSponsorshipsThanAvg() {
+		return this.projectRepository.findAllWith10PercentMoreSponsorshipsThanAvg();
+	}
 }

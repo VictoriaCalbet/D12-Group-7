@@ -29,6 +29,8 @@
 	<spring:message code="dashboard.project.title" var="dashboardProjectTitle"/>
 	<spring:message code="dashboard.user.username" var="dashboardUserUsername"/>
 	
+	<!-- LEVEL C -->
+	
 	<table border="1">
 		<tr>
 			<td colspan="2"> <b> <spring:message code="dashboard.avgProjectsPerUser"/>:&nbsp; </b> </td>
@@ -120,6 +122,66 @@
 		<jstl:forEach items="${top5DueProjectsWithMoreRaisedMoney}" var="project">
 			<tr>
 				<td> <jstl:out value="${project.title}"/></td>
+			</tr>
+		</jstl:forEach>
+	</table>
+	
+	<!-- LEVEL B -->
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.avgSponsorshipPerCorporation"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgSponsorshipPerCorporation}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdSponsorshipPerCorporation}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.avgSponsorshipPerProject"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgSponsorshipPerProject}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdSponsorshipPerProject}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.avgCommentsPerProject"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgCommentsPerProject}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdCommentsPerProject}"/></td>
+		</tr>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.findAllProjectWith10PercentMoreSponsorshipsThanAvg"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardProjectTitle}"/>:&nbsp; </b> </td>
+		</tr>
+		<jstl:forEach items="${findAllProjectWith10PercentMoreSponsorshipsThanAvg}" var="project">
+			<tr>
+				<td> <jstl:out value="${project.title}"/></td>
+			</tr>
+		</jstl:forEach>
+	</table>
+	
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="dashboard.findAllCorporationWith10PercentMoreSponsorshipsThanAvg"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardUserUsername}"/>:&nbsp; </b> </td>
+		</tr>
+		<jstl:forEach items="${findAllCorporationWith10PercentMoreSponsorshipsThanAvg}" var="corporation">
+			<tr>
+				<td> <jstl:out value="${corporation.userAccount.username}"/></td>
 			</tr>
 		</jstl:forEach>
 	</table>

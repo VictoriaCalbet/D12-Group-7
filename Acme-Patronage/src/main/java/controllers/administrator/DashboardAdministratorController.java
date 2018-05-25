@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AwardService;
+import services.CorporationService;
+import services.ProjectCommentService;
 import services.ProjectService;
+import services.SponsorshipService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Corporation;
 import domain.Project;
 import domain.User;
 
@@ -23,13 +27,22 @@ public class DashboardAdministratorController extends AbstractController {
 	// Services ---------------------------------------------------------------
 
 	@Autowired
-	private ProjectService	projectService;
+	private ProjectService			projectService;
 
 	@Autowired
-	private AwardService	awardService;
+	private AwardService			awardService;
 
 	@Autowired
-	private UserService		userService;
+	private UserService				userService;
+
+	@Autowired
+	private SponsorshipService		sponsorshipService;
+
+	@Autowired
+	private ProjectCommentService	projectCommentService;
+
+	@Autowired
+	private CorporationService		corporationService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -44,6 +57,8 @@ public class DashboardAdministratorController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result = null;
 		result = new ModelAndView("administrator/dashboard");
+
+		// LEVEL C:
 
 		// Req 12.2.1: The average and standard deviation of projects per user.
 		final Double avgProjectsPerUser = this.projectService.avgProjectsPerUser();
@@ -91,6 +106,42 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Collection<Project> top5DueProjectsWithMoreRaisedMoney = this.projectService.top5DueProjectsWithMoreRaisedMoney();
 		result.addObject("top5DueProjectsWithMoreRaisedMoney", top5DueProjectsWithMoreRaisedMoney);
+
+		// LEVEL B:
+
+		// Req 25.2.1: The average and standard deviation of sponsorships per corporation.
+
+		final Double avgSponsorshipPerCorporation = this.sponsorshipService.avgSponsorshipPerCorporation();
+		result.addObject("avgSponsorshipPerCorporation", avgSponsorshipPerCorporation);
+
+		final Double stdSponsorshipPerCorporation = this.sponsorshipService.stdSponsorshipPerCorporation();
+		result.addObject("stdSponsorshipPerCorporation", stdSponsorshipPerCorporation);
+
+		// Req 25.2.2: The average and standard deviation of sponsorships per project.
+
+		final Double avgSponsorshipPerProject = this.sponsorshipService.avgSponsorshipPerProject();
+		result.addObject("avgSponsorshipPerProject", avgSponsorshipPerProject);
+
+		final Double stdSponsorshipPerProject = this.sponsorshipService.stdSponsorshipPerProject();
+		result.addObject("stdSponsorshipPerProject", stdSponsorshipPerProject);
+
+		// Req 25.2.3: The average and standard deviation of comments per project.
+
+		final Double avgCommentsPerProject = this.projectCommentService.avgCommentsPerProject();
+		result.addObject("avgCommentsPerProject", avgCommentsPerProject);
+
+		final Double stdCommentsPerProject = this.projectCommentService.stdCommentsPerProject();
+		result.addObject("stdCommentsPerProject", stdCommentsPerProject);
+
+		// Req 25.2.4: The projects that have, at least, a 10% more sponsorships than the average.
+
+		final Collection<Project> findAllProjectWith10PercentMoreSponsorshipsThanAvg = this.projectService.findAllWith10PercentMoreSponsorshipsThanAvg();
+		result.addObject("findAllProjectWith10PercentMoreSponsorshipsThanAvg", findAllProjectWith10PercentMoreSponsorshipsThanAvg);
+
+		// Req 25.2.5: The corporations that have, at least, a 10% more sponsorships than the average.
+
+		final Collection<Corporation> findAllCorporationWith10PercentMoreSponsorshipsThanAvg = this.corporationService.findAllWith10PercentMoreSponsorshipsThanAvg();
+		result.addObject("findAllCorporationWith10PercentMoreSponsorshipsThanAvg", findAllCorporationWith10PercentMoreSponsorshipsThanAvg);
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 		return result;
