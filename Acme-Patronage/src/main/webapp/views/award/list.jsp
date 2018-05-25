@@ -18,6 +18,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<security:authentication property="principal" var="loggedactor"/>
+
 <display:table name="awards" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<display:column>
@@ -26,7 +28,11 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${canDelete eq true}">
+		<jstl:if test="${row.project.creator.userAccount.username eq loggedactor.username and row.project.isDraft eq true and row.project.isCancelled eq false}">
+			<display:column>
+				<spring:message code="award.edit" var="awardEditLink"/>
+				<a href="${editURI}${row.id}"><jstl:out value="${awardEditLink}"/></a>
+			</display:column>
 			<display:column>
 				<spring:message code="award.delete" var="awardDeleteLink"/>
 				<a href="${deleteURI}${row.id}"><jstl:out value="${awardDeleteLink}"/></a>

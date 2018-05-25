@@ -18,6 +18,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<security:authentication property="principal" var="loggedactor"/>
+
 <fieldset>
 	<legend>
 		<spring:message code="award.project.title" var="awardProjectTitleLegend"/>
@@ -49,13 +51,11 @@
 	
 	
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${canEdit eq true}">
-			<spring:message code="award.create" var="awardCreateLink"/>
+		<jstl:if test="${award.project.creator.userAccount.username eq loggedactor.username and award.project.isDraft eq true and award.project.isCancelled eq false}">
+			<spring:message code="award.edit" var="awardEditLink"/>
 			<acme:cancel url="${editURI}" code="award.edit"/>
 		</jstl:if>
 	</security:authorize>
-	
-	<jstl:out value="${editURL}"/>
 	
 	<acme:cancel url="${cancelURI}" code="award.cancel"/>
 </fieldset>

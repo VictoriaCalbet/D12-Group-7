@@ -23,16 +23,9 @@
 	<form:hidden path="projectId"/>
 	<form:hidden path="userId"/>
 	
-	<fieldset>
-		<legend>
-			<spring:message code="award.project.title" var="awardProjectTitleLegend"/>
-			<h2><b><jstl:out value="${awardProjectTitleLegend}"/>:&nbsp;</b> <jstl:out value="${award.project.title}"/></h2>
-		</legend>
-		
-		<acme:textbox code="award.name" path="name"/>
-		<acme:textbox code="award.description" path="description"/>
-		<acme:textbox code="award.moneyGoal" path="moneyGoal"/>
-	</fieldset>
+	<acme:textbox code="award.name" path="name"/>
+	<acme:textbox code="award.description" path="description"/>
+	<acme:textbox code="award.moneyGoal" path="moneyGoal"/>
 	
 	<br/>
 	<acme:submit name="save" code="award.save"/> &nbsp;
