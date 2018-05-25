@@ -13,12 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AwardService;
 import services.ProjectService;
+import controllers.AbstractController;
 import domain.Award;
 import domain.Project;
 
 @Controller
 @RequestMapping("/award/administrator")
-public class AwardAdministratorController {
+public class AwardAdministratorController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 

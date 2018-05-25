@@ -26,7 +26,7 @@ import domain.forms.ActorForm;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 

@@ -19,7 +19,7 @@ import domain.Project;
 
 @Controller
 @RequestMapping("/announcement")
-public class AnnouncementController {
+public class AnnouncementController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 

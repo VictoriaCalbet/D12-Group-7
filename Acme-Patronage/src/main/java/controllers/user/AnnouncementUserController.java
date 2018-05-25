@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ProjectService;
 import services.UserService;
 import services.forms.AnnouncementFormService;
+import controllers.AbstractController;
 import domain.Announcement;
 import domain.Project;
 import domain.User;
@@ -24,7 +25,7 @@ import domain.forms.AnnouncementForm;
 
 @Controller
 @RequestMapping("/announcement/user")
-public class AnnouncementUserController {
+public class AnnouncementUserController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 

@@ -139,7 +139,7 @@
 	<security:authorize access="hasRole('USER')">
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
-		<display:column title="${deleteHeader}">
+		<display:column title="${deleteHeader}" style="${style}">
 		<jstl:choose>
 			<jstl:when test="${(row.isCancelled eq false) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username }">
 				<jstl:choose>
@@ -166,7 +166,7 @@
 		</display:column>
 		
 		<spring:message code="project.edit" var="editHeader" />	
-		<display:column title="${editHeader}">
+		<display:column title="${editHeader}" style="${style}">
 			<jstl:choose>
 			
 				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
@@ -187,7 +187,7 @@
 	<security:authorize access="hasRole('ADMIN')">
 	
 	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
-		<display:column title="${deleteHeader}">	
+		<display:column title="${deleteHeader}" style="${style}">	
 			<jstl:choose>
 				<jstl:when test="${projectReports.contains(row)}">
 					<a href="project/administrator/delete.do?projectId=${row.id}">
@@ -208,7 +208,7 @@
 	<security:authorize access="hasRole('USER')">
 	
 	<spring:message code="project.patronage" var="patronageHeader" />	
-	<display:column title="${patronageHeader}">	
+	<display:column title="${patronageHeader}" style="${style}">	
 		<jstl:choose>
 		<jstl:when test="${row.creator != principal}">
 			<a href="patronage/user/edit.do?projectId=${row.id}">

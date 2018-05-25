@@ -18,6 +18,7 @@ import services.AwardService;
 import services.ProjectService;
 import services.UserService;
 import services.forms.AwardFormService;
+import controllers.AbstractController;
 import domain.Award;
 import domain.Project;
 import domain.User;
@@ -25,7 +26,7 @@ import domain.forms.AwardForm;
 
 @Controller
 @RequestMapping("/award/user")
-public class AwardUserController {
+public class AwardUserController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 
