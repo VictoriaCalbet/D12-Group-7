@@ -30,19 +30,21 @@
 			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user"/></a></li>
 			<li><a class="fNiv" href="corporation/list.do"><spring:message code="master.page.corporation"/></a></li>
 			<li><a class="fNiv" href="project/list.do"><spring:message code="master.page.project"/></a></li>
+			<li><a class="fNiv" href="project/listOrdered.do"><spring:message code="master.page.projectOrdered"/></a></li>
 			<li><a class="fNiv" href="category/list.do"><spring:message code="master.page.category"/></a></li>
-			<li><a class="fNiv" href="patronage/list.do"><spring:message code="master.page.patronage"/></a></li>
-		</security:authorize>
+			</security:authorize>
 		
 		<!-- #User -->
 		<security:authorize access="hasRole('USER')">
 			<li><a class="fNiv" href="project/user/list.do"><spring:message code="master.page.project.user.list" /></a></li>
 			<li><a class="fNiv" href="patronage/user/listPatronagesToMyProjects.do"><spring:message code="master.page.patronagesToMyProjects.user.list" /></a></li>	
 			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>			
+			<li><a class="fNiv" href="awardComment/user/list.do"><spring:message code="awardComment.list"/></a></li>			
 		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv" href="project/administrator/list.do"><spring:message code="master.page.project.admin.list" /></a></li>
+			<li><a class="fNiv" href="comment/administrator/list.do"><spring:message code="comment.list"/></a></li>			
 			<li><a class="fNiv"><spring:message
 						code="master.page.register" /></a>
 				<ul>

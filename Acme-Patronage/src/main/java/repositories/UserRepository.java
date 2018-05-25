@@ -30,4 +30,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	// Req 33.3.5: The average and standard deviation of banned users.
 
 	// Req 33.3.6: The ratio of banned users.
+
+	@Query("select count(u1)*1.0 / (select count(u2)*1.0 from User u2 where u2.userAccount.isEnabled = true) from User u1 where u1.userAccount.isEnabled = false")
+	Double ratioBannedUsers();
 }

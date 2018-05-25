@@ -114,7 +114,8 @@ public class ProjectService {
 		Assert.isTrue(!p.getIsDraft(), "message.error.project.isDraft");
 		Assert.isTrue(!p.getIsCancelled(), "message.error.project.isCancelled");
 		Assert.isTrue(p.getPatronages().size() != 0, "message.error.project.patronagesContains");
-
+		for (final Patronage pat : p.getPatronages())
+			pat.setIsCancelled(true);
 		p.setIsCancelled(true);
 
 		this.projectRepository.save(p);
@@ -180,10 +181,6 @@ public class ProjectService {
 		return this.projectRepository.findProjectByKeyWordByAdmin(keyWord);
 	}
 
-	public Collection<Project> findAllOrdered() {
-		return this.projectRepository.findAllOrdered();
-	}
-
 	public Integer isProjectLegitComplaint(final int projectId) {
 		return this.projectRepository.isProjectLegitComplaint(projectId);
 	}
@@ -203,11 +200,28 @@ public class ProjectService {
 	public Collection<Project> findDraftProjects() {
 		return this.projectRepository.findDraftProjects();
 	}
-	public Collection<Project> projectUser(final int userId) {
-		return this.projectRepository.projectUser(userId);
-	}
 
 	public Collection<Project> findProjects(final int userId, final boolean isDraft, final boolean isCancelled) {
 		return this.projectRepository.findProjects(userId, isDraft, isCancelled);
+	}
+
+	public Collection<Project> findProjectFutureDueDateOrdered() {
+		return this.projectRepository.findProjectFutureDueDateOrdered();
+	}
+
+	public Collection<Project> findProjectByKeyWordOrdered(final String word) {
+		return this.projectRepository.findProjectByKeyWordOrdered(word);
+	}
+
+	public Collection<Project> findProjectByCategory(final int categoryId) {
+		return this.projectRepository.findProjectByCategory(categoryId);
+	}
+
+	public Collection<Project> findProjectByKeyWordCategory(final String word, final int categoryId) {
+		return this.projectRepository.findProjectByKeyWordCategory(word, categoryId);
+	}
+
+	public Collection<Project> findProjectWithReportLegit() {
+		return this.projectRepository.findProjectWithReportLegit();
 	}
 }

@@ -139,23 +139,7 @@ public class PatronageUserController extends AbstractController {
 
 		return result;
 	}
-	//Cancel
-	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
-	public ModelAndView cancel(@RequestParam final int patronageId) {
-		ModelAndView result;
-		final Patronage patronage = this.patronageService.findOne(patronageId);
-		try {
-			this.patronageService.cancelPatronage(patronage);
-			result = new ModelAndView("redirect:/patronage/user/list.do");
-		} catch (final Throwable oops) {
-			String messageError = "patronage.cancel.error";
-			if (oops.getMessage().contains("message.error"))
-				messageError = oops.getMessage();
-			result = new ModelAndView("redirect:/patronage/user/list.do");
-			result.addObject("messageError", messageError);
-		}
-		return result;
-	}
+
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final PatronageForm patronageForm) {

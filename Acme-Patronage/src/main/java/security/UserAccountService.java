@@ -54,6 +54,7 @@ public class UserAccountService {
 
 		result.setUsername(username);
 		result.setPassword(Password);
+		result.setIsEnabled(true);
 
 		result = this.modifyPassword(result);
 

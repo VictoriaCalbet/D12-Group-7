@@ -87,6 +87,18 @@
 
 	</display:column>
 	
+	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
+	<display:column title="${totalAmountsHeader}" style="${style}">
+		<jstl:choose>
+			<jstl:when test="${totalAmounts[row.id] == null}">
+				<fmt:formatNumber value = "0.0" currencySymbol="&euro;" pattern = "${patternCurrency}" type = "currency"  minFractionDigits = "2"/>
+			</jstl:when>
+			<jstl:when test="${totalAmounts[row.id] != null}">
+				<fmt:formatNumber value = "${totalAmounts[row.id]}" currencySymbol="&euro;" pattern = "${patternCurrency}" type = "currency"  minFractionDigits = "2"/>
+			</jstl:when>
+		</jstl:choose>
+	</display:column>
+	
 	<spring:message code="project.economicGoal" var="economicGoalHeader" />
 	<display:column title="${economicGoalHeader}" style="${style}">
         <fmt:formatNumber value = "${row.economicGoal}" currencySymbol="&euro;" pattern="${patternCurrency}" type = "currency"  minFractionDigits="2"/>
@@ -160,32 +172,24 @@
 	
 	<security:authorize access="hasRole('ADMIN')">
 	
-	<spring:message code="project.delete" var="deleteHeader" />	
+	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
 		<display:column title="${deleteHeader}">	
-			<a href="project/administrator/delete.do?projectId=${row.id}">
-			 	<spring:message code="project.deleteButton" />
-			</a>
-		</display:column>
-	
-	</security:authorize>
-	
-	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
-	<display:column title="${totalAmountsHeader}" >
-	
-	<jstl:forEach var="amount" items="${totalAmounts}" >
-
-   	<jstl:out value="${amount}">
-   		
- 	 </jstl:out>
-
-	</jstl:forEach>
-    
-		
-		
-		
+			<jstl:choose>
+				<jstl:when test="${projectReports.contains(row)}">
+					<a href="project/administrator/delete.do?projectId=${row.id}">
+						<spring:message code="project.deleteButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notDeleteAdmin" var="projectNotDeleteAdmin"/>
+						<jstl:out value="${projectNotDeleteAdmin}"/> 
+				</jstl:otherwise>
+			</jstl:choose>	
 	
 	</display:column>
 	
+	
+	</security:authorize>
 	
 	<security:authorize access="hasRole('USER')">
 	
@@ -197,6 +201,11 @@
 			 	<spring:message code="project.patronageButton" />
 			</a>
 		</jstl:when>
+		<jstl:otherwise>
+
+			<spring:message code= "project.patronage.notPatronizable" var="projectNotPatronizable"/>
+			<jstl:out value="${projectNotPatronizable}"/> 
+		</jstl:otherwise>
 		</jstl:choose>
 	</display:column>
 	
