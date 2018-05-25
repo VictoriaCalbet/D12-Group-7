@@ -58,9 +58,12 @@ public class PatronageService {
 		Assert.isTrue(project.getIsCancelled() == false, "message.error.patronage.cancelled");
 		Assert.isTrue(project.getIsDraft() == false, "message.error.patronage.project.draft");
 		Assert.isTrue(project.getCreator() != principal, "message.error.patronage.create.userCreator");
+		final Calendar cal = Calendar.getInstance();
+		Date now = new Date();
+		now = cal.getTime();
+		Assert.isTrue(project.getDueDate().after(now), "message.error.patronage.dueDatePassed");
 		return result;
 	}
-
 	public Collection<Patronage> findAll() {
 		Collection<Patronage> result = null;
 		result = this.patronageRepository.findAll();

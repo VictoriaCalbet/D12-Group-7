@@ -210,7 +210,7 @@
 	<spring:message code="project.patronage" var="patronageHeader" />	
 	<display:column title="${patronageHeader}" style="${style}">	
 		<jstl:choose>
-		<jstl:when test="${row.creator != principal and row.isCancelled eq false and row.isDraft eq false}">
+		<jstl:when test="${row.creator != principal and row.isCancelled eq false and row.isDraft eq false and row.dueDate > now}">
 			<a href="patronage/user/edit.do?projectId=${row.id}">
 			 	<spring:message code="project.patronageButton" />
 			</a>
