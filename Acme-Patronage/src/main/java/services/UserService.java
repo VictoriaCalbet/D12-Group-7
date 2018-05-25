@@ -149,4 +149,18 @@ public class UserService {
 
 		return result;
 	}
+
+	// Dashboard
+
+	// Req 12.2.5: The users who have, at least, a 10% more projects than the average.
+
+	public Collection<User> findAllWith10PercentMoreProjectsThanAvg() {
+		return this.userRepository.findAllWith10PercentMoreProjectsThanAvg();
+	}
+
+	// Req 12.2.6: The users who have, at least, 10% more patronages than the average.
+
+	public Collection<User> findAllWith10PercentMorePatronagesThanAvg() {
+		return this.userRepository.findAllWith10PercentMorePatronagesThanAvg();
+	}
 }

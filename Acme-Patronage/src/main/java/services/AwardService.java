@@ -134,4 +134,26 @@ public class AwardService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	// Dashboard
+
+	// Req 12.2.2: The average and standard deviation of awards per project.
+
+	public Double avgAwardsPerProject() {
+		return this.awardRepository.avgAwardsPerProject();
+	}
+
+	public Double stdAwardsPerProject() {
+		return this.awardRepository.stdAwardsPerProject();
+	}
+
+	// Req 12.2.3: The average and standard deviation of awards per user.
+
+	public Double avgAwardsPerUser() {
+		return this.awardRepository.avgAwardsPerUser();
+	}
+
+	public Double stdAwardsPerUser() {
+		return this.awardRepository.stdAwardsPerUser();
+	}
 }

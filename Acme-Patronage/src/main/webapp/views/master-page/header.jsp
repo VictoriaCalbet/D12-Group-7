@@ -54,6 +54,7 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv" href="project/administrator/list.do"><spring:message code="master.page.project.admin.list" /></a></li>
 			<li><a class="fNiv" href="comment/administrator/list.do"><spring:message code="comment.list"/></a></li>			
+			<li><a class="fNiv" href="administrator/dashboard.do"><spring:message code="master.page.dashboard"/></a></li>			
 			<li><a class="fNiv"><spring:message
 						code="master.page.register" /></a>
 				<ul>
