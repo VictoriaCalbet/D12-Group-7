@@ -104,11 +104,17 @@ public class PatronageUserController extends AbstractController {
 
 		Assert.notNull(projectId);
 
-		final ModelAndView result;
+		ModelAndView result;
 		final PatronageForm patronageForm;
-		patronageForm = this.patronageFormService.create(projectId);
-
-		result = this.createEditModelAndView(patronageForm);
+		try {
+			patronageForm = this.patronageFormService.create(projectId);
+			result = this.createEditModelAndView(patronageForm);
+		} catch (final Throwable oops) {
+			String messageError = "patronage.commit.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = this.listModelAndView("redirect:/project/user/list.do", messageError);
+		}
 
 		return result;
 	}
@@ -158,6 +164,24 @@ public class PatronageUserController extends AbstractController {
 		result.addObject("patronageForm", patronageForm);
 		result.addObject("message", message);
 		result.addObject("requestURI", "patronage/user/edit.do");
+		return result;
+	}
+
+	protected ModelAndView listModelAndView(final String url) {
+		ModelAndView result;
+
+		result = this.listModelAndView(url, null);
+
+		return result;
+	}
+
+	protected ModelAndView listModelAndView(final String url, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView(url);
+
+		result.addObject("message", message);
+		result.addObject("requestURI", url);
 		return result;
 	}
 }
