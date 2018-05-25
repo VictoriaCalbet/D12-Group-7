@@ -23,12 +23,12 @@
 	
 	<definition name="report/create" extends="master.page">	
 		<put-attribute name="title" value="Crear informe" />
-		<put-attribute name="body" value="/views/report/edit.jsp" />
+		<put-attribute name="body" value="/views/report/create.jsp" />
 	</definition>
 	
-	<definition name="report/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrar informe" />
-		<put-attribute name="body" value="/views/report/display.jsp" />
+	<definition name="report/accept" extends="master.page">	
+		<put-attribute name="title" value="Aceptar informe" />
+		<put-attribute name="body" value="/views/report/accept.jsp" />
 	</definition>
 	
 </tiles-definitions>

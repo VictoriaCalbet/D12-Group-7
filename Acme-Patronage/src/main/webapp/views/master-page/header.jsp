@@ -39,7 +39,8 @@
 		<security:authorize access="hasRole('USER')">
 			<li><a class="fNiv" href="project/user/list.do"><spring:message code="master.page.project.user.list" /></a></li>
 			<li><a class="fNiv" href="patronage/user/listPatronagesToMyProjects.do"><spring:message code="master.page.patronagesToMyProjects.user.list" /></a></li>	
-			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>			
+			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>	
+			<li><a class="fNiv" href="report/user/create.do"><spring:message code="master.page.report.user.create" /></a></li>		
 		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
@@ -52,8 +53,11 @@
 								code="master.page.moderator.create" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv" href="report/administrator/list.do"><spring:message code="master.page.report.administrator.list" /></a></li>
 		</security:authorize>
-
+		<security:authorize access="hasRole('MODERATOR')">
+			<li><a class="fNiv" href="report/moderator/list.do"><spring:message code="master.page.report.moderator.list" /></a></li>
+		</security:authorize>
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.register" /></a>

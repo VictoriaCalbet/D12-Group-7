@@ -20,7 +20,7 @@ public class Report extends DomainEntity {
 
 	private String	complaint;
 	private String	reason;
-	private boolean	isLegit;
+	private Boolean	isLegit;
 
 
 	@NotNull
@@ -34,7 +34,6 @@ public class Report extends DomainEntity {
 		return this.complaint = complaint;
 	}
 
-	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getReason() {
 		return this.reason;
@@ -44,11 +43,11 @@ public class Report extends DomainEntity {
 		this.reason = reason;
 	}
 
-	public boolean getIsLegit() {
+	public Boolean getIsLegit() {
 		return this.isLegit;
 	}
 
-	public void setIsLegit(final boolean isLegit) {
+	public void setIsLegit(final Boolean isLegit) {
 		this.isLegit = isLegit;
 	}
 

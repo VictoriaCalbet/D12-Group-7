@@ -15,6 +15,9 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 	@Query("select r from Report r where r.isLegit = ?1")
 	Collection<Report> findByLegitimacy(Boolean isLegit);
 
+	@Query("select r from Report r where r.isLegit = null")
+	Collection<Report> findByLegitimacyNull();
+
 	// Dashboard --------------------------------------------------------------
 
 	// Req 33.3.1: The average and standard deviation of complaints per project.

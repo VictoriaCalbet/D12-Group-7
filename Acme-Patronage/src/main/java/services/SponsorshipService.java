@@ -37,7 +37,8 @@ public class SponsorshipService {
 
 	// TODO: Sponsorship - create
 	public Sponsorship create() {
-		final Sponsorship result = null;
+		final Sponsorship result;
+		result = new Sponsorship();
 		result.setCorporation(this.isCorporationAunthenticate());
 		return result;
 	}
