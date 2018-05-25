@@ -41,6 +41,15 @@
 			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>			
 			<li><a class="fNiv" href="awardComment/user/list.do"><spring:message code="awardComment.list"/></a></li>			
 		</security:authorize>
+		
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv"><spring:message code="master.page.announcement" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="announcement/user/list.do"><spring:message code="master.page.showStreamOfAnnouncements" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv" href="project/administrator/list.do"><spring:message code="master.page.project.admin.list" /></a></li>
