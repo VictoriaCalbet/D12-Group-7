@@ -37,8 +37,10 @@
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-	<spring:message code="announcement.create" var="announcementCreateLink"/>
-	<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
-	<br/>
-	<br/>
+	<jstl:if test="${canCreate eq true}">
+		<spring:message code="announcement.create" var="announcementCreateLink"/>
+		<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
+		<br/>
+		<br/>
+	</jstl:if>
 </security:authorize>
