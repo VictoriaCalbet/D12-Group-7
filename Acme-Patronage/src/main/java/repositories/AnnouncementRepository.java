@@ -12,6 +12,6 @@ import domain.Announcement;
 @Repository
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
 
-	@Query("select ann from Announcement ann where ann.project in (select distinct(pat.project.id) from Patronage pat where pat.user.id = ?1)")
+	@Query("select ann from Announcement ann where ann.project in (select distinct(pat.project.id) from Patronage pat where pat.user.id = ?1 order by ann.creationMoment)")
 	Collection<Announcement> findStreamThatIFunded(int userId);
 }
