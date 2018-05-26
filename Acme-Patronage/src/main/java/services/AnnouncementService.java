@@ -61,7 +61,7 @@ public class AnnouncementService {
 	}
 
 	public Announcement save(final Announcement announcement) {
-		Assert.notNull(announcement);
+		Assert.notNull(announcement, "message.error.announcement.null");
 		Announcement result = null;
 		result = this.announcementRepository.save(announcement);
 		return result;

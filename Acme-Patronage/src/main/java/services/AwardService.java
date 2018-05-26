@@ -68,7 +68,7 @@ public class AwardService {
 	}
 
 	public Award save(final Award award) {
-		Assert.notNull(award);
+		Assert.notNull(award, "message.error.award.null");
 		Award result = null;
 		result = this.awardRepository.save(award);
 		return result;
@@ -92,8 +92,6 @@ public class AwardService {
 		result = this.save(award);
 
 		// Paso 2: persisto el resto de relaciones a las que el objeto Award esta relacionada.
-
-		result.getProject().getAwards().add(result);
 
 		return result;
 	}
@@ -128,6 +126,7 @@ public class AwardService {
 		Assert.notNull(user, "message.error.award.principal.null");
 
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
 		// Paso 1: actualizamos el resto de relaciones con la entidad Award
 

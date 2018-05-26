@@ -114,7 +114,7 @@ public class AwardController extends AbstractController {
 		result.addObject("editURI", editURI);
 		result.addObject("deleteURI", deleteURI);
 		result.addObject("canCreate", canCreate);
-		result.addObject("message", message);
+		//		result.addObject("message", message);
 
 		return result;
 	}
@@ -128,6 +128,8 @@ public class AwardController extends AbstractController {
 		String cancelURI = null;
 		String editURI = null;
 		Actor actor = null;
+
+		result = new ModelAndView("award/display");
 
 		award = this.awardService.findOne(awardId);
 		project = award.getProject();
@@ -168,7 +170,6 @@ public class AwardController extends AbstractController {
 		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
 		editURI = "award/user/edit.do?awardId=" + award.getId();
 
-		result = new ModelAndView("award/display");
 		result.addObject("award", award);
 		result.addObject("cancelURI", cancelURI);
 		result.addObject("editURI", editURI);

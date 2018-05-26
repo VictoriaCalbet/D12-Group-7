@@ -53,6 +53,7 @@ public class AnnouncementController extends AbstractController {
 		Actor actor = null;
 		boolean canCreate = false;
 
+		result = new ModelAndView("announcement/list");
 		project = this.projectService.findOne(projectId);
 		Assert.notNull(project);
 
@@ -86,13 +87,12 @@ public class AnnouncementController extends AbstractController {
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
-			result.addObject("message", oops.getMessage());
+			//			result.addObject("message", oops.getMessage());
 		}
 
 		requestURI = "announcement/list.do";
 		createURI = "announcement/user/create.do?projectId=" + projectId;
 
-		result = new ModelAndView("announcement/list");
 		result.addObject("announcements", announcements);
 		result.addObject("requestURI", requestURI);
 		result.addObject("createURI", createURI);
