@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AnnouncementService;
 import services.ProjectService;
 import services.UserService;
 import services.forms.AnnouncementFormService;
@@ -33,6 +34,9 @@ public class AnnouncementUserController extends AbstractController {
 	private AnnouncementFormService	announcementFormService;
 
 	@Autowired
+	private AnnouncementService		announcementService;
+
+	@Autowired
 	private ProjectService			projectService;
 
 	@Autowired
@@ -48,37 +52,23 @@ public class AnnouncementUserController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final Integer projectId) {
+	public ModelAndView stream() {
 		ModelAndView result = null;
 		Collection<Announcement> announcements = null;
-		Project project = null;
+
 		User user = null;
 		String requestURI = null;
-		String createURI = null;
 
 		user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
-		requestURI = "announcement/user/list.do";
-		createURI = "announcement/user/create.do?projectId=" + projectId;
+		requestURI = "announcement/list.do";
 
-		if (projectId != null) {
-			project = this.projectService.findOne(projectId);
-			Assert.notNull(project);
-			announcements = project.getAnnouncements();
-		} else
-			announcements = user.getAnnouncements();
-
-		// TODO: ¿es necesario?
-		if (project.getCreator().equals(user)) {
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
-		}
+		announcements = this.announcementService.findStreamThatIFunded(user.getId());
 
 		result = new ModelAndView("announcement/list");
 		result.addObject("announcements", announcements);
 		result.addObject("requestURI", requestURI);
-		result.addObject("createURI", createURI);
 
 		return result;
 	}
@@ -92,15 +82,20 @@ public class AnnouncementUserController extends AbstractController {
 		User user = null;
 		Project project = null;
 
-		user = this.userService.findByPrincipal();
-		project = this.projectService.findOne(projectId);
+		try {
+			user = this.userService.findByPrincipal();
+			project = this.projectService.findOne(projectId);
 
-		Assert.notNull(user);
-		Assert.notNull(project);
-		Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
+			Assert.notNull(user);
+			Assert.notNull(project);
+			Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
 
-		announcementForm = this.announcementFormService.createFromCreate(projectId);
-		result = this.createModelAndView(announcementForm);
+			announcementForm = this.announcementFormService.createFromCreate(projectId);
+			result = this.createModelAndView(announcementForm);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result.addObject("message", oops.getMessage());
+		}
 
 		return result;
 	}
@@ -116,9 +111,7 @@ public class AnnouncementUserController extends AbstractController {
 		else
 			try {
 				this.announcementFormService.saveFromCreate(announcementForm);
-
-				result = new ModelAndView("redirect:/announcement/user/list.do?projectId=" + announcementForm.getProjectId());
-
+				result = new ModelAndView("redirect:/announcement/list.do?projectId=" + announcementForm.getProjectId());
 			} catch (final Throwable oops) {
 				String messageError = "announcement.commit.error";
 				if (oops.getMessage().contains("message.error"))
@@ -148,7 +141,7 @@ public class AnnouncementUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 
 		result = new ModelAndView("announcement/create");
-		cancelURI = "announcement/user/list.do?projectId=" + announcementForm.getProjectId();
+		cancelURI = "announcement/list.do?projectId=" + announcementForm.getProjectId();
 
 		result.addObject("user", user);
 		result.addObject("announcementForm", announcementForm);

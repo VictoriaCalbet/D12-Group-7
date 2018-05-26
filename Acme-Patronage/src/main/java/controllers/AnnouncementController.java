@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.ProjectService;
+import services.UserService;
 import domain.Actor;
 import domain.Announcement;
 import domain.Project;
+import domain.User;
 
 @Controller
 @RequestMapping("/announcement")
@@ -28,6 +30,9 @@ public class AnnouncementController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+
+	@Autowired
+	private UserService		userService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -43,31 +48,55 @@ public class AnnouncementController extends AbstractController {
 		ModelAndView result = null;
 		Collection<Announcement> announcements = null;
 		Project project = null;
-		Actor actor = null;
 		String requestURI = null;
+		String createURI = null;
+		Actor actor = null;
+		boolean canCreate = false;
 
 		project = this.projectService.findOne(projectId);
-
 		Assert.notNull(project);
 
-		if (this.actorService.checkLogin()) {
-			actor = this.actorService.findByPrincipal();
+		// ¿Quienes pueden entrar aqui? ADMIN, USER, MODERATOR, CORPORATION, anonymous
+		try {
+			if (this.actorService.checkLogin()) {
+				actor = this.actorService.findByPrincipal();
 
-			if (this.actorService.checkAuthority(actor, "USER"))
-				result = new ModelAndView("redirect:/announcement/user/list.do?projectId=" + projectId);
+				if (this.actorService.checkAuthority(actor, "USER")) {			//...es USER
+					User principal = null;
+					principal = this.userService.findByPrincipal();
 
-		} else {
-			Assert.isTrue(!project.getIsDraft());
-			Assert.isTrue(!project.getIsCancelled());
+					// Los announcements pueden verlos si no es draft
+					if (!project.getCreator().equals(principal)) {				// Si no es el creator del project
+						Assert.isTrue(!project.getIsDraft());
+						announcements = project.getAnnouncements();
+					} else {
+						announcements = project.getAnnouncements();
+						canCreate = true;
+					}
+				} else if (this.actorService.checkAuthority(actor, "ADMIN"))	//...es ADMIN
+					announcements = project.getAnnouncements();
+				else {															//...es MODERATOR o CORPORATION
+					Assert.isTrue(!project.getIsDraft());
+					announcements = project.getAnnouncements();
+				}
+			} else {															// Si es anonymous
+				Assert.isTrue(!project.getIsDraft());
+				announcements = project.getAnnouncements();
+			}
 
-			requestURI = "announcement/list.do";
-
-			announcements = project.getAnnouncements();
-
-			result = new ModelAndView("announcement/list");
-			result.addObject("announcements", announcements);
-			result.addObject("requestURI", requestURI);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result.addObject("message", oops.getMessage());
 		}
+
+		requestURI = "announcement/list.do";
+		createURI = "announcement/user/create.do?projectId=" + projectId;
+
+		result = new ModelAndView("announcement/list");
+		result.addObject("announcements", announcements);
+		result.addObject("requestURI", requestURI);
+		result.addObject("createURI", createURI);
+		result.addObject("canCreate", canCreate);
 
 		return result;
 	}
