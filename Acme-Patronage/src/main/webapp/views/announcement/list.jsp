@@ -35,12 +35,12 @@
 	</display:column>
 	
 	<spring:message code="announcementComment.listGeneral" var="aCom"/>
-	<display:column title="${aCom}">
+	<display:column title="${aCom}" style="${style}">
 	<a href="announcementComment/list.do?announcementId=${row.id}"><spring:message code="announcementComment.announcement.list"></spring:message></a>
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		<display:column>
+		<display:column style="${style}">
 		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
 		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
 		</jstl:if>

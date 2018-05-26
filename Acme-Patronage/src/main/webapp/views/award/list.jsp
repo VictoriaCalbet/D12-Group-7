@@ -53,7 +53,7 @@
 	</display:column>
 	
 	<spring:message code="awardComment.list" var="listAwardComments"/>
-	<display:column title="${listAwardComments}">
+	<display:column title="${listAwardComments}" style="${style}">
 		<spring:message code="awardComment.listAwardComments" var="awardCommentList"/>
 		<a href="awardComment/list.do?awardId=${row.id}"><jstl:out value="${awardCommentList}"/></a>
 	</display:column>

@@ -117,13 +117,13 @@
 	</display:column>
 	
 	<spring:message code="projectComment.listComments" var="Comment" />
-	<display:column title="${Comment}">
+	<display:column title="${Comment}" style="${style}">
 	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
 	
-	<display:column>
+	<display:column style="${style}">
 	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
 	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
 	</jstl:if>
