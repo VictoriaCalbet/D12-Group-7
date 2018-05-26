@@ -41,8 +41,11 @@
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
+		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
 		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+		</jstl:if>
 		</display:column>
+		
 	</security:authorize>
 
 </display:table>

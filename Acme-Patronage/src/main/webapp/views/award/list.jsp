@@ -60,8 +60,10 @@
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
+		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
 		<spring:message code="awardComment.create" var="awardComment"/>
 		<a href="awardComment/user/create.do?awardId=${row.id}"><jstl:out value="${awardComment}"/></a>
+		</jstl:if>
 		</display:column>
 	
 	</security:authorize>

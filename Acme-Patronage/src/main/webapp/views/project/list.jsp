@@ -124,7 +124,9 @@
 	<security:authorize access="hasRole('USER')">
 	
 	<display:column>
+	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
 	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
+	</jstl:if>
 	</display:column>	
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
