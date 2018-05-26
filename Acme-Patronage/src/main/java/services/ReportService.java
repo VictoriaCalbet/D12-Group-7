@@ -25,14 +25,13 @@ public class ReportService {
 	@Autowired
 	private ReportRepository	reportRepository;
 
+	// Supporting services ----------------------------------------------------
 	@Autowired
 	private UserService			userService;
 
 	@Autowired
 	private ModeratorService	moderatorService;
 
-
-	// Supporting services ----------------------------------------------------
 
 	// Constructors -----------------------------------------------------------
 

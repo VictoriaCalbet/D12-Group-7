@@ -44,7 +44,7 @@ public class ReportModeratorController extends AbstractController {
 			this.reportService.rejectReport(reportId);
 			result = new ModelAndView("redirect:/report/moderator/list.do");
 		} catch (final Throwable oops) {
-			String messageError = "patronage.commit.error";
+			String messageError = "report.commit.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
 			result = this.list();
@@ -72,7 +72,7 @@ public class ReportModeratorController extends AbstractController {
 				this.reportService.acceptReport(reportForm.getId(), reportForm.getReason());
 				result = new ModelAndView("redirect:/report/moderator/list.do");
 			} catch (final Throwable oops) {
-				String messageError = "patronage.commit.error";
+				String messageError = "report.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
 				result = this.createEditModelAndView(reportForm, messageError);

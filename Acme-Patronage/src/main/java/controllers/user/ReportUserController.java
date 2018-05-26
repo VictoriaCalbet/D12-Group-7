@@ -44,7 +44,7 @@ public class ReportUserController extends AbstractController {
 				this.reportService.saveFromCreate(report);
 				result = new ModelAndView("redirect:/");
 			} catch (final Throwable oops) {
-				String messageError = "project.commit.error";
+				String messageError = "report.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
 				result = this.createEditModelAndView(report, messageError);

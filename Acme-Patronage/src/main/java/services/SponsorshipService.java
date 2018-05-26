@@ -1,7 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
 import domain.Corporation;
+import domain.Patronage;
 import domain.Sponsorship;
 
 @Service
@@ -21,11 +25,14 @@ public class SponsorshipService {
 	@Autowired
 	private SponsorshipRepository	sponsorshipRepository;
 
+	// Supporting services ----------------------------------------------------
+
 	@Autowired
 	private CorporationService		corporationService;
 
+	@Autowired
+	private ProjectService			projectService;
 
-	// Supporting services ----------------------------------------------------
 
 	// Constructors -----------------------------------------------------------
 
@@ -35,7 +42,6 @@ public class SponsorshipService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	// TODO: Sponsorship - create
 	public Sponsorship create() {
 		final Sponsorship result;
 		result = new Sponsorship();
@@ -68,6 +74,7 @@ public class SponsorshipService {
 		Assert.notNull(sponsorship.getBannerURL(), "message.error.sponsorship.null.banner");
 		Assert.notNull(sponsorship.getPageURL(), "message.error.sponsorship.null.page");
 		Assert.notNull(sponsorship.getProject(), "message.error.sponsorship.null.project");
+		this.checkEconomicGoal(sponsorship);
 		Sponsorship sponsorshipInDB;
 		sponsorshipInDB = this.sponsorshipRepository.save(sponsorship);
 
@@ -91,11 +98,32 @@ public class SponsorshipService {
 		return sponsorshipInDB;
 	}
 
+	public void deleteByCorporation(final Sponsorship sponsorship) {
+		Assert.notNull(sponsorship, "message.error.sponsorship.null");
+
+		Sponsorship sponsorshipInDB;
+		sponsorshipInDB = this.sponsorshipRepository.findOne(sponsorship.getId());
+		Assert.notNull(sponsorshipInDB, "message.error.sponsorship.null.indb");
+		this.isCorrectCorporationAunthenticate(sponsorshipInDB.getCorporation().getId());
+		this.sponsorshipRepository.delete(sponsorshipInDB);
+	}
 	public void flush() {
 		this.sponsorshipRepository.flush();
 	}
 
 	// Other business methods -------------------------------------------------
+	public Sponsorship getRandomSponsorshipByProjectId(final int projectId) {
+		final List<Sponsorship> sponsorships = new ArrayList<Sponsorship>(this.projectService.findOne(projectId).getSponsorships());
+		final int nSponsorships = sponsorships.size();
+		Sponsorship s = null;
+		if (nSponsorships != 0) {
+			final Random random = new Random();
+			final int randomIndex = random.nextInt(nSponsorships);
+			s = sponsorships.get(randomIndex);
+		}
+
+		return s;
+	}
 	//Auxiliar method ---------------------------------------------------------
 	private Corporation isCorporationAunthenticate() {
 		Corporation actor;
@@ -103,12 +131,20 @@ public class SponsorshipService {
 		Assert.notNull(actor);
 		String authority;
 		authority = actor.getUserAccount().getAuthorities().iterator().next().getAuthority();
-		Assert.isTrue(authority.equals("CORPORATION"), "message.error.advertisement.notcorporation");
+		Assert.isTrue(authority.equals("CORPORATION"), "message.error.sponsorship.notcorporation");
 		return actor;
 	}
 
 	private void isCorrectCorporationAunthenticate(final int corporationId) {
-		Assert.isTrue(this.isCorporationAunthenticate().getId() == corporationId, "message.error.advertisement.badcorporation");
+		Assert.isTrue(this.isCorporationAunthenticate().getId() == corporationId, "message.error.sponsorship.badcorporation");
+	}
+
+	private void checkEconomicGoal(final Sponsorship sponsorship) {
+		Double totalAmountReached;
+		totalAmountReached = 0.0;
+		for (final Patronage p : sponsorship.getProject().getPatronages())
+			totalAmountReached = totalAmountReached + p.getAmount();
+		Assert.isTrue(sponsorship.getProject().getEconomicGoal() > totalAmountReached, "message.error.sponsorship.economicgoalreached");
 	}
 
 	// Dashboard --------------------------------------------------------------

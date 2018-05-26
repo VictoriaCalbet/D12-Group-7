@@ -69,6 +69,10 @@
 		<security:authorize access="hasRole('MODERATOR')">
 			<li><a class="fNiv" href="report/moderator/list.do"><spring:message code="master.page.report.moderator.list" /></a></li>
 		</security:authorize>
+		
+		<security:authorize access="hasRole('CORPORATION')">
+			<li><a class="fNiv" href="sponsorship/corporation/list.do"><spring:message code="master.page.sponsorshipt.corporation.list" /></a></li>
+		</security:authorize>
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.register" /></a>

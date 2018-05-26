@@ -134,7 +134,12 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
-	
+	<spring:message code="project.sponsorships" var="sponsorships" />
+	<display:column sortable="false" title="${sponsorships}">
+		<a href="sponsorship/list.do?projectId=${row.id}">
+			${sponsorships}
+		</a>
+	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
 	
@@ -224,6 +229,13 @@
 	</display:column>
 	
 	</security:authorize>
+	
+	<spring:message code="project.display" var="display" />
+	<display:column sortable="false" title="${display}">
+		<a href="project/display.do?projectId=${row.id}">
+			${display}
+		</a>
+	</display:column>
 </display:table>
 
 <security:authorize access="hasRole('USER')">

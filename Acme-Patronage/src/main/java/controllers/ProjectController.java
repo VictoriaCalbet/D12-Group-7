@@ -26,6 +26,7 @@ import services.ActorService;
 import services.CategoryService;
 import services.PatronageService;
 import services.ProjectService;
+import services.SponsorshipService;
 import services.UserService;
 import domain.Actor;
 import domain.Category;
@@ -50,6 +51,9 @@ public class ProjectController extends AbstractController {
 
 	@Autowired
 	private CategoryService		categoryService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -89,6 +93,22 @@ public class ProjectController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int projectId) {
+		ModelAndView result;
+		Project projectInDB;
+		projectInDB = this.projectService.findOne(projectId);
+		Collection<Project> projects;
+		projects = this.projectService.findProjectFutureDueDate();
+		if (projectInDB == null || !projects.contains(projectInDB))
+			result = new ModelAndView("redirect:/");
+		else {
+			result = new ModelAndView("project/display");
+			result.addObject("project", projectInDB);
+			result.addObject("sponsorshipBanner", this.sponsorshipService.getRandomSponsorshipByProjectId(projectInDB.getId()));
+		}
+		return result;
+	}
 	//List ordered
 
 	@RequestMapping(value = "/listOrdered", method = RequestMethod.GET)

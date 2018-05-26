@@ -17,3 +17,38 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+
+<div>
+	<b><spring:message code="project.title" />: </b>
+	<jstl:out value="${project.title}" /><br>
+	
+	<b><spring:message code="project.description" />: </b>
+	<jstl:out value="${project.description}" /><br>	
+	
+	<b><spring:message code="project.economicGoal" />: </b>
+	<jstl:out value="${project.economicGoal}" /><br>
+	
+
+	
+	<b><spring:message code="project.minimumPatronageAmount" />: </b>
+	<jstl:out value="${project.minimumPatronageAmount}" /><br><br>
+	
+	<div>
+	<b><spring:message code="project.sponsorship" />: </b>
+	</div>
+
+	<jstl:if test="${sponsorshipBanner!=null}">
+		<spring:url var="sponsorshipBannerURL"
+			value="${sponsorshipBanner.bannerURL}" />
+		<spring:url var="sponsorshipPageURL"
+			value="${sponsorshipBanner.pageURL}" />
+		<spring:message code="project.sponsorship" var="sponsorship" />
+		<a href="${sponsorshipPageURL}"> <img
+			src="${sponsorshipBannerURL}" alt="${sponsorship}" />
+		</a>
+	</jstl:if>
+	<jstl:if test="${sponsorshipBanner==null}">
+		<spring:message code="project.sponsorship.noBannerUrl" />
+</jstl:if>
+</div>
