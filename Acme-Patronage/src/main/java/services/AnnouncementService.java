@@ -43,7 +43,7 @@ public class AnnouncementService {
 
 		result = new Announcement();
 		result.setAnnouncementComments(new ArrayList<AnnouncementComment>());
-		result.setCreationMoment(new Date());
+		result.setCreationMoment(new Date(System.currentTimeMillis() - 1000));
 
 		return result;
 	}
@@ -61,7 +61,7 @@ public class AnnouncementService {
 	}
 
 	public Announcement save(final Announcement announcement) {
-		Assert.notNull(announcement);
+		Assert.notNull(announcement, "message.error.announcement.null");
 		Announcement result = null;
 		result = this.announcementRepository.save(announcement);
 		return result;
@@ -76,8 +76,7 @@ public class AnnouncementService {
 		Assert.notNull(announcement, "message.error.announcement.null");
 		Assert.notNull(user, "message.error.announcement.principal.null");
 		Assert.isTrue(announcement.getProject().getCreator().equals(user), "message.error.announcement.user.owner");
-
-		announcement.setCreationMoment(new Date());
+		announcement.setCreationMoment(new Date(System.currentTimeMillis() - 1000));
 
 		// Paso 1: realizo la entidad del servicio Announcement
 
@@ -87,11 +86,16 @@ public class AnnouncementService {
 
 		return result;
 	}
-
 	public void flush() {
 		this.announcementRepository.flush();
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Announcement> findStreamThatIFunded(final int userId) {
+		Collection<Announcement> result = null;
+		result = this.announcementRepository.findStreamThatIFunded(userId);
+		return result;
+	}
 
 }

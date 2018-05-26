@@ -36,10 +36,3 @@
 	</display:column>
 
 </display:table>
-
-<security:authorize access="hasRole('USER')">
-
-	<a href="announcementComment/user/create.do"> 
-			<spring:message code="announcementComment.create"/></a>
-
-</security:authorize>

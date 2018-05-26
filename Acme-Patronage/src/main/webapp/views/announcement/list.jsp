@@ -33,12 +33,28 @@
 	<display:column title="${announcementCreationMomentHeader}" style="${style}">
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
 	</display:column>
+	
+	<spring:message code="announcementComment.listGeneral" var="aCom"/>
+	<display:column title="${aCom}" style="${style}">
+	<a href="announcementComment/list.do?announcementId=${row.id}"><spring:message code="announcementComment.announcement.list"></spring:message></a>
+	</display:column>
+	
+	<security:authorize access="hasRole('USER')">
+		<display:column style="${style}">
+		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
+		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+		</jstl:if>
+		</display:column>
+		
+	</security:authorize>
 
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-	<spring:message code="announcement.create" var="announcementCreateLink"/>
-	<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
-	<br/>
-	<br/>
+	<jstl:if test="${canCreate eq true}">
+		<spring:message code="announcement.create" var="announcementCreateLink"/>
+		<a href="${createURI}"><jstl:out value="${announcementCreateLink}"/></a>
+		<br/>
+		<br/>
+	</jstl:if>
 </security:authorize>

@@ -37,4 +37,4 @@
 	<acme:submit name="save" code="award.save"/> &nbsp;
 	<acme:cancel url="${cancelURI}" code="award.cancel"/>
 	<br/>
-	</form:form>
+</form:form>

@@ -53,15 +53,17 @@
 	</display:column>
 	
 	<spring:message code="awardComment.list" var="listAwardComments"/>
-	<display:column title="${listAwardComments}">
+	<display:column title="${listAwardComments}" style="${style}">
 		<spring:message code="awardComment.listAwardComments" var="awardCommentList"/>
 		<a href="awardComment/list.do?awardId=${row.id}"><jstl:out value="${awardCommentList}"/></a>
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
+		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
 		<spring:message code="awardComment.create" var="awardComment"/>
 		<a href="awardComment/user/create.do?awardId=${row.id}"><jstl:out value="${awardComment}"/></a>
+		</jstl:if>
 		</display:column>
 	
 	</security:authorize>

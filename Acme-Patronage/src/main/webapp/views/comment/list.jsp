@@ -23,6 +23,9 @@
 	<spring:message code="announcementComment.user" var="aCUser" />	
 	<display:column property="user.fullName" title="${aCUser}"/>
 
+	<spring:message code="announcementComment.announcement" var="aN" />	
+	<display:column property="announcement.title" title="${aN}"/>
+
 	<spring:message code="announcementComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
 	
@@ -34,6 +37,10 @@
 	<display:column title="${aCCreationMoment}">
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
 	</display:column>
+	
+	<display:column>
+		<a href="comment/administrator/deleteAnnouncementComment.do?announcementCommentId=${row.id}"><spring:message code="awardComment.delete"/></a>
+	</display:column>
 
 </display:table>
 
@@ -41,6 +48,9 @@
 
 	<spring:message code="awardComment.user" var="aCUser" />	
 	<display:column property="user.fullName" title="${aCUser}"/>
+	
+	<spring:message code="awardComment.award" var="aW" />	
+	<display:column property="award.name" title="${aW}"/>
 
 	<spring:message code="awardComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
@@ -64,6 +74,9 @@
 
 	<spring:message code="projectComment.user" var="aCUser" />	
 	<display:column property="user.fullName" title="${aCUser}"/>
+	
+	<spring:message code="projectComment.project" var="aPr" />	
+	<display:column property="project.title" title="${aPr}"/>
 
 	<spring:message code="projectComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
@@ -75,6 +88,10 @@
 	<spring:message code="projectComment.creationMoment.pattern" var="datePattern"/>
 	<display:column title="${aCCreationMoment}">
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
+	</display:column>
+	
+	<display:column>
+		<a href="comment/administrator/deleteProjectComment.do?projectCommentId=${row.id}"><spring:message code="projectComment.delete"/></a>
 	</display:column>
 
 </display:table>

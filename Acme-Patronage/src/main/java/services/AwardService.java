@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +68,7 @@ public class AwardService {
 	}
 
 	public Award save(final Award award) {
-		Assert.notNull(award);
+		Assert.notNull(award, "message.error.award.null");
 		Award result = null;
 		result = this.awardRepository.save(award);
 		return result;
@@ -82,16 +83,15 @@ public class AwardService {
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
-		Assert.isTrue(award.getMoneyGoal() >= award.getProject().getMinimumPatronageAmount(), "message.error.award.moneyGoalIsLower");
 		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
+		Assert.isTrue(award.getProject().getDueDate().after(new Date(System.currentTimeMillis() - 1000)), "message.error.award.dueDateIsPast");
+		Assert.isTrue(award.getMoneyGoal() >= award.getProject().getMinimumPatronageAmount(), "message.error.award.moneyGoalIsLower");
 
 		// Paso 1: realizo la entidad del servicio Award
 
 		result = this.save(award);
 
 		// Paso 2: persisto el resto de relaciones a las que el objeto Award esta relacionada.
-
-		result.getProject().getAwards().add(result);
 
 		return result;
 	}
@@ -107,7 +107,9 @@ public class AwardService {
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 		Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
+		Assert.isTrue(award.getProject().getDueDate().after(new Date(System.currentTimeMillis() - 1000)), "message.error.award.dueDate");
 		Assert.isTrue(award.getMoneyGoal() >= award.getProject().getMinimumPatronageAmount(), "message.error.award.moneyGoalIsLower");
+
 		// Paso 1: realizo la entidad del servicio Award
 
 		result = this.save(award);
@@ -124,6 +126,7 @@ public class AwardService {
 		Assert.notNull(user, "message.error.award.principal.null");
 
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
+		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
 		// Paso 1: actualizamos el resto de relaciones con la entidad Award
 

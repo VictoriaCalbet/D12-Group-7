@@ -74,31 +74,13 @@
 	<spring:message code="project.awards" var="awardsHeader" />	
 	<spring:message code="project.showAwards" var="showAwardsLink" />
 	<display:column title="${awardsHeader}" style="${style}">
-	
-		<security:authorize access="hasRole('USER')">
-			<a href="award/user/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="hasRole('ADMIN')">
-			<a href="award/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-			<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-
+		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
 	</display:column>
 
 	<spring:message code="project.announcements" var="announcementsHeader" />	
 	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
 	<display:column title="${announcementsHeader}" style="${style}">
-		<security:authorize access="hasRole('USER')">
-			<a href="announcement/user/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="hasRole('ADMIN')">
-			<a href="announcement/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-			<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
+		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
 	</display:column>
 	
 	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
@@ -134,14 +116,27 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
+
 	<spring:message code="project.sponsorships" var="sponsorships" />
 	<display:column sortable="false" title="${sponsorships}">
 		<a href="sponsorship/list.do?projectId=${row.id}">
 			${sponsorships}
 		</a>
 	</display:column>
+
+	<spring:message code="projectComment.listComments" var="Comment" />
+	<display:column title="${Comment}" style="${style}">
+	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
+
+	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
+	
+	<display:column style="${style}">
+	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
+	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
+	</jstl:if>
+	</display:column>	
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">
