@@ -80,15 +80,7 @@
 	<spring:message code="project.announcements" var="announcementsHeader" />	
 	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
 	<display:column title="${announcementsHeader}" style="${style}">
-		<security:authorize access="hasRole('USER')">
-			<a href="announcement/user/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="hasRole('ADMIN')">
-			<a href="announcement/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-			<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-		</security:authorize>
+		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
 	</display:column>
 	
 	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
