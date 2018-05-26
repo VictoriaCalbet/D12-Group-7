@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.AwardService;
 import services.ProjectService;
+import services.UserService;
 import domain.Actor;
 import domain.Award;
 import domain.Project;
+import domain.User;
 
 @Controller
 @RequestMapping("/award")
@@ -33,6 +36,9 @@ public class AwardController extends AbstractController {
 	@Autowired
 	private ActorService	actorService;
 
+	@Autowired
+	private UserService		userService;
+
 
 	// Constructors ---------------------------------------------------------
 
@@ -43,42 +49,75 @@ public class AwardController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int projectId) {
+	public ModelAndView list(@RequestParam final int projectId, @RequestParam(required = false) final String message) {
 		ModelAndView result = null;
 		Collection<Award> awards = null;
 		Project project = null;
-		Actor actor = null;
 		String requestURI = null;
 		String displayURI = null;
+		String createURI = null;
+		String editURI = null;
+		String deleteURI = null;
+		Actor actor = null;
+		boolean canCreate = false;
 
-		if (this.actorService.checkLogin()) {
-			actor = this.actorService.findByPrincipal();
+		project = this.projectService.findOne(projectId);
+		Assert.notNull(project);
 
-			if (this.actorService.checkAuthority(actor, "USER"))
-				result = new ModelAndView("redirect:/award/user/list.do?projectId=" + projectId);
+		result = new ModelAndView("award/list");
 
-		} else {
-			project = this.projectService.findOne(projectId);
+		// ¿Quienes pueden entrar aqui? ADMIN, USER, MODERATOR, CORPORATION, anonymous
+		try {
+			if (this.actorService.checkLogin()) {		// Si el usuario logueado en el sistema...
+				actor = this.actorService.findByPrincipal();
 
-			Assert.notNull(project);
+				if (this.actorService.checkAuthority(actor, "USER")) {			//...es USER
+					User principal = null;
+					principal = this.userService.findByPrincipal();
 
-			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
-			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
-
-			requestURI = "award/list.do";
-			displayURI = "award/display.do?awardId=";
-
-			awards = project.getAwards();
-
-			result = new ModelAndView("award/list");
-			result.addObject("awards", awards);
-			result.addObject("requestURI", requestURI);
-			result.addObject("displayURI", displayURI);
+					// Solo el creador puede ver los premios si es draft
+					if (!project.getCreator().equals(principal)) {	// Si no es el creator del project
+						Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+						awards = project.getAwards();
+					} else {
+						awards = project.getAwards();
+						if (!project.getIsCancelled() || project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)))
+							canCreate = true;
+					}
+				} else if (this.actorService.checkAuthority(actor, "ADMIN"))	//...es ADMIN
+					awards = project.getAwards();
+				else {															//...es MODERATOR o CORPORATION
+					Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+					Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+					awards = project.getAwards();
+				}
+			} else {															// Si es anonymous	
+				Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+				Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+				awards = project.getAwards();
+			}
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result.addObject("message", oops.getMessage());
 		}
+
+		requestURI = "award/list.do";
+		displayURI = "award/display.do?awardId=";
+		createURI = "award/user/create.do?projectId=" + projectId;
+		editURI = "award/user/edit.do?awardId=";
+		deleteURI = "award/user/delete.do?awardId=";
+
+		result.addObject("awards", awards);
+		result.addObject("requestURI", requestURI);
+		result.addObject("displayURI", displayURI);
+		result.addObject("createURI", createURI);
+		result.addObject("editURI", editURI);
+		result.addObject("deleteURI", deleteURI);
+		result.addObject("canCreate", canCreate);
+		result.addObject("message", message);
 
 		return result;
 	}
-
 	// Display --------------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -86,29 +125,53 @@ public class AwardController extends AbstractController {
 		ModelAndView result = null;
 		Award award = null;
 		Project project = null;
-		Actor actor = null;
 		String cancelURI = null;
+		String editURI = null;
+		Actor actor = null;
 
 		award = this.awardService.findOne(awardId);
+		project = award.getProject();
+
 		Assert.notNull(award);
+		Assert.notNull(project);
 
-		if (this.actorService.checkLogin()) {
-			actor = this.actorService.findByPrincipal();
+		// ¿Quienes pueden entrar aqui? ADMIN, USER, MODERATOR, CORPORATION, anonymous
+		try {
+			if (this.actorService.checkLogin()) {				// Si el usuario logueado en el sistema...
+				actor = this.actorService.findByPrincipal();
 
-			if (this.actorService.checkAuthority(actor, "USER"))
-				result = new ModelAndView("redirect:/award/user/display.do?awardId=" + awardId);
+				if (this.actorService.checkAuthority(actor, "USER")) {			//...es USER
+					User principal = null;
+					principal = this.userService.findByPrincipal();
 
-		} else {
-			project = award.getProject();
-			cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+					// Solo el creador puede ver un premio si es draft
+					if (!project.getCreator().equals(principal)) {      // Si user no es el creador del proyecto...
+						Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+						Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+					}
+				} else if (this.actorService.checkAuthority(actor, "ADMIN")) {	//...es ADMIN
+					// Puede visualizarlo directamente
+				} else {														//...es MODERATOR o CORPORATION
+					Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+					Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+				}
 
-			Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
-			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
-
-			result = new ModelAndView("award/display");
-			result.addObject("award", award);
-			result.addObject("cancelURI", cancelURI);
+			} else {															// Si es anonymous
+				Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
+				Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
+			}
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/project/list.do?projectId=" + project.getId());
+			result.addObject("message", oops.getMessage());
 		}
+
+		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+		editURI = "award/user/edit.do?awardId=" + award.getId();
+
+		result = new ModelAndView("award/display");
+		result.addObject("award", award);
+		result.addObject("cancelURI", cancelURI);
+		result.addObject("editURI", editURI);
 
 		return result;
 	}
