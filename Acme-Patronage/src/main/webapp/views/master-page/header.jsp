@@ -41,6 +41,8 @@
 			<li><a class="fNiv" href="report/user/create.do"><spring:message code="master.page.report.user.create" /></a></li>		
 			<li><a class="fNiv" href="patronage/user/list.do"><spring:message code="master.page.patronages.user.list" /></a></li>			
 			<li><a class="fNiv" href="awardComment/user/list.do"><spring:message code="awardComment.list"/></a></li>			
+			<li><a class="fNiv" href="projectComment/user/list.do"><spring:message code="projectComment.list"/></a></li>			
+			<li><a class="fNiv" href="announcementComment/user/list.do"><spring:message code="announcementComment.listOwn"/></a></li>			
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">

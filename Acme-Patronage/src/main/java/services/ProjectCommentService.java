@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ProjectCommentRepository;
+import domain.Administrator;
 import domain.ProjectComment;
 
 @Service
@@ -23,6 +25,12 @@ public class ProjectCommentService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private UserService	userService;
+	
+	@Autowired
+	private AdministratorService	administratorService;
+	
 	// Constructors -----------------------------------------------------------
 
 	public ProjectCommentService() {
@@ -33,7 +41,9 @@ public class ProjectCommentService {
 
 	// TODO: ProjectComment - create
 	public ProjectComment create() {
-		final ProjectComment result = null;
+		final ProjectComment result = new ProjectComment();
+		
+		result.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
@@ -62,7 +72,14 @@ public class ProjectCommentService {
 
 		final ProjectComment result;
 
-		Assert.notNull(pC);
+		Assert.notNull(pC,"message.error.projectComment.null");
+		Assert.notNull(pC.getProject(),"message.error.projectComment.project.null");
+		Assert.notNull(pC.getText(),"message.error.projectComment.text.null");
+		Assert.notNull(pC.getRating(),"message.error.projectComment.rating.null");
+		
+		pC.setUser(this.userService.findByPrincipal());
+		
+		pC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 
 		result = this.projectCommentRepository.save(pC);
 
@@ -73,6 +90,17 @@ public class ProjectCommentService {
 		this.projectCommentRepository.flush();
 	}
 
+	public void delete(ProjectComment pC){
+		
+		Assert.notNull(pC,"message.error.projectComment.null");
+		
+		Administrator admin = this.administratorService.findByPrincipal();
+		
+		Assert.notNull(admin);
+		
+		this.projectCommentRepository.delete(pC.getId());
+	}
+	
 	// Other business methods -------------------------------------------------
 
 	public Collection<ProjectComment> listAllProjectComments(final int projectId) {

@@ -108,8 +108,6 @@ public class CommentFormService {
 			
 			int userId = this.userService.findByPrincipal().getId();
 			
-			//TODO: Check that the user who is going to post a comment has funded the proyect 
-			
 			
 			Assert.notNull(anC,"message.error.projectComment.null");
 			Assert.notNull(anC.getText(),"message.error.projectComment.text.null");
@@ -124,13 +122,14 @@ public class CommentFormService {
 				
 				final Project p = this.projectService.findOne(id);
 				
-				Assert.notNull(p);
-				
+				Assert.notNull(p,"message.error.projectComment.project.null");
+				Assert.isTrue(!p.getIsCancelled(),"message.error.projectComment.cancelledProject");
+				Assert.isTrue(!p.getIsDraft(),"message.error.projectComment.draftProject");
 				final ProjectComment pC = this.projectCommentService.create();
 				
 				pC.setText(anC.getText());
 				pC.setRating(anC.getRating());
-				pC.setCreationMoment(anC.getCreationMoment());
+				pC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				
 				pC.setProject(p);
 				
@@ -146,12 +145,13 @@ public class CommentFormService {
 				Assert.notNull(a,"message.error.awardComment.award.null");
 				
 				Assert.isTrue(!a.getProject().getIsDraft(),"message.error.awardComment.draftProject");
+				Assert.isTrue(!a.getProject().getIsCancelled(),"message.error.awardComment.draftProject");
 				
 				final AwardComment aC = this.awardCommentService.create();
 				
 				aC.setText(anC.getText());
 				aC.setRating(anC.getRating());
-				aC.setCreationMoment(anC.getCreationMoment());
+				aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				aC.setAward(a);
 				
 				result = this.awardCommentService.saveFromCreate(aC);
@@ -163,16 +163,17 @@ public class CommentFormService {
 				
 				final Announcement a = this.announcementService.findOne(id);
 				
-				Assert.isTrue(this.userService.findOne(userId).equals(a.getUser()));
-				Assert.isTrue(this.patronageService.getPatronagesOfProjectByUser(this.userService.findByPrincipal().getId(),a.getProject().getId()).size()>0);
+				Assert.isTrue(!a.getProject().getIsDraft(),"message.error.announcementComment.draftProject");
+				Assert.isTrue(!a.getProject().getIsCancelled(),"message.error.announcementComment.draftProject");
+				Assert.isTrue(this.patronageService.getPatronagesOfProjectByUser(this.userService.findByPrincipal().getId(),a.getProject().getId()).size()>0 || this.userService.findOne(userId).equals(a.getUser()),"message.error.announcementComment.noPatronages");
 				
-				Assert.notNull(a);
+				Assert.notNull(a,"message.error.announcementComment.announcement.null");
 				
 				final AnnouncementComment aC = this.announcementCommentService.create();
 				
 				aC.setText(anC.getText());
 				aC.setRating(anC.getRating());
-				aC.setCreationMoment(anC.getCreationMoment());
+				aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				aC.setAnnouncement(a);
 				
 				result = this.announcementCommentService.saveFromCreate(aC);

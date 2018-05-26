@@ -22,12 +22,20 @@
 
 	<!-- Hidden attributes -->
 	<form:hidden path="id"/>
+	<form:hidden path="creationMoment"/>
 	
 	<acme:textbox code="projectComment.text" path="text"/>
+	<br/>
+	<form:label path="rating">
+	<spring:message code="projectComment.rating"/>
+	</form:label>
+	<form:errors cssClass="error" path="rating"/>
 	<form:select code="projectComment.rating" path="rating">
   		<form:options items="${numbers}"/>
 	</form:select>
+	<br/>
 	
+<br><br>		
 	<acme:submit name="save" code="projectComment.save" />
 	<acme:cancel url="/" code="projectComment.cancel" /> 	
 	

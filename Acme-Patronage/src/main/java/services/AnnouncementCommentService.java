@@ -78,7 +78,14 @@ public class AnnouncementCommentService {
 		
 		return result;
 	}
-
+	
+	public void delete(AnnouncementComment aC){
+		
+		Assert.notNull(aC,"message.error.announcementComment.null");
+		
+		this.announcementCommentRepository.delete(aC.getId());
+		
+	}
 	
 
 	public void flush() {

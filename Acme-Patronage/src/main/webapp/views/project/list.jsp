@@ -116,9 +116,16 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
-	
+	<spring:message code="projectComment.listComments" var="Comment" />
+	<display:column title="${Comment}">
+	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
+	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
+	
+	<display:column>
+	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
+	</display:column>	
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">

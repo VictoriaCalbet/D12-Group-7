@@ -33,6 +33,17 @@
 	<display:column title="${announcementCreationMomentHeader}" style="${style}">
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
 	</display:column>
+	
+	<spring:message code="announcementComment.listGeneral" var="aCom"/>
+	<display:column title="${aCom}">
+	<a href="announcementComment/list.do?announcementId=${row.id}"><spring:message code="announcementComment.announcement.list"></spring:message></a>
+	</display:column>
+	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+		</display:column>
+	</security:authorize>
 
 </display:table>
 
