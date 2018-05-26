@@ -74,17 +74,7 @@
 	<spring:message code="project.awards" var="awardsHeader" />	
 	<spring:message code="project.showAwards" var="showAwardsLink" />
 	<display:column title="${awardsHeader}" style="${style}">
-	
-		<security:authorize access="hasRole('USER')">
-			<a href="award/user/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="hasRole('ADMIN')">
-			<a href="award/administrator/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-			<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-		</security:authorize>
-
+		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
 	</display:column>
 
 	<spring:message code="project.announcements" var="announcementsHeader" />	
