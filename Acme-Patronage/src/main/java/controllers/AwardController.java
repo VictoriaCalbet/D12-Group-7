@@ -76,7 +76,7 @@ public class AwardController extends AbstractController {
 					principal = this.userService.findByPrincipal();
 
 					// Solo el creador puede ver los premios si es draft
-					if (!project.getCreator().equals(principal)) {	// Si no es el creator del project
+					if (!project.getCreator().equals(principal)) {				// Si no es el creator del project
 						Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
 						awards = project.getAwards();
 					} else {
