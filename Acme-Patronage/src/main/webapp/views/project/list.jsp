@@ -118,7 +118,7 @@
 	
 
 	<spring:message code="project.sponsorships" var="sponsorships" />
-	<display:column sortable="false" title="${sponsorships}">
+	<display:column sortable="false" title="${sponsorships}" style="${style}">
 		<a href="sponsorship/list.do?projectId=${row.id}">
 			${sponsorships}
 		</a>
@@ -226,7 +226,7 @@
 	</security:authorize>
 	
 	<spring:message code="project.display" var="display" />
-	<display:column sortable="false" title="${display}">
+	<display:column sortable="false" title="${display}" style="${style}">
 		<a href="project/display.do?projectId=${row.id}">
 			${display}
 		</a>
