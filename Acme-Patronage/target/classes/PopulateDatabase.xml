@@ -467,15 +467,26 @@
 	</bean>
 	
 	<bean id="award4" class="domain.Award">
-	
 		<property name="name" value="Award4"/>
 		<property name="description" value="I will make a large amount of examples."/>
-		<property name="moneyGoal" value="10000.0"/>
-		<property name="project" ref="project3"/>
+		<property name="moneyGoal" value="2000.0"/>
+		<property name="project" ref="project5"/>
+		<property name="awardComments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="award5" class="domain.Award">
+	
+		<property name="name" value="Award5"/>
+		<property name="description" value="Montgomery Burns Award for Outstanding Achievement in the Field of Excellence"/>
+		<property name="moneyGoal" value="2000.0"/>
+		<property name="project" ref="project5"/>
 		<property name="awardComments">
 		
 			<list>
-				
+			
 			</list>
 		
 		</property>
@@ -940,8 +951,7 @@
 		<property name="awards">
 		
 			<list>
-			
-			
+				<ref bean="award5"/>
 			</list>
 		
 		</property>
