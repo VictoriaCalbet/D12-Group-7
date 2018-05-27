@@ -19,6 +19,22 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
+<jsp:useBean id="now" class="java.util.Date"/>
+
+<jstl:choose>
+ <jstl:when test="${pageContext.response.locale.language=='en'}">
+      <fmt:setLocale value = "en_US"/>
+      <jstl:set var="patternCurrency" value="¤ #,##0.00"></jstl:set>
+ </jstl:when>
+ <jstl:otherwise>
+      <fmt:setLocale value = "es_ES"/>
+      <jstl:set var="patternCurrency" value="#,##0.00 ¤"></jstl:set>
+ </jstl:otherwise> 
+</jstl:choose>
+
+
+
+
 <div>
 	<b><spring:message code="project.title" />: </b>
 	<jstl:out value="${project.title}" /><br>
@@ -27,17 +43,17 @@
 	<jstl:out value="${project.description}" /><br>	
 	
 	<b><spring:message code="project.economicGoal" />: </b>
-	<jstl:out value="${project.economicGoal}" /><br>
+	<fmt:formatNumber value = "${project.economicGoal}" currencySymbol="&euro;" pattern="${patternCurrency}" type = "currency" minFractionDigits="2"/><br>
 	
-
 	
 	<b><spring:message code="project.minimumPatronageAmount" />: </b>
-	<jstl:out value="${project.minimumPatronageAmount}" /><br><br>
+	<fmt:formatNumber value = "${project.minimumPatronageAmount}" currencySymbol="&euro;" pattern="${patternCurrency}" type = "currency" minFractionDigits="2"/><br>
+	 <br/>
 	
 	<div>
 	<b><spring:message code="project.sponsorship" />: </b>
 	</div>
-
+ 	<br/>
 	<jstl:if test="${sponsorshipBanner!=null}">
 		<spring:url var="sponsorshipBannerURL"
 			value="${sponsorshipBanner.bannerURL}" />

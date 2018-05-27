@@ -71,18 +71,6 @@
 		<fmt:formatDate value="${row.creationMoment}" pattern="${datePattern}"/>
 	</display:column>
 	
-	<spring:message code="project.awards" var="awardsHeader" />	
-	<spring:message code="project.showAwards" var="showAwardsLink" />
-	<display:column title="${awardsHeader}" style="${style}">
-		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-	</display:column>
-
-	<spring:message code="project.announcements" var="announcementsHeader" />	
-	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
-	<display:column title="${announcementsHeader}" style="${style}">
-		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-	</display:column>
-	
 	<spring:message code="patronage.totalAmount" var="totalAmountsHeader" />
 	<display:column title="${totalAmountsHeader}" style="${style}">
 		<jstl:choose>
@@ -116,7 +104,18 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
+	<spring:message code="project.awards" var="awardsHeader" />	
+	<spring:message code="project.showAwards" var="showAwardsLink" />
+	<display:column title="${awardsHeader}" style="${style}">
+		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
+	</display:column>
 
+	<spring:message code="project.announcements" var="announcementsHeader" />	
+	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
+	<display:column title="${announcementsHeader}" style="${style}">
+		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
+	</display:column>
+	
 	<spring:message code="project.sponsorships" var="sponsorships" />
 	<display:column sortable="false" title="${sponsorships}" style="${style}">
 		<a href="sponsorship/list.do?projectId=${row.id}">
@@ -131,8 +130,9 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-	
-	<display:column style="${style}">
+		
+	<spring:message code="projectComment.createComments" var="createCommentHeader" />
+	<display:column title="${createCommentHeader}" style="${style}">
 	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
 	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
 	</jstl:if>
