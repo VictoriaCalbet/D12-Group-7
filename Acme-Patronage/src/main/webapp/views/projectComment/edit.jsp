@@ -26,14 +26,7 @@
 	
 	<acme:textbox code="projectComment.text" path="text"/>
 	<br/>
-	<form:label path="rating">
-	<spring:message code="projectComment.rating"/>
-	</form:label>
-	<form:errors cssClass="error" path="rating"/>
-	<form:select code="projectComment.rating" path="rating">
-  		<form:options items="${numbers}"/>
-	</form:select>
-	<br/>
+	<acme:textbox code="projectComment.rating" path="rating"/>
 	
 <br><br>		
 	<acme:submit name="save" code="projectComment.save" />

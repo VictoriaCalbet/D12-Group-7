@@ -25,9 +25,9 @@ public class Comment extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	text;
-	private Date	creationMoment;
-	private int		rating;
+	private String		text;
+	private Date		creationMoment;
+	private Integer		rating;
 
 
 	@NotBlank
@@ -51,13 +51,13 @@ public class Comment extends DomainEntity {
 	public void setCreationMoment(final Date creationMoment) {
 		this.creationMoment = creationMoment;
 	}
-
-	@Range(min = 1, max = 5)
-	public int getRating() {
+	
+	
+	public Integer getRating() {
 		return this.rating;
 	}
 
-	public void setRating(final int rating) {
+	public void setRating(final Integer rating) {
 		this.rating = rating;
 	}
 

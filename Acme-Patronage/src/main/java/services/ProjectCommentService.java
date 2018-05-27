@@ -72,10 +72,10 @@ public class ProjectCommentService {
 
 		final ProjectComment result;
 
+		Assert.isTrue(pC.getId()==0);
 		Assert.notNull(pC,"message.error.projectComment.null");
 		Assert.notNull(pC.getProject(),"message.error.projectComment.project.null");
 		Assert.notNull(pC.getText(),"message.error.projectComment.text.null");
-		Assert.notNull(pC.getRating(),"message.error.projectComment.rating.null");
 		
 		pC.setUser(this.userService.findByPrincipal());
 		

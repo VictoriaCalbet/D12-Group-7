@@ -71,8 +71,7 @@ public class AwardCommentService {
 	public AwardComment saveFromCreate(final AwardComment aC) {
 		
 		Assert.isTrue(aC.getId()==0);
-		Assert.notNull(aC,"message.error.awardComment.null ");
-		Assert.notNull(aC.getRating(),"message.error.awardComment.rating.null");
+		Assert.notNull(aC,"message.error.awardComment.null");
 		Assert.notNull(aC.getText(),"message.error.awardComment.text.null");
 		Assert.notNull(aC.getAward(),"message.error.awardComment.award.null");
 		

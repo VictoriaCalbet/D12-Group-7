@@ -25,13 +25,8 @@
 	<form:hidden path="creationMoment"/>
 	
 	<acme:textbox code="announcementComment.text" path="text"/>
-	<form:label path="rating">
-	<spring:message code="announcementComment.rating"/>
-	</form:label>
-	<form:errors cssClass="error" path="rating"/>
-	<form:select code="announcementComment.rating" path="rating">
-  		<form:options items="${numbers}"/>
-	</form:select>
+	<br/>
+	<acme:textbox code="announcementComment.rating" path="rating"/>
 	<br/>
 	
 	<acme:submit name="save" code="announcementComment.save" />

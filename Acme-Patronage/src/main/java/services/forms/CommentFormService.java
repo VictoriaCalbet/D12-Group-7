@@ -111,7 +111,6 @@ public class CommentFormService {
 			
 			Assert.notNull(anC,"message.error.projectComment.null");
 			Assert.notNull(anC.getText(),"message.error.projectComment.text.null");
-			Assert.notNull(anC.getRating(),"message.error.projectComment.rating.null");
 			
 			anC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 			
@@ -128,7 +127,10 @@ public class CommentFormService {
 				final ProjectComment pC = this.projectCommentService.create();
 				
 				pC.setText(anC.getText());
-				pC.setRating(anC.getRating());
+				if(anC.getRating()!=null){
+					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
+					pC.setRating(anC.getRating());
+				}
 				pC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				
 				pC.setProject(p);
@@ -150,7 +152,12 @@ public class CommentFormService {
 				final AwardComment aC = this.awardCommentService.create();
 				
 				aC.setText(anC.getText());
-				aC.setRating(anC.getRating());
+				
+				if(anC.getRating()!=null){
+					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
+					aC.setRating(anC.getRating());
+					}
+				
 				aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				aC.setAward(a);
 				
@@ -172,7 +179,12 @@ public class CommentFormService {
 				final AnnouncementComment aC = this.announcementCommentService.create();
 				
 				aC.setText(anC.getText());
-				aC.setRating(anC.getRating());
+				
+				if(anC.getRating()!=null){
+					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
+					aC.setRating(anC.getRating());
+					}
+				
 				aC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 				aC.setAnnouncement(a);
 				

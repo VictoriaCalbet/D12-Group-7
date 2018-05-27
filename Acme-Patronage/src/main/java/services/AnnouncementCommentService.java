@@ -66,9 +66,9 @@ public class AnnouncementCommentService {
 	// TODO: AnnouncementComment - saveFromCreate
 	public AnnouncementComment saveFromCreate(AnnouncementComment anC) {
 		
+		Assert.isTrue(anC.getId()==0);
 		Assert.notNull(anC);
 		Assert.notNull(anC.getText());
-		Assert.notNull(anC.getRating());
 		Assert.notNull(anC.getAnnouncement());
 		
 		anC.setCreationMoment(new Date(System.currentTimeMillis() - 1));

@@ -26,14 +26,7 @@
 	
 	<acme:textbox code="awardComment.text" path="text"/>
 	
-	<form:label path="rating">
-	<spring:message code="awardComment.rating"/>
-	</form:label>
-	<form:errors cssClass="error" path="rating"/>
-	<form:select code="awardComment.rating" path="rating">
-  		<form:options items="${numbers}"/>
-	</form:select>
-	<br/>
+	<acme:textbox code="awardComment.rating" path="rating"/>
 	<br/>
 	<acme:submit name="save" code="awardComment.save" />
 	<acme:cancel url="/" code="awardComment.cancel" /> 	
