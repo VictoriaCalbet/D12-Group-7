@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AnnouncementCommentRepository;
+import domain.Administrator;
 import domain.Announcement;
 import domain.AnnouncementComment;
 
@@ -27,6 +28,9 @@ public class AnnouncementCommentService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 	
 	// Constructors -----------------------------------------------------------
 
@@ -82,6 +86,10 @@ public class AnnouncementCommentService {
 	public void delete(AnnouncementComment aC){
 		
 		Assert.notNull(aC,"message.error.announcementComment.null");
+		
+		Administrator admin = this.administratorService.findByPrincipal();
+		
+		Assert.notNull(admin,"message.error.announcementComment.notAnAdmin");
 		
 		this.announcementCommentRepository.delete(aC.getId());
 		

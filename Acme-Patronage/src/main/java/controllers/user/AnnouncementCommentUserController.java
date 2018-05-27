@@ -55,7 +55,7 @@ public class AnnouncementCommentUserController extends AbstractController{
 		
 		Collection<AnnouncementComment> announcementComments;
 		final User u = this.userService.findByPrincipal();
-
+		
 		announcementComments = this.announcementCommentService.listAllAnnouncementCommentsOfUser(u.getId());
 		
 		result = new ModelAndView("announcementComment/list");

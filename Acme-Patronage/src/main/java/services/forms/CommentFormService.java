@@ -128,7 +128,6 @@ public class CommentFormService {
 				
 				pC.setText(anC.getText());
 				if(anC.getRating()!=null){
-					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
 					pC.setRating(anC.getRating());
 				}
 				pC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
@@ -154,7 +153,6 @@ public class CommentFormService {
 				aC.setText(anC.getText());
 				
 				if(anC.getRating()!=null){
-					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
 					aC.setRating(anC.getRating());
 					}
 				
@@ -181,7 +179,6 @@ public class CommentFormService {
 				aC.setText(anC.getText());
 				
 				if(anC.getRating()!=null){
-					Assert.isTrue(anC.getRating()>0&&anC.getRating()<6,"message.error.comment.wrongRating");
 					aC.setRating(anC.getRating());
 					}
 				

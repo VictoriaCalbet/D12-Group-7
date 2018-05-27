@@ -51,7 +51,7 @@ public class CommentForm extends DomainEntity {
 			this.creationMoment = creationMoment;
 		}
 
-		
+		@Range(min=1,max=5)
 		public Integer getRating() {
 			return this.rating;
 		}

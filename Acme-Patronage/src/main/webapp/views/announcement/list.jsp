@@ -10,6 +10,7 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -41,9 +42,11 @@
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column style="${style}">
-		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
+		
+		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false and (row.project.creator.userAccount.username eq loggedactor.username or fn:length(patronages)>0)}">
 		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
 		</jstl:if>
+		
 		</display:column>
 		
 	</security:authorize>

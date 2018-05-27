@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.PatronageService;
 import services.ProjectService;
 import services.UserService;
 import domain.Actor;
 import domain.Announcement;
+import domain.Patronage;
 import domain.Project;
 import domain.User;
 
@@ -34,6 +36,8 @@ public class AnnouncementController extends AbstractController {
 	@Autowired
 	private UserService		userService;
 
+	@Autowired
+	private PatronageService		patronageService;
 
 	// Constructors ---------------------------------------------------------
 
@@ -92,12 +96,18 @@ public class AnnouncementController extends AbstractController {
 
 		requestURI = "announcement/list.do";
 		createURI = "announcement/user/create.do?projectId=" + projectId;
-
+		
+		if(this.actorService.checkLogin()&& this.actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")){
+			User user = this.userService.findByPrincipal();
+			Collection<Patronage> patronages = this.patronageService.getPatronagesOfProjectByUser(user.getId(), projectId);
+			result.addObject("patronages",patronages);
+		}
+		
 		result.addObject("announcements", announcements);
 		result.addObject("requestURI", requestURI);
 		result.addObject("createURI", createURI);
 		result.addObject("canCreate", canCreate);
-
+		
 		return result;
 	}
 
