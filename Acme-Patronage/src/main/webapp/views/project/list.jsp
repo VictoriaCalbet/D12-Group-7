@@ -60,7 +60,11 @@
 
 
 	<spring:message code="project.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" style="${style}" />
+	<display:column title="${titleHeader}" style="${style}">
+	<a href="project/display.do?projectId=${row.id}">
+		${row.title}
+	</a>
+	</display:column>
 	
 	<spring:message code="project.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}" style="${style}" />
@@ -104,39 +108,24 @@
 		<jstl:out value="${row.category.name}" />
 	</display:column>
 	
-	<spring:message code="project.awards" var="awardsHeader" />	
-	<spring:message code="project.showAwards" var="showAwardsLink" />
-	<display:column title="${awardsHeader}" style="${style}">
-		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
-	</display:column>
-
-	<spring:message code="project.announcements" var="announcementsHeader" />	
-	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
-	<display:column title="${announcementsHeader}" style="${style}">
-		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
-	</display:column>
-	
-	<spring:message code="project.sponsorships" var="sponsorships" />
-	<display:column sortable="false" title="${sponsorships}" style="${style}">
-		<a href="sponsorship/list.do?projectId=${row.id}">
-			${sponsorships}
-		</a>
-	</display:column>
-
-	<spring:message code="projectComment.listComments" var="Comment" />
-	<display:column title="${Comment}" style="${style}">
-	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
-
-	</display:column>
-	
 	<security:authorize access="hasRole('USER')">
-		
-	<spring:message code="projectComment.createComments" var="createCommentHeader" />
-	<display:column title="${createCommentHeader}" style="${style}">
-	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
-	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
-	</jstl:if>
-	</display:column>	
+	
+	<spring:message code="project.edit" var="editHeader" />	
+		<display:column title="${editHeader}" style="${style}">
+			<jstl:choose>
+			
+				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
+					<a href="project/user/edit.do?projectId=${row.id}">
+					 	<spring:message code="project.editButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notEdit" var="projectNotEditable"/>
+						<jstl:out value="${projectNotEditable}"/> 
+				</jstl:otherwise>
+			</jstl:choose>	
+						
+		</display:column>
 	
 	<spring:message code="project.delete" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">
@@ -165,22 +154,13 @@
 	
 		</display:column>
 		
-		<spring:message code="project.edit" var="editHeader" />	
-		<display:column title="${editHeader}" style="${style}">
-			<jstl:choose>
-			
-				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
-					<a href="project/user/edit.do?projectId=${row.id}">
-					 	<spring:message code="project.editButton" />
-					</a>
-				</jstl:when>
-				<jstl:otherwise>
-					<spring:message code= "project.notEdit" var="projectNotEditable"/>
-						<jstl:out value="${projectNotEditable}"/> 
-				</jstl:otherwise>
-			</jstl:choose>	
-						
-		</display:column>
+		
+	<spring:message code="projectComment.createComments" var="createCommentHeader" />
+	<display:column title="${createCommentHeader}" style="${style}">
+	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
+	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
+	</jstl:if>
+	</display:column>	
 	
 	</security:authorize>
 	
@@ -225,12 +205,32 @@
 	
 	</security:authorize>
 	
-	<spring:message code="project.display" var="display" />
-	<display:column sortable="false" title="${display}" style="${style}">
-		<a href="project/display.do?projectId=${row.id}">
-			${display}
+		
+	<spring:message code="project.awards" var="awardsHeader" />	
+	<spring:message code="project.showAwards" var="showAwardsLink" />
+	<display:column title="${awardsHeader}" style="${style}">
+		<a href="award/list.do?projectId=${row.id}"><jstl:out value="${showAwardsLink}" /></a>
+	</display:column>
+
+	<spring:message code="project.announcements" var="announcementsHeader" />	
+	<spring:message code="project.showAnnouncements" var="showAnnouncementsLink" />
+	<display:column title="${announcementsHeader}" style="${style}">
+		<a href="announcement/list.do?projectId=${row.id}"><jstl:out value="${showAnnouncementsLink}" /></a>
+	</display:column>
+	
+	<spring:message code="project.sponsorships" var="sponsorships" />
+	<display:column sortable="false" title="${sponsorships}" style="${style}">
+		<a href="sponsorship/list.do?projectId=${row.id}">
+			${sponsorships}
 		</a>
 	</display:column>
+
+	<spring:message code="projectComment.listComments" var="Comment" />
+	<display:column title="${Comment}" style="${style}">
+	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
+
+	</display:column>
+	
 </display:table>
 
 <security:authorize access="hasRole('USER')">
