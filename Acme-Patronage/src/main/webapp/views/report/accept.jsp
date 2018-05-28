@@ -8,7 +8,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="reportForm">
+<form:form action="${requestURI}" modelAttribute="moderatorReportForm">
 
 	
 	<form:hidden path="id"/>
