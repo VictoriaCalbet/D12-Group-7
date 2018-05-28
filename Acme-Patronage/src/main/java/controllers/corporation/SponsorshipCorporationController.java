@@ -154,21 +154,4 @@ public class SponsorshipCorporationController extends AbstractController {
 		return result;
 	}
 
-	/*
-	 * private List<Project> economicGoalNoReach(final Collection<Project> projects) {
-	 * List<Project> result;
-	 * result = new ArrayList<Project>();
-	 * 
-	 * for (final Project project : projects) {
-	 * Double totalAmountReached;
-	 * totalAmountReached = 0.0;
-	 * for (final Patronage p : project.getPatronages())
-	 * totalAmountReached = totalAmountReached + p.getAmount();
-	 * if (project.getEconomicGoal() > totalAmountReached)
-	 * result.add(project);
-	 * }
-	 * return result;
-	 * }
-	 */
-
 }
