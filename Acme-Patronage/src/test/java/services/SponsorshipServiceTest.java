@@ -39,9 +39,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	 * 
 	 * 
 	 * 
-	 * Positive test1: Corporation create an sponsorship.
-	 * Negative test2: Corporation try to create an sponsorship with wrong url banner.
-	 * Negative test3: Unaunthenticate actor try to create an sponsorship.
+	 * Positive test1: Corporation create a sponsorship.
+	 * Negative test2: Corporation try to create a sponsorship with wrong url banner.
+	 * Negative test3: Unaunthenticate actor try to create a sponsorship.
 	 */
 	@Test
 	public void testSaveFromCreateSponsorship() {
@@ -93,9 +93,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	 * 
 	 * 
 	 * 
-	 * Positive test1: Corporation1 edit an sponsorship.
-	 * Negative test2: Corporation2 try to edit an sponsorship.
-	 * Negative test3: Unaunthenticate actor try to edit an sponsorship.
+	 * Positive test1: Corporation1 edit a sponsorship.
+	 * Negative test2: Corporation2 try to edit a sponsorship.
+	 * Negative test3: Unaunthenticate actor try to edit a sponsorship.
 	 */
 	@Test
 	public void testSaveFromEditSponsorship() {
@@ -153,9 +153,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	 * 
 	 * 
 	 * 
-	 * Positive test1: Corporation remove an sponsorship.
-	 * Negative test2: User try to remove an sponsorship.
-	 * Negative test3: Unaunthenticate actor try to remove an sponsorship.
+	 * Positive test1: Corporation remove a sponsorship.
+	 * Negative test2: User try to remove a sponsorship.
+	 * Negative test3: Unaunthenticate actor try to remove a sponsorship.
 	 */
 	@Test
 	public void testDeleteByCorporation() {
