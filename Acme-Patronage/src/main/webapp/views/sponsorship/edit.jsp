@@ -28,6 +28,9 @@
 	<jstl:if test="${createBoolean eq true}">
 		<acme:select code="sponsorship.project" path="project" items="${projects}" itemLabel="title"/><br/>
 	</jstl:if>
+	<jstl:if test="${createBoolean eq false}">
+		<form:hidden path="project"/>
+	</jstl:if>
 	<acme:textbox code="sponsorship.banner" path="bannerURL"/>
 	<acme:textbox code="sponsorship.page" path="pageURL"/>
 
