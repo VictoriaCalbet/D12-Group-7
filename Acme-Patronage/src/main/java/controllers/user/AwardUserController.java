@@ -179,11 +179,15 @@ public class AwardUserController extends AbstractController {
 		ModelAndView result = null;
 		String actionURI = null;
 		String cancelURI = null;
+		Project project = null;
 		User user = null;
 
 		actionURI = "award/user/edit.do";
 
 		user = this.userService.findByPrincipal();
+		project = this.projectService.findOne(awardForm.getProjectId());
+		awardForm.setMinimumPatronageAmount(project.getMinimumPatronageAmount());
+
 		cancelURI = "award/list.do?projectId=" + awardForm.getProjectId();
 
 		if (awardForm.getId() == 0)
