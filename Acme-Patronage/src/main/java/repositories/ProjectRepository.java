@@ -51,6 +51,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query("select p from Project p join p.reports r where r.isLegit = true")
 	Collection<Project> findProjectWithReportLegit();
 
+	@Query("select p from Project p where p.economicGoal > (select sum(pt.amount) from Patronage pt where pt.project.id= p.id)")
+	Collection<Project> findProjectWithEconomicGoalNoReach();
+
 	// Dashboard --------------------------------------------------------------
 
 	// Req 12.2.1: The average and standard deviation of projects per user.

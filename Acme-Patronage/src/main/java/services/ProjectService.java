@@ -225,7 +225,12 @@ public class ProjectService {
 	public Collection<Project> findProjectWithReportLegit() {
 		return this.projectRepository.findProjectWithReportLegit();
 	}
-
+	public Collection<Project> findProjectsForSponsorships() {
+		Collection<Project> projects;
+		projects = this.findProjectFutureDueDate();
+		projects.retainAll(this.projectRepository.findProjectWithEconomicGoalNoReach());
+		return projects;
+	}
 	// Dashboard
 
 	// Req 12.2.1: The average and standard deviation of projects per user.
