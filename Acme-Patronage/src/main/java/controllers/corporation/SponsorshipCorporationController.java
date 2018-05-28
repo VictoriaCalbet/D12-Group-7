@@ -2,7 +2,6 @@
 package controllers.corporation;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,8 +19,6 @@ import services.ProjectService;
 import services.SponsorshipService;
 import controllers.AbstractController;
 import domain.Corporation;
-import domain.Patronage;
-import domain.Project;
 import domain.Sponsorship;
 
 @Controller
@@ -152,22 +149,8 @@ public class SponsorshipCorporationController extends AbstractController {
 		result.addObject("sponsorship", sponsorship);
 		result.addObject("message", message);
 		result.addObject("requestURI", "sponsorship/corporation/edit.do");
-		result.addObject("projects", this.economicGoalNoReach(this.projectService.findProjectFutureDueDate()));
+		result.addObject("projects", this.projectService.findProjectsForSponsorships());
 
-		return result;
-	}
-	private List<Project> economicGoalNoReach(final Collection<Project> projects) {
-		List<Project> result;
-		result = new ArrayList<Project>();
-
-		for (final Project project : projects) {
-			Double totalAmountReached;
-			totalAmountReached = 0.0;
-			for (final Patronage p : project.getPatronages())
-				totalAmountReached = totalAmountReached + p.getAmount();
-			if (project.getEconomicGoal() > totalAmountReached)
-				result.add(project);
-		}
 		return result;
 	}
 

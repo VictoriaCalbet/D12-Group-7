@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-public class ModeratorReportForm {
+public class ReportForm {
 
 	private int		id;
 	private String	reason;

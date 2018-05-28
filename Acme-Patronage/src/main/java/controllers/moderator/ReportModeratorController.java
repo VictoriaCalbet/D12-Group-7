@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ReportService;
 import controllers.AbstractController;
 import domain.Report;
-import domain.forms.ModeratorReportForm;
+import domain.forms.ReportForm;
 
 @Controller
 @RequestMapping("/report/moderator")
@@ -56,14 +56,14 @@ public class ReportModeratorController extends AbstractController {
 	@RequestMapping(value = "/accept", method = RequestMethod.GET)
 	public ModelAndView accept(@RequestParam final int reportId) {
 		final ModelAndView result;
-		ModeratorReportForm reportForm;
-		reportForm = new ModeratorReportForm();
+		ReportForm reportForm;
+		reportForm = new ReportForm();
 		reportForm.setId(reportId);
 		result = this.createEditModelAndView(reportForm);
 		return result;
 	}
 	@RequestMapping(value = "/accept", method = RequestMethod.POST)
-	public ModelAndView accept(@Valid final ModeratorReportForm reportForm, final BindingResult binding) {
+	public ModelAndView accept(@Valid final ReportForm reportForm, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(reportForm);
@@ -83,7 +83,7 @@ public class ReportModeratorController extends AbstractController {
 
 	// Ancillary methods
 
-	public ModelAndView createEditModelAndView(final ModeratorReportForm reportForm) {
+	public ModelAndView createEditModelAndView(final ReportForm reportForm) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(reportForm, null);
@@ -91,7 +91,7 @@ public class ReportModeratorController extends AbstractController {
 		return result;
 	}
 
-	public ModelAndView createEditModelAndView(final ModeratorReportForm reportForm, final String message) {
+	public ModelAndView createEditModelAndView(final ReportForm reportForm, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("report/accept");
