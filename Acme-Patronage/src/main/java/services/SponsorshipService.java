@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,7 @@ public class SponsorshipService {
 		Assert.notNull(sponsorship.getBannerURL(), "message.error.sponsorship.null.banner");
 		Assert.notNull(sponsorship.getPageURL(), "message.error.sponsorship.null.page");
 		Assert.notNull(sponsorship.getProject(), "message.error.sponsorship.null.project");
+		Assert.isTrue(sponsorship.getProject().getDueDate().after(LocalDate.now().toDate()), "message.error.sponsorship.pastduedate");
 		this.checkEconomicGoal(sponsorship);
 		Sponsorship sponsorshipInDB;
 		sponsorshipInDB = this.sponsorshipRepository.save(sponsorship);
@@ -88,9 +90,11 @@ public class SponsorshipService {
 		Assert.notNull(sponsorship.getBannerURL(), "message.error.sponsorship.null.banner");
 		Assert.notNull(sponsorship.getPageURL(), "message.error.sponsorship.null.page");
 		Assert.notNull(sponsorship.getProject(), "message.error.sponsorship.null.project");
+
 		Sponsorship sponsorshipInDB;
 		sponsorshipInDB = this.findOne(sponsorship.getId());
 		Assert.notNull(sponsorshipInDB);
+		Assert.isTrue(sponsorship.getProject().getId() == sponsorshipInDB.getProject().getId(), "message.error.sponsorship.editproject");
 		this.isCorrectCorporationAunthenticate(sponsorshipInDB.getCorporation().getId());
 
 		sponsorshipInDB = this.sponsorshipRepository.save(sponsorship);

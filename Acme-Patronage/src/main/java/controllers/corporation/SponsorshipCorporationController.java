@@ -59,7 +59,7 @@ public class SponsorshipCorporationController extends AbstractController {
 
 		sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 		result = this.createEditModelAndView(sponsorship);
-
+		result.addObject("createBoolean", false);
 		return result;
 
 	}
@@ -71,7 +71,7 @@ public class SponsorshipCorporationController extends AbstractController {
 
 		sponsorship = this.sponsorshipService.create();
 		result = this.createEditModelAndView(sponsorship);
-
+		result.addObject("createBoolean", true);
 		return result;
 
 	}
@@ -96,7 +96,10 @@ public class SponsorshipCorporationController extends AbstractController {
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
 				result = this.createEditModelAndView(sponsorship, messageError);
-
+				if (sponsorship.getId() != 0)
+					result.addObject("createBoolean", true);
+				else
+					result.addObject("createBoolean", false);
 			}
 
 		return result;
