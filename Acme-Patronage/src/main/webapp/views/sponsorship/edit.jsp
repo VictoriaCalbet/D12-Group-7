@@ -25,9 +25,9 @@
 	<form:hidden path="corporation"/>
 	<form:hidden path="version"/>
 	
-	
-	<acme:select code="sponsorship.project" path="project" items="${projects}" itemLabel="title"/><br/>
-
+	<jstl:if test="${createBoolean eq true}">
+		<acme:select code="sponsorship.project" path="project" items="${projects}" itemLabel="title"/><br/>
+	</jstl:if>
 	<acme:textbox code="sponsorship.banner" path="bannerURL"/>
 	<acme:textbox code="sponsorship.page" path="pageURL"/>
 
