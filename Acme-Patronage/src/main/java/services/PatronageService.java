@@ -106,7 +106,6 @@ public class PatronageService {
 		if (totalAcumulation == null)
 			totalAcumulation = 0.0;
 		totalAcumulation = totalAcumulation + patronage.getAmount();
-		Assert.isTrue(totalAcumulation < project.getEconomicGoal(), "message.error.patronage.reachedAmount");
 		Assert.isTrue(patronage.getAmount() > project.getMinimumPatronageAmount(), "message.error.patronage.minimumAmount");
 		result = this.save(patronage);
 
