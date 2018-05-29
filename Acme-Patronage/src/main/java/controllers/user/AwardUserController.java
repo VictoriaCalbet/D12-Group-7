@@ -64,8 +64,8 @@ public class AwardUserController extends AbstractController {
 			user = this.userService.findByPrincipal();
 			project = this.projectService.findOne(projectId);
 
-			Assert.notNull(user);
-			Assert.notNull(project);
+			Assert.notNull(user, "message.error.award.principal.null");
+			Assert.notNull(project, "message.error.award.null");
 			Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
 			Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 			Assert.isTrue(project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)), "message.error.award.dueDateIsPast");
@@ -73,7 +73,7 @@ public class AwardUserController extends AbstractController {
 			awardForm = this.awardFormService.createFromCreate(projectId);
 			result = this.createEditModelAndView(awardForm);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result = new ModelAndView("redirect:/award/list.do?projectId=" + projectId);
 			result.addObject("message", oops.getMessage());
 		}
 
@@ -95,8 +95,8 @@ public class AwardUserController extends AbstractController {
 			award = this.awardService.findOne(awardId);
 			user = this.userService.findByPrincipal();
 
-			Assert.notNull(user);
-			Assert.notNull(award, "message.error.award.principal.null");
+			Assert.notNull(user, "message.error.award.principal.null");
+			Assert.notNull(award, "message.error.award.null");
 			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 			Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
@@ -104,7 +104,10 @@ public class AwardUserController extends AbstractController {
 			awardForm = this.awardFormService.createFromEdit(awardId);
 			result = this.createEditModelAndView(awardForm);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/project/list.do?projectId=" + award.getProject().getId());
+			if (award != null)
+				result = new ModelAndView("redirect:/project/list.do?projectId=" + award.getProject().getId());
+			else
+				result = new ModelAndView("redirect:/project/list.do");
 			result.addObject("message", oops.getMessage());
 		}
 
@@ -148,7 +151,9 @@ public class AwardUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 
 		try {
-			Assert.isTrue(award.getProject().getCreator().equals(user));
+			Assert.notNull(award, "message.error.award.null");
+			Assert.notNull(user, "message.error.award.principal.null");
+			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 			Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
