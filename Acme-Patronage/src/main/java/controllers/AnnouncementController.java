@@ -105,7 +105,7 @@ public class AnnouncementController extends AbstractController {
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/project/list.do");
-			result.addObject("message", oops.getMessage());	// Este fue el que quitamos
+			result.addObject("message", oops.getMessage());
 		}
 
 		return result;
