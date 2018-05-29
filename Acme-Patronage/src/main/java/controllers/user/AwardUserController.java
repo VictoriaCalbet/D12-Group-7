@@ -147,10 +147,10 @@ public class AwardUserController extends AbstractController {
 		Award award = null;
 		User user = null;
 
-		award = this.awardService.findOne(awardId);
-		user = this.userService.findByPrincipal();
-
 		try {
+			award = this.awardService.findOne(awardId);
+			user = this.userService.findByPrincipal();
+
 			Assert.notNull(award, "message.error.award.null");
 			Assert.notNull(user, "message.error.award.principal.null");
 			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
@@ -158,6 +158,7 @@ public class AwardUserController extends AbstractController {
 			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 
 			this.awardService.delete(award);
+
 			result = new ModelAndView("redirect:/award/list.do?projectId=" + award.getProject().getId());
 			result.addObject("message", "award.delete.success");
 		} catch (final Throwable oops) {
@@ -166,7 +167,11 @@ public class AwardUserController extends AbstractController {
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
 
-			result = new ModelAndView("redirect:/award/list.do?projectId=" + award.getProject().getId());
+			if (award != null)
+				result = new ModelAndView("redirect:/award/list.do?projectId=" + award.getProject().getId());
+			else
+				result = new ModelAndView("redirect:/project/list.do");
+
 			result.addObject("message", messageError);
 		}
 
