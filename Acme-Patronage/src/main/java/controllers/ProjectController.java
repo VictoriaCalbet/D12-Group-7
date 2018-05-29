@@ -31,6 +31,7 @@ import services.UserService;
 import domain.Actor;
 import domain.Category;
 import domain.Project;
+import domain.Sponsorship;
 import domain.User;
 
 @Controller
@@ -93,22 +94,6 @@ public class ProjectController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int projectId) {
-		ModelAndView result;
-		Project projectInDB;
-		projectInDB = this.projectService.findOne(projectId);
-		Collection<Project> projects;
-		projects = this.projectService.findProjectFutureDueDate();
-		if (projectInDB == null || !projects.contains(projectInDB))
-			result = new ModelAndView("redirect:/");
-		else {
-			result = new ModelAndView("project/display");
-			result.addObject("project", projectInDB);
-			result.addObject("sponsorshipBanner", this.sponsorshipService.getRandomSponsorshipByProjectId(projectInDB.getId()));
-		}
-		return result;
-	}
 	//List ordered
 
 	@RequestMapping(value = "/listOrdered", method = RequestMethod.GET)
@@ -167,6 +152,43 @@ public class ProjectController extends AbstractController {
 		result.addObject("requestURI", "project/list.do");
 
 		return result;
+	}
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView info(@RequestParam final int projectId) {
+		ModelAndView result = new ModelAndView();
+
+		final Project project = this.projectService.findOne(projectId);
+		result = this.infoModelAndView(project);
+		return result;
+	}
+
+	// Ancillaty methods
+	protected ModelAndView infoModelAndView(final Project project) {
+		ModelAndView result;
+
+		result = this.infoModelAndView(project, null);
+
+		return result;
+	}
+
+	protected ModelAndView infoModelAndView(final Project project, final String message) {
+		ModelAndView result;
+		result = new ModelAndView("project/display");
+		String sponsorshipBanner;
+		Sponsorship sponsorship;
+		sponsorship = this.sponsorshipService.getRandomSponsorshipByProjectId(project.getId());
+
+		if (sponsorship != null) {
+			sponsorshipBanner = sponsorship.getBannerURL();
+			result.addObject("sponsorshipBanner", sponsorshipBanner);
+
+		}
+		result.addObject("project", project);
+		result.addObject("message", message);
+
+		return result;
+
 	}
 
 }
