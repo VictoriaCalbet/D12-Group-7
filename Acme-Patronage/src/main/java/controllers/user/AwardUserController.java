@@ -1,6 +1,7 @@
 
 package controllers.user;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -50,6 +51,33 @@ public class AwardUserController extends AbstractController {
 	}
 
 	// Listing --------------------------------------------------------------
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result = null;
+		Collection<Award> awards = null;
+		String requestURI = null;
+		User user = null;
+
+		result = new ModelAndView("award/list");
+
+		try {
+			user = this.userService.findByPrincipal();
+			Assert.notNull(user, "message.error.award.principal.null");
+			awards = this.awardService.findMyAwards(user.getId());
+
+			requestURI = "award/list.do";
+
+			result.addObject("awards", awards);
+			result.addObject("requestURI", requestURI);
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/project/list.do");
+			result.addObject("message", oops.getMessage());
+		}
+
+		return result;
+	}
 
 	// Creation  ------------------------------------------------------------
 

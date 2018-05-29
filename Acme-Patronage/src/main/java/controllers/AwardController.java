@@ -81,7 +81,7 @@ public class AwardController extends AbstractController {
 						awards = project.getAwards();
 					} else {
 						awards = project.getAwards();
-						if (!project.getIsCancelled() || project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)))
+						if (!project.getIsCancelled() && project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)))
 							canCreate = true;
 					}
 				} else if (this.actorService.checkAuthority(actor, "ADMIN"))	//...es ADMIN
