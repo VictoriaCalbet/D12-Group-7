@@ -41,14 +41,11 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		<display:column style="${style}">
-		
-		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false and (row.project.creator.userAccount.username eq loggedactor.username or fn:length(patronages)>0)}">
-		<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+		<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false and (row.project.creator.userAccount.username eq loggedactor.username or fn:length(patronages)>0)}">
+			<display:column style="${style}">
+				<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+			</display:column>
 		</jstl:if>
-		
-		</display:column>
-		
 	</security:authorize>
 
 </display:table>

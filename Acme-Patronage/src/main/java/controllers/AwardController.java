@@ -61,13 +61,13 @@ public class AwardController extends AbstractController {
 		Actor actor = null;
 		boolean canCreate = false;
 
-		project = this.projectService.findOne(projectId);
-		Assert.notNull(project);
-
 		result = new ModelAndView("award/list");
 
 		// ¿Quienes pueden entrar aqui? ADMIN, USER, MODERATOR, CORPORATION, anonymous
 		try {
+			project = this.projectService.findOne(projectId);
+			Assert.notNull(project, "message.error.award.project.null");
+
 			if (this.actorService.checkLogin()) {		// Si el usuario logueado en el sistema...
 				actor = this.actorService.findByPrincipal();
 
@@ -81,7 +81,7 @@ public class AwardController extends AbstractController {
 						awards = project.getAwards();
 					} else {
 						awards = project.getAwards();
-						if (!project.getIsCancelled() || project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)))
+						if (!project.getIsCancelled() && project.getDueDate().after(new Date(System.currentTimeMillis() - 1000)))
 							canCreate = true;
 					}
 				} else if (this.actorService.checkAuthority(actor, "ADMIN"))	//...es ADMIN
@@ -96,25 +96,25 @@ public class AwardController extends AbstractController {
 				Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
 				awards = project.getAwards();
 			}
+
+			requestURI = "award/list.do";
+			displayURI = "award/display.do?awardId=";
+			createURI = "award/user/create.do?projectId=" + projectId;
+			editURI = "award/user/edit.do?awardId=";
+			deleteURI = "award/user/delete.do?awardId=";
+
+			result.addObject("awards", awards);
+			result.addObject("requestURI", requestURI);
+			result.addObject("displayURI", displayURI);
+			result.addObject("createURI", createURI);
+			result.addObject("editURI", editURI);
+			result.addObject("deleteURI", deleteURI);
+			result.addObject("canCreate", canCreate);
+			result.addObject("message", message);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result = new ModelAndView("redirect:/project/list.do");
 			result.addObject("message", oops.getMessage());
 		}
-
-		requestURI = "award/list.do";
-		displayURI = "award/display.do?awardId=";
-		createURI = "award/user/create.do?projectId=" + projectId;
-		editURI = "award/user/edit.do?awardId=";
-		deleteURI = "award/user/delete.do?awardId=";
-
-		result.addObject("awards", awards);
-		result.addObject("requestURI", requestURI);
-		result.addObject("displayURI", displayURI);
-		result.addObject("createURI", createURI);
-		result.addObject("editURI", editURI);
-		result.addObject("deleteURI", deleteURI);
-		result.addObject("canCreate", canCreate);
-		//		result.addObject("message", message);
 
 		return result;
 	}
@@ -131,14 +131,14 @@ public class AwardController extends AbstractController {
 
 		result = new ModelAndView("award/display");
 
-		award = this.awardService.findOne(awardId);
-		project = award.getProject();
-
-		Assert.notNull(award);
-		Assert.notNull(project);
-
 		// ¿Quienes pueden entrar aqui? ADMIN, USER, MODERATOR, CORPORATION, anonymous
 		try {
+			award = this.awardService.findOne(awardId);
+			Assert.notNull(award, "message.error.award.null");
+
+			project = award.getProject();
+			Assert.notNull(project, "message.error.award.project.null");
+
 			if (this.actorService.checkLogin()) {				// Si el usuario logueado en el sistema...
 				actor = this.actorService.findByPrincipal();
 
@@ -162,17 +162,17 @@ public class AwardController extends AbstractController {
 				Assert.isTrue(!project.getIsCancelled(), "message.error.award.project.isCancelled");
 				Assert.isTrue(!project.getIsDraft(), "message.error.award.project.isNotPublished");
 			}
+
+			cancelURI = "award/list.do?projectId=" + award.getProject().getId();
+			editURI = "award/user/edit.do?awardId=" + award.getId();
+
+			result.addObject("award", award);
+			result.addObject("cancelURI", cancelURI);
+			result.addObject("editURI", editURI);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/project/list.do?projectId=" + project.getId());
+			result = new ModelAndView("redirect:/project/list.do");
 			result.addObject("message", oops.getMessage());
 		}
-
-		cancelURI = "award/list.do?projectId=" + award.getProject().getId();
-		editURI = "award/user/edit.do?awardId=" + award.getId();
-
-		result.addObject("award", award);
-		result.addObject("cancelURI", cancelURI);
-		result.addObject("editURI", editURI);
 
 		return result;
 	}

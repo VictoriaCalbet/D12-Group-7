@@ -51,7 +51,7 @@ public class AnnouncementUserController extends AbstractController {
 
 	// Listing --------------------------------------------------------------
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/stream", method = RequestMethod.GET)
 	public ModelAndView stream() {
 		ModelAndView result = null;
 		Collection<Announcement> announcements = null;
@@ -84,16 +84,17 @@ public class AnnouncementUserController extends AbstractController {
 
 		try {
 			user = this.userService.findByPrincipal();
-			project = this.projectService.findOne(projectId);
+			Assert.notNull(user, "message.error.announcement.user.null");
 
-			Assert.notNull(user);
-			Assert.notNull(project);
+			project = this.projectService.findOne(projectId);
+			Assert.notNull(project, "message.error.announcement.project.null");
+
 			Assert.isTrue(project.getCreator().equals(user), "message.error.award.user.owner");
 
 			announcementForm = this.announcementFormService.createFromCreate(projectId);
 			result = this.createModelAndView(announcementForm);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/project/list.do?projectId=" + projectId);
+			result = new ModelAndView("redirect:/project/list.do");
 			result.addObject("message", oops.getMessage());
 		}
 

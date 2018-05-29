@@ -141,6 +141,12 @@ public class AwardService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<Award> findMyAwards(final int userId) {
+		Collection<Award> result = null;
+		result = this.awardRepository.findMyAwards(userId);
+		return result;
+	}
+
 	// Dashboard
 
 	// Req 12.2.2: The average and standard deviation of awards per project.

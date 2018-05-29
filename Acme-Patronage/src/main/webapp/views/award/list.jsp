@@ -19,6 +19,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authentication property="principal" var="loggedactor"/>
+<jsp:useBean id="now" class="java.util.Date"/>
 
 <display:table name="awards" id="row" requestURI="${requestURI}" pagesize="5">
 
@@ -28,7 +29,7 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${row.project.creator.userAccount.username eq loggedactor.username and row.project.isDraft eq true and row.project.isCancelled eq false}">
+		<jstl:if test="${row.project.dueDate.time > now.time and row.project.creator.userAccount.username eq loggedactor.username and row.project.isDraft eq true and row.project.isCancelled eq false}">
 			<display:column>
 				<spring:message code="award.edit" var="awardEditLink"/>
 				<a href="${editURI}${row.id}"><jstl:out value="${awardEditLink}"/></a>
@@ -58,14 +59,14 @@
 		<a href="awardComment/list.do?awardId=${row.id}"><jstl:out value="${awardCommentList}"/></a>
 	</display:column>
 	
-	<security:authorize access="hasRole('USER')">
-		<display:column>
-		<jstl:if test="${row.project.getIsCancelled()==false and row.project.getIsDraft()==false}">
-		<spring:message code="awardComment.create" var="awardComment"/>
-		<a href="awardComment/user/create.do?awardId=${row.id}"><jstl:out value="${awardComment}"/></a>
-		</jstl:if>
-		</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false}">
+			<display:column>
+				<spring:message code="awardComment.create" var="awardComment"/>
+				<a href="awardComment/user/create.do?awardId=${row.id}"><jstl:out value="${awardComment}"/></a>
+			</display:column>
+		</jstl:if>
 	</security:authorize>
 	
 </display:table>
