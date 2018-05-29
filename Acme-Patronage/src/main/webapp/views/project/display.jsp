@@ -56,9 +56,9 @@
  	<br/>
 	<jstl:if test="${sponsorshipBanner!=null}">
 		<spring:url var="sponsorshipBannerURL"
-			value="${sponsorshipBanner}" />
+			value="${sponsorshipBanner.bannerURL}" />
 		<spring:url var="sponsorshipPageURL"
-			value="${sponsorshipBanner}" />
+			value="${sponsorshipBanner.pageURL}" />
 		<spring:message code="project.sponsorship" var="sponsorship" />
 		<a href="${sponsorshipPageURL}"> <img
 			src="${sponsorshipBannerURL}" alt="${sponsorship}" />

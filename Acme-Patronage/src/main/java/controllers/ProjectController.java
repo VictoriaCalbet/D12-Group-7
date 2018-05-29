@@ -175,15 +175,12 @@ public class ProjectController extends AbstractController {
 	protected ModelAndView infoModelAndView(final Project project, final String message) {
 		ModelAndView result;
 		result = new ModelAndView("project/display");
-		String sponsorshipBanner;
+
 		Sponsorship sponsorship;
 		sponsorship = this.sponsorshipService.getRandomSponsorshipByProjectId(project.getId());
 
-		if (sponsorship != null) {
-			sponsorshipBanner = sponsorship.getBannerURL();
-			result.addObject("sponsorshipBanner", sponsorshipBanner);
+		result.addObject("sponsorshipBanner", sponsorship);
 
-		}
 		result.addObject("project", project);
 		result.addObject("message", message);
 
