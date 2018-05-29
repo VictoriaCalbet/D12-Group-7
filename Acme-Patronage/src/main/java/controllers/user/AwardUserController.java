@@ -57,6 +57,7 @@ public class AwardUserController extends AbstractController {
 		ModelAndView result = null;
 		Collection<Award> awards = null;
 		String requestURI = null;
+		String displayURI = null;
 		User user = null;
 
 		result = new ModelAndView("award/list");
@@ -67,9 +68,11 @@ public class AwardUserController extends AbstractController {
 			awards = this.awardService.findMyAwards(user.getId());
 
 			requestURI = "award/list.do";
+			displayURI = "award/display.do?awardId=";
 
 			result.addObject("awards", awards);
 			result.addObject("requestURI", requestURI);
+			result.addObject("displayURI", displayURI);
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/project/list.do");
@@ -78,7 +81,6 @@ public class AwardUserController extends AbstractController {
 
 		return result;
 	}
-
 	// Creation  ------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
