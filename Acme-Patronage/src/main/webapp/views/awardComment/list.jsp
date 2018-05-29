@@ -26,6 +26,9 @@
 	<spring:message code="awardComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
 	
+	<spring:message code="awardComment.award" var="aCPro" />	
+	<display:column property="award.name" title="${aCPro}"/>
+	
 	<spring:message code="awardComment.rating" var="aCRating" />
 	<display:column property="rating" title="${aCRating}"/>
 	
