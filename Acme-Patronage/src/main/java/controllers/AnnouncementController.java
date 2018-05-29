@@ -52,6 +52,7 @@ public class AnnouncementController extends AbstractController {
 	public ModelAndView list(@RequestParam final int projectId, @RequestParam(required = false) final String message) {
 		ModelAndView result = null;
 		Collection<Announcement> announcements = null;
+		Collection<Patronage> patronages = null;
 		Project project = null;
 		String requestURI = null;
 		String createURI = null;
@@ -71,6 +72,7 @@ public class AnnouncementController extends AbstractController {
 				if (this.actorService.checkAuthority(actor, "USER")) {			//...es USER
 					User principal = null;
 					principal = this.userService.findByPrincipal();
+					patronages = this.patronageService.getPatronagesOfProjectByUser(principal.getId(), projectId);
 
 					// Los announcements pueden verlos si no es draft
 					if (!project.getCreator().equals(principal)) {				// Si no es el creator del project
@@ -94,13 +96,8 @@ public class AnnouncementController extends AbstractController {
 			requestURI = "announcement/list.do";
 			createURI = "announcement/user/create.do?projectId=" + projectId;
 
-			if (this.actorService.checkLogin() && this.actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")) {
-				final User user = this.userService.findByPrincipal();
-				final Collection<Patronage> patronages = this.patronageService.getPatronagesOfProjectByUser(user.getId(), projectId);
-				result.addObject("patronages", patronages);
-			}
-
 			result.addObject("announcements", announcements);
+			result.addObject("patronages", patronages);
 			result.addObject("requestURI", requestURI);
 			result.addObject("createURI", createURI);
 			result.addObject("canCreate", canCreate);
