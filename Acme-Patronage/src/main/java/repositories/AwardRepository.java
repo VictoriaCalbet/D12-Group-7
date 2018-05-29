@@ -12,7 +12,7 @@ import domain.Award;
 @Repository
 public interface AwardRepository extends JpaRepository<Award, Integer> {
 
-	@Query("select awd from Project pr join pr.patronages pat join pr.awards awd where pat.user.id = ?1  and pr.dueDate > CURRENT_TIMESTAMP and (pr.economicGoal <= (select sum(ptr.amount) from Patronage ptr where ptr.project.id = pr.id)) and (awd.moneyGoal <= (select sum(ptrr.amount) from Patronage ptrr where ptrr.project.id = pr.id))")
+	@Query("select awd from Patronage pt join pt.project.awards awd where pt.user.id = ?1 and pt.project.dueDate < CURRENT_TIMESTAMP and pt.project.economicGoal <= (select sum(pt2.amount) from Patronage pt2 where pt2.project.id = pt.project.id) and awd.moneyGoal <= (select sum(pt3.amount) from Patronage pt3 where pt3.project.id = pt.project.id)")
 	Collection<Award> findMyAwards(int userId);
 
 	// Dashboard --------------------------------------------------------------
