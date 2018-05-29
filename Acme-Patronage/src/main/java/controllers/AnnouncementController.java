@@ -110,7 +110,6 @@ public class AnnouncementController extends AbstractController {
 
 		return result;
 	}
-
 	// Display --------------------------------------------------------------
 
 }
