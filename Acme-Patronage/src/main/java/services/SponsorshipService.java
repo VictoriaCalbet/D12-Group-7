@@ -123,7 +123,7 @@ public class SponsorshipService {
 		if (nSponsorships != 0) {
 			final Random random = new Random();
 			final int randomIndex = random.nextInt(nSponsorships);
-			s = sponsorships.get(randomIndex);
+			s = sponsorships.get(0);
 		}
 
 		return s;
