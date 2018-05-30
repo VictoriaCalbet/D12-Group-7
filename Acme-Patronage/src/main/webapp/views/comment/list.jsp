@@ -18,6 +18,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<spring:message code="comment.announcementC" var="titleAn" />	
+<spring:message code="comment.awardC" var="titleAw" />	
+<spring:message code="comment.projectC" var="titlePr" />	
+<b><jstl:out value="${titleAn}"/></b>
+
 <display:table name="announcementComments" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<spring:message code="announcementComment.user" var="aCUser" />	
@@ -44,6 +49,8 @@
 
 </display:table>
 
+<b><jstl:out value="${titleAw}"/></b>
+
 <display:table name="awardComments" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<spring:message code="awardComment.user" var="aCUser" />	
@@ -69,6 +76,8 @@
 	</display:column>
 
 </display:table>
+
+<b><jstl:out value="${titlePr}"/></b>
 
 <display:table name="projectComments" id="row" requestURI="${requestURI}" pagesize="5">
 

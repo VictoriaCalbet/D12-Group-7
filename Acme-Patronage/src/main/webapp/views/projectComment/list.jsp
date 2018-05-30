@@ -23,6 +23,9 @@
 	<spring:message code="projectComment.user" var="aCUser" />	
 	<display:column property="user.fullName" title="${aCUser}"/>
 
+	<spring:message code="projectComment.project" var="aCProject" />	
+	<display:column property="project.title" title="${aCProject}"/>
+
 	<spring:message code="projectComment.text" var="aCText" />	
 	<display:column property="text" title="${aCText}"/>
 	
