@@ -133,7 +133,7 @@ public class PatronageUserController extends AbstractController {
 				else
 					this.patronageFormService.saveFromCreate(patronageForm);
 
-				result = new ModelAndView("redirect:/patronage/user/list.do");
+				result = new ModelAndView("redirect:/patronage/user/listPatronagesToMyProjects.do");
 
 			} catch (final Throwable oops) {
 				String messageError = "patronage.commit.error";

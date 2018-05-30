@@ -25,7 +25,7 @@
 	<jstl:set var="isCancelled" value="${row.isCancelled}"/>	
 	
 	<jstl:if test="${isCancelled eq true}">
-		<jstl:set var="style" value="background-color:Crimson;" />
+		<jstl:set var="style" value="background-color:Black;" />
 	</jstl:if>
 	<jstl:if test="${isCancelled eq false}">
 		<jstl:set var="style" value="background-color:white;" />
