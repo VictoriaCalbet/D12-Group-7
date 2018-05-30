@@ -170,7 +170,6 @@ public class CommentFormService {
 				
 				Assert.isTrue(!a.getProject().getIsDraft(),"message.error.announcementComment.draftProject");
 				Assert.isTrue(!a.getProject().getIsCancelled(),"message.error.announcementComment.draftProject");
-				Assert.isTrue(this.patronageService.getPatronagesOfProjectByUser(this.userService.findByPrincipal().getId(),a.getProject().getId()).size()>0 || this.userService.findOne(userId).equals(a.getUser()),"message.error.announcementComment.noPatronages");
 				
 				Assert.notNull(a,"message.error.announcementComment.announcement.null");
 				

@@ -91,7 +91,7 @@ public class AnnouncementCommentService {
 		
 		Assert.notNull(admin,"message.error.announcementComment.notAnAdmin");
 		
-		this.announcementCommentRepository.delete(aC.getId());
+		
 		
 	}
 	

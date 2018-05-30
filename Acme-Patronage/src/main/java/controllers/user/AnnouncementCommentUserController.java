@@ -76,11 +76,10 @@ public class AnnouncementCommentUserController extends AbstractController{
 			try{
 				
 				Announcement a = this.announcementService.findOne(announcementId);
-				User user = this.userService.findByPrincipal();
+				
 				Assert.notNull(a,"message.error.announcement.null");
 				Assert.isTrue(!a.getProject().getIsDraft(),"message.error.announcementComment.draftProject");
 				Assert.isTrue(!a.getProject().getIsCancelled(),"message.error.announcementComment.cancelledProject");
-				Assert.isTrue((this.patronageService.getPatronagesOfProjectByUser(user.getId(),a.getProject().getId()).size())>0 || user.equals(a.getUser()),"message.error.announcementComment.noPatronages");
 				cForm = this.commentFormService.create();
 				result = this.createModelAndView(cForm);
 				

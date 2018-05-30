@@ -92,7 +92,6 @@ public class AwardCommentService {
 		
 		Assert.notNull(admin,"message.error.awardComment.notAnAdmin");
 		
-		this.awardCommentRepository.delete(aC);
 		
 	}
 

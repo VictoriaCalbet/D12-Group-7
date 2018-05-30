@@ -41,7 +41,7 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false and (row.project.creator.userAccount.username eq loggedactor.username or fn:length(patronages)>0)}">
+		<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false}">
 			<display:column style="${style}">
 				<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
 			</display:column>

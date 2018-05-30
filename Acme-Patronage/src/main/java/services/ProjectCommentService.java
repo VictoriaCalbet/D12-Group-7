@@ -98,7 +98,6 @@ public class ProjectCommentService {
 		
 		Assert.notNull(admin);
 		
-		this.projectCommentRepository.delete(pC.getId());
 	}
 	
 	// Other business methods -------------------------------------------------
