@@ -126,7 +126,7 @@ public class AwardService {
 		Assert.notNull(user, "message.error.award.principal.null");
 
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
-		Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
+		Assert.isTrue(!award.getProject().getIsDraft(), "message.error.award.project.isPublished");
 		Assert.isTrue(award.getProject().getDueDate().after(new Date(System.currentTimeMillis() - 1000)), "message.error.award.dueDateIsPast");
 
 		// Paso 1: actualizamos el resto de relaciones con la entidad Award
