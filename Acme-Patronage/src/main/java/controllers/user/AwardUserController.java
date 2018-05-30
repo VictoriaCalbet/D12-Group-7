@@ -134,10 +134,7 @@ public class AwardUserController extends AbstractController {
 			awardForm = this.awardFormService.createFromEdit(awardId);
 			result = this.createEditModelAndView(awardForm);
 		} catch (final Throwable oops) {
-			if (award != null)
-				result = new ModelAndView("redirect:/project/list.do?projectId=" + award.getProject().getId());
-			else
-				result = new ModelAndView("redirect:/project/list.do");
+			result = new ModelAndView("redirect:/project/list.do");
 			result.addObject("message", oops.getMessage());
 		}
 
@@ -186,6 +183,7 @@ public class AwardUserController extends AbstractController {
 			Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
 			Assert.isTrue(!award.getProject().getIsCancelled(), "message.error.award.project.isCancelled");
 			Assert.isTrue(award.getProject().getIsDraft(), "message.error.award.project.isPublished");
+			Assert.isTrue(award.getProject().getDueDate().after(new Date(System.currentTimeMillis() - 1000)), "message.error.award.dueDateIsPast");
 
 			this.awardService.delete(award);
 
