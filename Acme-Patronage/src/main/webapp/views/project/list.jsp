@@ -130,9 +130,9 @@
 	<spring:message code="project.delete" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">
 		<jstl:choose>
-			<jstl:when test="${(row.isCancelled eq false) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username }">
+			<jstl:when test="${(row.isCancelled eq false) && row.creationMoment.time < now.time && row.creator.userAccount.username!=loggedactor.username }">
 				<jstl:choose>
-						<jstl:when test="${(fn:length(row.patronages) ==0)}">	
+						<jstl:when test="${(row.isDraft eq false) && (fn:length(row.patronages) ==0)}">	
 							<a href="project/user/delete.do?projectId=${row.id}">
 							 	<spring:message code="project.deleteButton" />
 							</a>
