@@ -62,12 +62,12 @@ public class CategoryService {
 		Assert.notNull(category, "message.error.category.null");
 
 		final Category result;
-		final Collection<Category> categories = this.categoryRepository.findAll();
-		Boolean check = true;
-		for (final Category c : categories)
-			if (category.getName().equals(c.getName()))
-				check = false;
-		Assert.isTrue(check, "message.error.category.nameAlreadyInDB");
+		//		final Collection<Category> categories = this.categoryRepository.findAll();
+		//		Boolean check = true;
+		//		for (final Category c : categories)
+		//			if (category.getName().equals(c.getName()))
+		//				check = false;
+		//Assert.isTrue(check, "message.error.category.nameAlreadyInDB");
 		final Administrator principal = this.administratorService.findByPrincipal();
 
 		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.category.create.admin");

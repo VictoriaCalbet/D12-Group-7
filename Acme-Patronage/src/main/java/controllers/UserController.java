@@ -121,7 +121,7 @@ public class UserController extends AbstractController {
 					this.actorFormService.saveFromEdit(actorForm, "USER");
 				else
 					this.actorFormService.saveFromCreate(actorForm, "USER");
-				result = new ModelAndView("redirect:../");
+				result = new ModelAndView("redirect:../user/list.do");
 			} catch (final Throwable oops) {
 				String messageError = "user.commit.error";
 				if (oops.getMessage().contains("message.error"))
