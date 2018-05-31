@@ -8,4 +8,6 @@ revoke all privileges on `Acme-Battle`.* from 'acme-manager'@'%';
 drop user 'acme-user'@'%';
 drop user 'acme-manager'@'%';
 
-commtit;
+drop database `Acme-Battle`;
+
+commit;
