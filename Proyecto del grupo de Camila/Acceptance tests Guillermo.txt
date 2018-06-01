@@ -1,0 +1,39 @@
+Acceptance tests Guillermo
+
+UC 01 – Register to the System.
+- Test #001: Funciona.
+- Test #002: Falta el @Email
+
+UC 02 – List the players in the game.
+- Test #001: Funciona.
+
+UC 03 – Display the player profile.
+- Test #001: Funciona.
+
+UC 04 – Search a user by username.
+- Test #001: Funciona.
+- Test #002: Redirección al listado con un mensaje de "No results found".
+- Test #003: Se muestra el listado pero también un "Cannot commit this operation" arriba.
+
+UC 05 – Ban/Unban a player for a time.
+- Test #001: Funciona.
+- Test #002: Sólo aparecen dos errores: Uno que la duración no puede ser nula y un "Cannot commit this operation".
+- Test #003: Redirección al listado de usuarios baneados.
+
+UC 06 – List the users that are banned.
+- Test #001: Funciona.
+
+UC 07 – Create a Game Master.
+- Test #001: Funciona.
+- Test #002: Falta el @Email.
+
+UC 08 – Create a Content Manager
+- Test #001: Funciona.
+- Test #002: Falta el @Email.
+
+UC 09 – List and delete Organizations
+- Test #001: Funciona.
+
+UC 10 – See the members of an organization.
+- Test #001: Funciona.
+- Test #002: Funciona.
