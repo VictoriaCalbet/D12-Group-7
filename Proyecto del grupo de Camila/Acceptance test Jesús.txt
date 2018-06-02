@@ -1,0 +1,58 @@
+
+
+Acceptance test-Jesús.
+
+(Error de internacionalización, en el menu sale organization cuando está en español)
+
+UC 41 - Navigate from Recruiter to their troops.
+
+Test 1: Bug?, para recruiter 1 y 2 funciona, para el 3 no se muestran las tablas de información sobre reclutables.
+
+ 
+UC 42 – List my invitations.
+
+Test 1: Funciona.
+
+
+UC 43 – Create messages in chat of organization.
+
+Test 1: -Bug, sea lo que sea que se escriba unicamente aparece Hola en el chat.
+	-Fallo, el mensaje aparece arriba en vez de abajo como se indica en el test de aceptación.
+	-Problema, puedo cambiar la fecha en el POST y poner la que quiera, también puedo cambiar la id de la invitación y escribir como otro usuario.
+
+Test 2: Funciona.
+
+UC 44 – List the items available in the shop.
+
+Test1 1: Funciona.
+
+UC 45 – List the items he bought.
+
+Test 1: Funciona (Error de internacionalización? La palabra item no existe en español).
+
+UC 46 – List the activated items.
+
+Test 1: Tecnicamente es un fallo, pone que debe listar los objetos no utilizados aún, igual que en test 1 del UC 45, suponiendo
+	que haya querido referirse a los objetos en uso, funciona perfectamentamente.
+
+	(Error de internacionalización? La palabra item no existe en español.)
+
+UC 47 – Use items.
+
+Test 1: Funciona.
+	Problema, mediante hacking get otros usuarios pueden usar items ajenos que no les pertenecen.
+
+UC 48 - No exite el caso de uso 48.
+
+UC 49 - Create an organization.
+
+Test 1: Funciona.
+
+Test 2: Funciona.
+
+UC 50 - Accept an Invitation.
+
+Test 1: Funciona.
+
+
+
