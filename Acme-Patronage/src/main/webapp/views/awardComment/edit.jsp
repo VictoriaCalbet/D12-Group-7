@@ -26,7 +26,7 @@
 	
 	<acme:textbox code="awardComment.text" path="text"/>
 	
-	<acme:textbox code="awardComment.rating" path="rating"/>
+	<acme:textbox code="awardComment.rating" path="rating"/> <spring:message code="comment.ratingMessage"></spring:message>
 	<br/>
 	<acme:submit name="save" code="awardComment.save" />
 	<acme:cancel url="/" code="awardComment.cancel" /> 	

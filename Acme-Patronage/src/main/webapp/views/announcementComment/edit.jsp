@@ -26,7 +26,7 @@
 	
 	<acme:textbox code="announcementComment.text" path="text"/>
 	<br/>
-	<acme:textbox code="announcementComment.rating" path="rating"/>
+	<acme:textbox code="announcementComment.rating" path="rating"/><spring:message code="comment.ratingMessage"></spring:message>
 	<br/>
 	
 	<acme:submit name="save" code="announcementComment.save" />
