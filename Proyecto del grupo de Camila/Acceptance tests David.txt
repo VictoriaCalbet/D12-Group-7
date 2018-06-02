@@ -1,0 +1,46 @@
+UC 31-Delete a troop
+    Test1- Bug- The troop is deleted correctly but the 110% troop cost compensation is not charged to the players who own it
+UC 32-Create an item
+    Test1- Item is created correctly and appears in the list of items created by him.
+    Test2- When we let all areas in blank, form errors appear correctly.
+Error en nomenclatura de test, hay dos #test01
+UC 33-Edit an item
+    Test1-The item is edited correctly, and it is shown in the created item list with the new changes
+    Test2- Bug The system returns to a panic page, with the error: Could not commit JPA Transaction, nested exception is javax.persistence.RollBackException: Error while committing the transaction. 
+    Error en nomenclatura de test, hay dos #test01
+UC 34-Delete an item
+    Test1- The item "protective shield" is correctly deleted from database
+    Error en el expected- Supongo que querrá decir que el item no deberá aparecer
+    en la lista una vez borrado
+    Test2- If we access as a player, buy the item and log in as the content manager, he/she cant delete it
+    because the delete button has disapeared.
+UC 35-Display my world-
+    Posible error- Es cierto que accediendo a main menu/profile/myProfile/world
+    se accede al mundo, pero en el menú principal hay un acceso directo llamado
+    "my world".
+    Test1- Bug- Phone number is not shown on the list
+    Test2- Everything is shown correctly
+    En la descripción de este test se debería señalar que ese test no es en el acceso
+    que indica el caso de uso, sino al paso previo, a "myProfile"
+
+UC 36-List my buildings
+    Test1- The list is shown correctly
+    No sé si es un bug o no ya que creo que forma parte del listado,
+    pero cuando pongo el ratón encima del botón mejorar de un edificio,
+    los materiales(creo que el unico que cambia en la traducción es el combustible)
+    aparecen en inglés cuando lo tengo en español. 
+UC 37-Create a building
+    Test1- The building is created correctly, appears in the list of buildings,
+    and is shown as being built.
+UC 38-Unbuild a building
+    Test1- The building is unbuilt properly, and dissapears "my buildings"
+    Test2- Bug- The troops and resources that the unbuilt building had stored
+    are not shown after unbuilding a build.
+
+UC 39- Error:Idéntico al UC38, salvo por la nota
+
+UC 40-Update a building
+    Test1- The buildings are upgraded properly and its levels are upgraded
+    Test2- Errors "está al máximo nivel" and "No tienes recursos suficientes"
+    are shown properly. I haven't found the error "not passing the requirements"
+
