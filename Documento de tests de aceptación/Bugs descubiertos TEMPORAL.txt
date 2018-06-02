@@ -1,0 +1,42 @@
+Angel lozano:
+- El usuario puede introducir en el teléfono un valor cualquiera, tanto letras como números sin un patrón.
+- Se permiten usuarios con el mismo correo electrónico
+- En mensajes, el menu, el botón inbox redirecciona a outbox y outbox a inbox
+
+Camila:
+- Los proyectos siempre se guardan en modo final.
+- La columna cancelar/borrar proyectos nunca muestra los botones para cancelar y borrar.
+- Posible bug: al intentar borrar un proyecto con fecha de fin pasada, el mensaje de error es “La fecha de fin debe estar en el futuro”, que no tiene mucho que ver (????)
+- En la lista de todos los proyectos, sale el botón de borrar un proyecto para un proyecto que no es tuyo.
+- El expiration year de la credit card de un patrocinio no muestra mensaje de error si se deja vacío, sin embargo, no se puede crear una tarjeta de crédito si no se mete un año correcto.
+- Tras crear un patrocinio el usuario es redirigido a la lista de los patrocinios que han sido creados para sus proyectos (vista que muestra una tabla en negro, y hay que seleccionar el texto para poder leerlo), no a los patrocinios que él ha creado.
+- Los campos de la credit card al crear un patrocinio no se traducen.
+- Se pueden crear dos categorías con el mismo nombre.
+- Los campos de title y description en el formulario de creación de categoría no son traducidos.
+- No se muestra la opción de editar un premio ni en el list ni en el display.
+- No se puede editar un prize aunque lo intente por URL, dice que el proyecto está publicado siempre (he probado creando proyectos en modo draft, modo final, fecha límite menor y mayor a la actual; tampoco se indica cuando se publica un proyecto).
+- La columna de borrar un premio tampoco se muestra.
+
+Ángel Pérez (No está usando el documento):
+
+Sergio Ortiz (No está usando el documento): 
+
+
+Ismael Lucas:
+- Eliminar comentario (CU 39): Al hacer click en eliminar un comentario redirecciona a la misma web pero sin haber borrado el comentario.
+- Aceptar informe por revisar (CU 44) : En idioma inglés tanto en la vista de la lista de informes como en la de aceptar informe en lugar de la palabra aceptar aparece unos caracteres extraños.
+- Aceptar informe por revisar (CU 44) : Cuando estoy en la vista para meter el motivo de aceptar un informe si le clicko en cancelar me lleva al index en lugar de a la lista de informes sin revolver que es donde debería redireccionar.
+- Borrar un proyecto con una queja legítima (CU 46) : Si me meto en List of Projects me sale que no puedo eliminar el Project 1 pese que tiene quejas aceptadas en cambio en All Projects si me aparece que se puede eliminar.
+
+Carlos Castaño:
+- UC10: No funciona correctamente el buscador en “vacío”. Me devuelve únicamente un sólo proyecto futuro ‘project1’ cunado ‘project4’ también lo es.
+- Los mensajes del sistema no funcionan correctamente: 
+	- Fundador = Founder , no ‘funder’ como pone el sistema.
+	- Fundado = Founded, no ‘funded’ como pone el sistema.
+- Comment Award Form: No tiene ningún mensaje explicando qué rating debemos poner en el formulario.
+- Award List: Si el número de objetos supera la paginación, cualquier enlace te devuelve a inicio.
+- La página de Award List en español tiene todo completamente en inglés.
+Show/Display award: El botón tiene “Cancel” en lugar de “Return”.
+- No nos dan información sobre IDs de premios en proyectos cancelados, por lo que no puedo saber cuál es la id en la URL. 
+- El botón de cancelar un proyecto sólo aparece cuando el proyecto está en pasado y no es tuyo. Justo lo contrario al documento. Además, no puedo cancelar porque me salta error diciendo que no soy el dueño de éste.
+- Cuando cancelas un proyecto (por URL), los patrocinios cancelados salen de color negro en lugar de color rojo.
