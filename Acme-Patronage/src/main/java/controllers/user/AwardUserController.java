@@ -67,7 +67,7 @@ public class AwardUserController extends AbstractController {
 			Assert.notNull(user, "message.error.award.principal.null");
 			awards = this.awardService.findMyAwards(user.getId());
 
-			requestURI = "award/list.do";
+			requestURI = "award/user/list.do";
 			displayURI = "award/display.do?awardId=";
 
 			result.addObject("awards", awards);
