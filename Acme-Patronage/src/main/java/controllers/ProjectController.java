@@ -69,6 +69,9 @@ public class ProjectController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Project> projects = new ArrayList<Project>();
+		Collection<Project> projectReports = new ArrayList<Project>();
+		projectReports = this.projectService.findProjectWithReportLegit();
+
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDate();
 		else
@@ -88,6 +91,7 @@ public class ProjectController extends AbstractController {
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("principal", principal);
 		result.addObject("projects", projects);
+		result.addObject("projectReports", projectReports);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/list.do");
 
@@ -100,6 +104,9 @@ public class ProjectController extends AbstractController {
 	public ModelAndView listOrdered(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Project> projects = new ArrayList<Project>();
+		Collection<Project> projectReports = new ArrayList<Project>();
+		projectReports = this.projectService.findProjectWithReportLegit();
+
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectFutureDueDateOrdered();
 
@@ -117,6 +124,7 @@ public class ProjectController extends AbstractController {
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("principal", principal);
 		result.addObject("projects", projects);
+		result.addObject("projectReports", projectReports);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/list.do");
 
@@ -128,6 +136,8 @@ public class ProjectController extends AbstractController {
 		ModelAndView result;
 		Collection<Project> projects = new ArrayList<Project>();
 		final Category c = this.categoryService.findOne(categoryId);
+		Collection<Project> projectReports = new ArrayList<Project>();
+		projectReports = this.projectService.findProjectWithReportLegit();
 
 		if (word == null || word.equals(""))
 			projects = this.projectService.findProjectByCategory(c.getId());
@@ -148,6 +158,7 @@ public class ProjectController extends AbstractController {
 		result.addObject("totalAmounts", totalAmounts);
 		result.addObject("c", c);
 		result.addObject("categoryId", categoryId);
+		result.addObject("projectReports", projectReports);
 		result.addObject("message", message);
 		result.addObject("requestURI", "project/list.do");
 
