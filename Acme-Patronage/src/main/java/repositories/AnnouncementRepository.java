@@ -15,6 +15,6 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 	//	@Query("select ann from Announcement ann where ann.project in (select distinct(pat.project.id) from Patronage pat where pat.user.id = ?1) order by ann.creationMoment desc")
 	//	Collection<Announcement> findStreamThatIFunded(int userId);
 
-	@Query("select a from Patronage pt join pt.project.announcements a where pt.user.id = ?1 order by a.creationMoment desc")
+	@Query("select distinct(a) from Patronage pt join pt.project.announcements a where pt.user.id = ?1 order by a.creationMoment desc")
 	Collection<Announcement> findStreamThatIFunded(int userId);
 }
