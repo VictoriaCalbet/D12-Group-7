@@ -80,6 +80,7 @@ public class AwardService {
 
 		user = this.userService.findByPrincipal();
 
+		Assert.isTrue(award.getId() == 0, "message.error.award.editToCreate");
 		Assert.notNull(award, "message.error.award.null");
 		Assert.notNull(user, "message.error.award.principal.null");
 		Assert.isTrue(award.getProject().getCreator().equals(user), "message.error.award.user.owner");
