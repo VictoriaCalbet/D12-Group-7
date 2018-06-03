@@ -62,7 +62,7 @@ public class AnnouncementUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
-		requestURI = "announcement/list.do";
+		requestURI = "announcement/user/stream.do";
 
 		announcements = this.announcementService.findStreamThatIFunded(user.getId());
 
