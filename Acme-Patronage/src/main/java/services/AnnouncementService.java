@@ -73,6 +73,7 @@ public class AnnouncementService {
 
 		user = this.userService.findByPrincipal();
 
+		Assert.isTrue(announcement.getId() == 0, "message.error.announcement.edit");
 		Assert.notNull(announcement, "message.error.announcement.null");
 		Assert.notNull(user, "message.error.announcement.principal.null");
 		Assert.isTrue(announcement.getProject().getCreator().equals(user), "message.error.announcement.user.owner");
