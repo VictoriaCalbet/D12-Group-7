@@ -16,5 +16,5 @@
 	
 	<br/>
 	<input type="submit" value="<spring:message code="report.accept"/>"/>
-	<acme:cancel url="/" code="report.cancel" /> <br/>
+	<acme:cancel url="report/moderator/list.do" code="report.cancel" /> <br/>
 </form:form>
