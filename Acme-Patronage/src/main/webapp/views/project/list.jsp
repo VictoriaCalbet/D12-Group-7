@@ -109,11 +109,9 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-	
 	<spring:message code="project.edit" var="editHeader" />	
 		<display:column title="${editHeader}" style="${style}">
 			<jstl:choose>
-			
 				<jstl:when test="${(row.isCancelled eq false) && (row.isDraft eq true) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username}">	
 					<a href="project/user/edit.do?projectId=${row.id}">
 					 	<spring:message code="project.editButton" />
@@ -123,50 +121,36 @@
 					<spring:message code= "project.notEdit" var="projectNotEditable"/>
 						<jstl:out value="${projectNotEditable}"/> 
 				</jstl:otherwise>
-			</jstl:choose>	
-						
+			</jstl:choose>		
 		</display:column>
 	
-	<spring:message code="project.delete" var="deleteHeader" />	
+		<spring:message code="project.delete" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">
 		<jstl:choose>
 			<jstl:when test="${(row.isCancelled eq false) && row.dueDate.time > now.time && row.creator.userAccount.username==loggedactor.username }">
 				<jstl:choose>
-						<jstl:when test="${(fn:length(row.patronages) ==0)}">	
-							<a href="project/user/delete.do?projectId=${row.id}">
-							 	<spring:message code="project.deleteButton" />
-							</a>
-						</jstl:when>
-						
-						<jstl:when test="${(row.isDraft eq false) && (fn:length(row.patronages) !=0)}">	
-							<a href="project/user/cancel.do?projectId=${row.id}">
-							 	<spring:message code="project.cancel" />
-							</a>
-						</jstl:when>
+					<jstl:when test="${(fn:length(row.patronages) ==0)}">	
+						<a href="project/user/delete.do?projectId=${row.id}">
+						 	<spring:message code="project.deleteButton" />
+						</a>
+					</jstl:when>	
+					<jstl:when test="${(row.isDraft eq false) && (fn:length(row.patronages) !=0)}">	
+						<a href="project/user/cancel.do?projectId=${row.id}">
+						 	<spring:message code="project.cancel" />
+						</a>
+					</jstl:when>
 				</jstl:choose>	
-			</jstl:when>
-			<jstl:otherwise>
-				<spring:message code= "project.notCancelDelete" var="projectNotCancelDelete"/>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.notCancelDelete" var="projectNotCancelDelete"/>
 					<jstl:out value="${projectNotCancelDelete}"/> 
-			</jstl:otherwise>
-			
-		</jstl:choose>
-	
+				</jstl:otherwise>
+			</jstl:choose>
 		</display:column>
-		
-		
-	<spring:message code="projectComment.createComments" var="createCommentHeader" />
-	<display:column title="${createCommentHeader}" style="${style}">
-	<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
-	<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
-	</jstl:if>
-	</display:column>	
-	
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
-	
-	<spring:message code="project.deleteAdmin" var="deleteHeader" />	
+		<spring:message code="project.deleteAdmin" var="deleteHeader" />	
 		<display:column title="${deleteHeader}" style="${style}">	
 			<jstl:choose>
 				<jstl:when test="${projectReports.contains(row)}">
@@ -176,35 +160,28 @@
 				</jstl:when>
 				<jstl:otherwise>
 					<spring:message code= "project.notDeleteAdmin" var="projectNotDeleteAdmin"/>
-						<jstl:out value="${projectNotDeleteAdmin}"/> 
+					<jstl:out value="${projectNotDeleteAdmin}"/> 
 				</jstl:otherwise>
 			</jstl:choose>	
-	
-	</display:column>
-	
-	
+		</display:column>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('USER')">
-	
-	<spring:message code="project.patronage" var="patronageHeader" />	
-	<display:column title="${patronageHeader}" style="${style}">	
-		<jstl:choose>
-		<jstl:when test="${row.creator != principal and row.isCancelled eq false and row.isDraft eq false and row.dueDate > now}">
-			<a href="patronage/user/edit.do?projectId=${row.id}">
-			 	<spring:message code="project.patronageButton" />
-			</a>
-		</jstl:when>
-		<jstl:otherwise>
-
-			<spring:message code= "project.patronage.notPatronizable" var="projectNotPatronizable"/>
-			<jstl:out value="${projectNotPatronizable}"/> 
-		</jstl:otherwise>
-		</jstl:choose>
-	</display:column>
-	
+		<spring:message code="project.patronage" var="patronageHeader" />	
+			<display:column title="${patronageHeader}" style="${style}">	
+				<jstl:choose>
+					<jstl:when test="${row.creator != principal and row.isCancelled eq false and row.isDraft eq false and row.dueDate > now}">
+					<a href="patronage/user/edit.do?projectId=${row.id}">
+				 		<spring:message code="project.patronageButton" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code= "project.patronage.notPatronizable" var="projectNotPatronizable"/>
+					<jstl:out value="${projectNotPatronizable}"/> 
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
 	</security:authorize>
-	
 		
 	<spring:message code="project.awards" var="awardsHeader" />	
 	<spring:message code="project.showAwards" var="showAwardsLink" />
@@ -226,10 +203,16 @@
 	</display:column>
 
 	<spring:message code="projectComment.listComments" var="Comment" />
-	<display:column title="${Comment}" style="${style}">
-	<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
-
+		<display:column title="${Comment}" style="${style}">
+		<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
 	</display:column>
+	
+	<spring:message code="projectComment.createComments" var="createCommentHeader" />
+		<display:column title="${createCommentHeader}" style="${style}">
+		<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
+			<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
+		</jstl:if>
+	</display:column>	
 	
 </display:table>
 
