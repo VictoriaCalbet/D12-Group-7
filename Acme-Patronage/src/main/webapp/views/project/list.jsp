@@ -207,12 +207,16 @@
 		<a href="projectComment/list.do?projectId=${row.id}"><spring:message code="projectComment.listGeneral"></spring:message></a>
 	</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+	
 	<spring:message code="projectComment.createComments" var="createCommentHeader" />
 		<display:column title="${createCommentHeader}" style="${style}">
 		<jstl:if test="${row.getIsCancelled()==false and row.getIsDraft()==false}">
 			<a href="projectComment/user/create.do?projectId=${row.id}"><spring:message code="projectComment.create"></spring:message></a>
 		</jstl:if>
 	</display:column>	
+	
+	</security:authorize>
 	
 </display:table>
 
