@@ -40,12 +40,35 @@
 	<a href="announcementComment/list.do?announcementId=${row.id}"><spring:message code="announcementComment.announcement.list"></spring:message></a>
 	</display:column>
 	
+	
+	
 	<security:authorize access="hasRole('USER')">
+		
+		<jstl:choose>
+		
+		<jstl:when test="${requestURI eq 'announcement/list.do'}">
+		
 		<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false and (row.project.creator.userAccount.username eq loggedactor.username or fn:length(patronages)>0)}">
 			<display:column style="${style}">
 				<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
 			</display:column>
 		</jstl:if>
+		
+		</jstl:when>
+		
+		<jstl:when test="${requestURI eq 'announcement/user/stream.do'}">
+		
+			<jstl:if test="${row.project.getIsCancelled() eq false and row.project.getIsDraft() eq false}">
+			<display:column style="${style}">
+				<a href="announcementComment/user/create.do?announcementId=${row.id}"><spring:message code="announcementComment.create"></spring:message></a>
+			</display:column>
+		</jstl:if>
+		
+		</jstl:when>
+		
+		</jstl:choose>
+		
+		
 	</security:authorize>
 
 </display:table>
