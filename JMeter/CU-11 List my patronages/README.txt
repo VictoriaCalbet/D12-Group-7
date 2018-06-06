@@ -1,0 +1,3 @@
+Se han ejecutado tests con diversa cantidad de usuarios en búsqueda del punto a partir del cual el sistema presenta fallos. No obstante, la distancia entre el número de usuarios que hace que se produzcan errores en la aplicación y el número a partir del cual se pueden apreciar tiempos muy largos es muy grande. 
+
+A partir de los 100 usuarios el sistema presenta tiempos de ejecución inaceptables, pero no es hasta los 200 usuarios que se presentan errores en la aplicación. Por ello, el salto entre los usuarios concurrentes de cada captura es muy grande.
