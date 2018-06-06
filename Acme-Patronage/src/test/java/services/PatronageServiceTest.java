@@ -85,12 +85,9 @@ public class PatronageServiceTest extends AbstractTest {
 
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
-			this.setUp();
+		for (int i = 0; i < testingData.length; i++)
 			this.testPatronageProjectTemplate((String) testingData[i][0], (Project) testingData[i][1], (Double) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (Integer) testingData[i][6],
 				(Integer) testingData[i][7], (Integer) testingData[i][8], (Class<?>) testingData[i][9]);
-			this.tearDown();
-		}
 	}
 	protected void testPatronageProjectTemplate(final String username, final Project project, final Double amount, final String brandName, final String holderName, final String cardNumber, final Integer month, final Integer year, final Integer cvv,
 		final Class<?> expectedException) {
