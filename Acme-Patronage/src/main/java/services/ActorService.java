@@ -44,6 +44,10 @@ public class ActorService {
 		return result;
 	}
 
+	public void flush() {
+		this.actorRepository.flush();
+	}
+
 	public Collection<Actor> findAll() {
 		Collection<Actor> result;
 		result = this.actorRepository.findAll();
@@ -64,6 +68,9 @@ public class ActorService {
 
 	public void ban(final int actorId) {
 
+		final Actor principal = this.findByPrincipal();
+		Assert.isTrue(this.checkAuthority(principal, "ADMIN"));
+
 		final Actor actor = this.findOne(actorId);
 		Assert.notNull(actor, "message.error.actor.null");
 		Assert.isTrue(actor.getUserAccount().getIsEnabled(), "message.error.actor.enabled");
@@ -75,6 +82,9 @@ public class ActorService {
 	}
 
 	public void unban(final int actorId) {
+
+		final Actor principal = this.findByPrincipal();
+		Assert.isTrue(this.checkAuthority(principal, "ADMIN"));
 
 		final Actor actor = this.findOne(actorId);
 		Assert.notNull(actor, "message.error.actor.null");
