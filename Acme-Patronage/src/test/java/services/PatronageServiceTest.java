@@ -43,7 +43,7 @@ public class PatronageServiceTest extends AbstractTest {
 	 * Negative test3: A user tries to patronize a project, but the creditCard expirationDate is before the project's dueDate
 	 * Negative test4: A user patronize a project, but he is the creator of the project
 	 * Negative test5: A user patronize a project, but the amount is lower than minimum amount
-	 * Negative test6: A user patronize a project, but exceeds the goal
+	 * Negative test6: A user patronize a project, but it's draft
 	 * Negative test7: A user patronize a project, but the credit card is invalid
 	 * Negative test8: An admin tries to patronize a project.
 	 * Negative test9: A corporation tries to patronize a project
@@ -54,6 +54,7 @@ public class PatronageServiceTest extends AbstractTest {
 	public void testPatronizeProjectDriver() {
 		final Project p1 = this.projectService.findOne(this.getEntityId("project1"));
 		final Project p4 = this.projectService.findOne(this.getEntityId("project4"));
+		final Project p5 = this.projectService.findOne(this.getEntityId("project5"));
 
 		//p1 belongs to user1, minimumAmount is 5.0,economicGoal = 5050. Due Date = 02/12/2019
 		//p4 is cancelled
@@ -61,26 +62,25 @@ public class PatronageServiceTest extends AbstractTest {
 
 			/** userPrincipal, project, amount, brandName,holderName, cardNumber, card ExpirationMonth, card ExpirationYear, cvv, exception */
 			{
-				"user2", p1, 50.0, "VISA", "JUAN GÓMEZ", "4245342397520134", 2, 2021, 961, null
+				"user2", p1, 50.0, "VISA", "JUAN GAMEZ", "4245342397520134", 2, 2021, 961, null
 			}, {
-				"user2", p4, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"user2", p4, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				"user2", p1, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 01, 2019, 169, IllegalArgumentException.class
+				"user2", p1, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 01, 2019, 169, IllegalArgumentException.class
 			}, {
-
-				"user1", p1, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"user1", p1, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				"user2", p1, 2.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"user2", p1, 2.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				"user2", p1, 6000.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"user2", p5, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				"user2", p1, 50.0, "VISA", "JUAN GÓMEZ", "414444444", 11, 2023, 169, ConstraintViolationException.class
+				"user2", p1, 50.0, "VISA", "JUAN GAMEZ", "414444444", 11, 2023, 169, ConstraintViolationException.class
 			}, {
-				"admin", p1, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"admin", p1, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				"corporation1", p1, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				"corporation1", p1, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			}, {
-				null, p1, 50.0, "VISA", "JUAN GÓMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
+				null, p1, 50.0, "VISA", "JUAN GAMEZ", "4123052576787753", 11, 2023, 169, IllegalArgumentException.class
 			},
 
 		};
