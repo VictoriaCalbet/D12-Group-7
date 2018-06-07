@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="patronage/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de patrocinios" />
+		<put-attribute name="body" value="/views/patronage/list.jsp" />
+	</definition>
+	<definition name="patronage/user/list" extends="master.page">	
+		<put-attribute name="title" value="Mis patrocinios" />
+		<put-attribute name="body" value="/views/patronage/list.jsp" />
+	</definition>
+	<definition name="patronage/user/listPatronagesToMyProjects" extends="master.page">	
+		<put-attribute name="title" value="Patrocinios a mis proyectos" />
+		<put-attribute name="body" value="/views/patronage/listPatronagesToMyProjects.jsp" />
+	</definition>
+	
+	<definition name="patronage/user/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar patronage" />
+		<put-attribute name="body" value="/views/patronage/edit.jsp" />
+	</definition>
+	
+	<definition name="patronage/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar patronage" />
+		<put-attribute name="body" value="/views/patronage/display.jsp" />
+	</definition>
+	
+</tiles-definitions>
