@@ -63,7 +63,7 @@ public class ProjectServiceTest extends AbstractTest {
 
 		try {
 			final Collection<Project> projects = this.projectService.findProjectFutureDueDate();
-			Assert.isTrue(projects.size() == 3);
+			Assert.isTrue(projects.size() == 1);
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
