@@ -24,3 +24,6 @@ script:
 dist:
 - precise
 
+cache:
+  directories:
+  - "$HOME/.m2"
