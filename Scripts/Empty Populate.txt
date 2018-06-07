@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Other domain beans come here -->	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="fullName" value="Admin McAdmin"/>
+		<property name="email" value="admin@admins.com"/>
+		<property name="telephone" value="619619617"/>
+		<property name="bio" value="This is a bio of an admin."/>
+		<property name="userAccount" ref="userAccount1"/>
+	</bean>
+	
+	<!-- #Advertisements Advertisements of the system -->
+	
+	<!-- #AnnouncementComments Announcement Comments in the system -->
+	
+	<!-- #Awards Awards in the system -->
+	
+	<!-- #AwardComments Award Comments in the system -->
+	
+	<!-- #Categories Categories of the system -->
+	
+	<bean id="category1" class="domain.Category">
+		
+		<property name="name" value="Games"/>
+		<property name="description" value="This category is for games which need funding."/>
+		<property name="projects">
+			<list>			
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category2" class="domain.Category">
+		
+		<property name="name" value="Art"/>
+		<property name="description" value="This category is for artists who need funding."/>
+		<property name="projects">
+			<list>			
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category3" class="domain.Category">
+		
+		<property name="name" value="Artisan Crafts"/>
+		<property name="description" value="This category is for handmade crafters who need funding."/>
+		<property name="projects">
+			<list>
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category4" class="domain.Category">
+		
+		<property name="name" value="Others"/>
+		<property name="description" value="This category is for projects that don't match the other categories."/>
+		<property name="projects">
+			<list>			
+			</list>
+		</property>
+	
+	</bean>
+	
+	<!-- #CreditCard Credit Cards in the system -->
+	
+	<!-- #Messages Messages in the system -->
+	
+	<!-- #Patronages Patronages in the system -->
+	
+	<!-- #Projects Projects in the system -->
+	
+	<!-- #ProjectComment Project comments -->
+	
+	<!-- #Reports Reports in the system -->
+	
+	<!-- #Sponsorships in the system -->
+	
+</beans>

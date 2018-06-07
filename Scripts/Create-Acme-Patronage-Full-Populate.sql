@@ -58,7 +58,7 @@ CREATE TABLE `administrator` (
 
 LOCK TABLES `administrator` WRITE;
 /*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
-INSERT INTO `administrator` VALUES (8,0,'This is a bio of an admin.','admin@admins.com','Admin McAdmin','619619617',7);
+INSERT INTO `administrator` VALUES (364,0,'This is a bio of an admin.','admin@admins.com','Admin McAdmin','619619617',356);
 /*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,6 +92,7 @@ CREATE TABLE `announcement` (
 
 LOCK TABLES `announcement` WRITE;
 /*!40000 ALTER TABLE `announcement` DISABLE KEYS */;
+INSERT INTO `announcement` VALUES (387,0,'2017-12-11 11:00:00','This is Announcement1.','Announcement1',378,365),(388,0,'2018-01-11 12:00:00','This is Announcement2.','Announcement2',379,366),(389,0,'2018-02-11 13:00:00','This is Announcement3.','Announcement3',380,366);
 /*!40000 ALTER TABLE `announcement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,6 +125,7 @@ CREATE TABLE `announcementcomment` (
 
 LOCK TABLES `announcementcomment` WRITE;
 /*!40000 ALTER TABLE `announcementcomment` DISABLE KEYS */;
+INSERT INTO `announcementcomment` VALUES (390,0,'2018-03-12 14:00:00',1,'Comment in an announcement',365,388),(391,0,'2018-04-12 14:00:00',2,'Comment in another different announcement',365,389),(392,0,'2018-05-12 14:00:00',4,'Look! Another comment in an announcement',366,389);
 /*!40000 ALTER TABLE `announcementcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +156,7 @@ CREATE TABLE `award` (
 
 LOCK TABLES `award` WRITE;
 /*!40000 ALTER TABLE `award` DISABLE KEYS */;
+INSERT INTO `award` VALUES (393,0,'You get a prize, you get a prize, EVERYBODY GETS A PRIZE!!',50,'Award1',378),(394,0,'I will write more original examples for testing purposes rather than \'Award2\'.',1600,'Award2',379),(395,0,'I will try to do the Ice Bucket Challenge.',200,'Award3',380),(396,0,'I will make a large amount of examples.',2000,'Award4',382),(397,0,'Montgomery Burns Award for Outstanding Achievement in the Field of Excellence',2000,'Award5',382);
 /*!40000 ALTER TABLE `award` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,6 +189,7 @@ CREATE TABLE `awardcomment` (
 
 LOCK TABLES `awardcomment` WRITE;
 /*!40000 ALTER TABLE `awardcomment` DISABLE KEYS */;
+INSERT INTO `awardcomment` VALUES (398,0,'2018-04-12 14:00:00',2,'Comment in an award',365,394),(399,0,'2018-04-12 15:00:00',3,'Comment in another award',365,395),(400,0,'2018-04-12 15:00:00',4,'Comment in a brand new different award',365,395);
 /*!40000 ALTER TABLE `awardcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +215,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (9,0,'This category is for games which need funding.','Games'),(10,0,'This category is for artists who need funding.','Art'),(11,0,'This category is for handmade crafters who need funding.','Artisan Crafts'),(12,0,'This category is for projects that don\'t match the other categories.','Others');
+INSERT INTO `category` VALUES (372,0,'This category is for games which need funding.','Games'),(373,0,'This category is for artists who need funding.','Art'),(374,0,'This category is for handmade crafters who need funding.','Artisan Crafts'),(375,0,'This category is for projects that don\'t match the other categories.','Others');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,6 +301,7 @@ CREATE TABLE `corporation` (
 
 LOCK TABLES `corporation` WRITE;
 /*!40000 ALTER TABLE `corporation` DISABLE KEYS */;
+INSERT INTO `corporation` VALUES (370,0,'This is the bio of corporation1.','corporation1@corporations.com','Corporation1 McCorporation1','61961999',362),(371,0,'This is the bio of corporation2.','corporation2@corporations.com','Corporation2 McCorporation2','61961990',363);
 /*!40000 ALTER TABLE `corporation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,6 +353,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (376,0,NULL,'This is a message for you!','Header of message1',368,365),(377,0,NULL,'A message for you!','Header of message2',370,369);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,6 +384,7 @@ CREATE TABLE `moderator` (
 
 LOCK TABLES `moderator` WRITE;
 /*!40000 ALTER TABLE `moderator` DISABLE KEYS */;
+INSERT INTO `moderator` VALUES (368,0,'This is the bio of moderator1.','moderator1@moderators.com','Moderator1 McModerator1','619619622',360),(369,0,'This is the bio of moderator2.','moderator2@moderators.com','Moderator2 McModerator2','619619625',361);
 /*!40000 ALTER TABLE `moderator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,6 +424,7 @@ CREATE TABLE `patronage` (
 
 LOCK TABLES `patronage` WRITE;
 /*!40000 ALTER TABLE `patronage` DISABLE KEYS */;
+INSERT INTO `patronage` VALUES (401,0,20,'2017-01-12 12:00:00','VISA',673,6,2019,'user2','4485750721419113','\0',378,366),(402,0,30,'2017-02-12 12:00:00','VISA',673,6,2019,'user1','4485750721419113','\0',379,365),(403,0,2,'2017-03-12 12:00:00','VISA',673,6,2019,'user1','4485750721419113','\0',380,365);
 /*!40000 ALTER TABLE `patronage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,6 +469,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` VALUES (378,0,'2016-08-11 15:30:00','Project1 is about a game.','2019-12-02 15:30:00',5050,'\0','\0',5,'Project1',372,365),(379,0,'2016-08-11 16:30:00','Project2 is about art.','2017-01-01 15:30:00',10050,'\0','\0',10,'Project2',373,366),(380,0,'2016-04-11 16:30:00','Project3 is about crafting.','2017-01-03 15:30:00',12470,'\0','\0',15,'Project3',374,367),(381,0,'2016-08-11 16:30:00','Project4 is about something else.','2019-01-01 15:30:00',620050,'','\0',30,'Project4',375,367),(382,0,'2016-08-11 16:30:00','Project5 is a draft.','2019-01-04 15:30:00',720050,'\0','',40,'Project5',375,367);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,6 +502,7 @@ CREATE TABLE `projectcomment` (
 
 LOCK TABLES `projectcomment` WRITE;
 /*!40000 ALTER TABLE `projectcomment` DISABLE KEYS */;
+INSERT INTO `projectcomment` VALUES (383,0,'2018-03-12 14:00:00',5,'Comment in a project',366,378);
 /*!40000 ALTER TABLE `projectcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,6 +536,7 @@ CREATE TABLE `report` (
 
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
+INSERT INTO `report` VALUES (384,0,'I hate this user.','\0','It\'s childish',379,367),(385,0,'This project is inappropriate because reasons.','','The reasons are so goods, I\'m happy.',381,365);
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,6 +568,7 @@ CREATE TABLE `sponsorship` (
 
 LOCK TABLES `sponsorship` WRITE;
 /*!40000 ALTER TABLE `sponsorship` DISABLE KEYS */;
+INSERT INTO `sponsorship` VALUES (386,0,'https://image.freepik.com/free-icon/facebook-logo_318-49940.jpg','https://facebook.com',370,378);
 /*!40000 ALTER TABLE `sponsorship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,6 +599,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (365,0,'This is the bio of user1.','user1@users.com','User1 McUser1','619619619',357),(366,0,'This is the bio of user2.','user2@users.com','User2 McUser2','619619618',358),(367,0,'This is the bio of user3.','user3@users.com','User3 McUser3','619619718',359);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -614,7 +627,7 @@ CREATE TABLE `useraccount` (
 
 LOCK TABLES `useraccount` WRITE;
 /*!40000 ALTER TABLE `useraccount` DISABLE KEYS */;
-INSERT INTO `useraccount` VALUES (7,0,'','21232f297a57a5a743894a0e4a801fc3','admin');
+INSERT INTO `useraccount` VALUES (356,0,'','21232f297a57a5a743894a0e4a801fc3','admin'),(357,0,'','24c9e15e52afc47c225b757e7bee1f9d','user1'),(358,0,'','7e58d63b60197ceb55a1c487989a3720','user2'),(359,0,'','92877af70a45fd6a2ed7fe81e1236b78','user3'),(360,0,'','38caf4a470117125b995f7ce53e6e6b9','moderator1'),(361,0,'','95d88ad73653fc7ad4fec3bc56677c3c','moderator2'),(362,0,'','6ebb9282d889012f86ad6c73cf6e706b','corporation1'),(363,0,'','29ce5983dce114d6e5b06e4fef1694e2','corporation2');
 /*!40000 ALTER TABLE `useraccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,7 +652,7 @@ CREATE TABLE `useraccount_authorities` (
 
 LOCK TABLES `useraccount_authorities` WRITE;
 /*!40000 ALTER TABLE `useraccount_authorities` DISABLE KEYS */;
-INSERT INTO `useraccount_authorities` VALUES (7,'ADMIN');
+INSERT INTO `useraccount_authorities` VALUES (356,'ADMIN'),(357,'USER'),(358,'USER'),(359,'USER'),(360,'MODERATOR'),(361,'MODERATOR'),(362,'CORPORATION'),(363,'CORPORATION');
 /*!40000 ALTER TABLE `useraccount_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -652,6 +665,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-07  8:43:17
+-- Dump completed on 2018-05-30 16:58:44
 
 commit;
