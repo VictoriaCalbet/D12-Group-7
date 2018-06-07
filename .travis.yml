@@ -1,2 +1,29 @@
-language: java
-install: ant deps
+language:
+- java
+
+sudo:
+- enabled
+
+services:
+- mysql
+
+jdk:
+- oraclejdk7
+
+before_install:
+
+- mysql -u root < Scripts/Create-Acme-Patronage-Full-Populate.sql
+- cd Acme-Patronage
+
+install:
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V 
+
+script:
+- mvn test -B
+
+dist:
+- precise
+
+cache:
+  directories:
+  - "$HOME/.m2"

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * security.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    ">
+
+	<!-- Security infrastructure -->
+
+	<bean id="loginService" class="security.LoginService" />
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+	<!-- Access control -->
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/" access="permitAll" /> 
+
+		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
+		<security:intercept-url pattern="/images/**" access="permitAll" /> 
+		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
+		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+
+		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
+
+		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
+		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
+		<security:intercept-url pattern="/legal-terms/index.do" access="permitAll" />		 
+		<security:intercept-url pattern="/about-us/index.do" access="permitAll" />		 
+		
+		<!--  **************************************************************************************  --> 	 
+		
+		<!-- Actor -->
+	
+		<!-- Administrator -->
+		
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/administrator/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/administrator/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/administrator/**" access="permitAll" />
+		
+		<!-- Announcement -->
+		<security:intercept-url pattern="/announcement/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/announcement/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/announcement/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/announcement/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/announcement/**" access="permitAll" />
+		
+		<!-- AnnouncementComment -->
+		<security:intercept-url pattern="/announcementComment/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/announcementComment/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/announcementComment/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/announcementComment/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/announcementComment/**" access="permitAll" />
+		
+		<!-- Award -->
+		<security:intercept-url pattern="/award/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/award/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/award/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/award/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/award/**" access="permitAll" />
+		
+		<!-- AwardComment -->
+		<security:intercept-url pattern="/awardComment/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/awardComment/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/awardComment/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/awardComment/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/awardComment/**" access="permitAll" />
+		
+		<!-- Category -->
+		<security:intercept-url pattern="/category/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/category/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/category/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/category/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/category/**" access="permitAll" />
+		
+		<!-- Comment -->
+		<security:intercept-url pattern="/comment/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/comment/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/comment/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/comment/**" access="permitAll" />
+		
+		<!-- Corporation -->
+		<security:intercept-url pattern="/corporation/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/corporation/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/corporation/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/corporation/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/corporation/**" access="permitAll" />
+				
+		<!-- Message -->
+		<security:intercept-url pattern="/message/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/message/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/message/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/message/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/message/**" access="permitAll" />
+		
+		<!-- Moderator -->
+		<security:intercept-url pattern="/moderator/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/moderator/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/moderator/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/moderator/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/moderator/**" access="permitAll" />
+		
+		<!-- Patronage -->
+		<security:intercept-url pattern="/patronage/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/patronage/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/patronage/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/patronage/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/patronage/**" access="permitAll" />
+		
+		<!-- Project -->
+		<security:intercept-url pattern="/project/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/project/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/project/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/project/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/project/**" access="permitAll" />
+		
+		<!-- ProjectComment -->
+		<security:intercept-url pattern="/projectComment/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/projectComment/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/projectComment/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/projectComment/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/projectComment/**" access="permitAll" />
+		
+		<!-- Report -->
+		<security:intercept-url pattern="/report/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/report/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/report/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/report/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/report/**" access="permitAll" />
+		
+		<!-- Sponsorship -->
+		<security:intercept-url pattern="/sponsorship/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/sponsorship/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/sponsorship/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/sponsorship/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/sponsorship/**" access="permitAll" />
+		
+		<!-- User -->
+		<security:intercept-url pattern="/user/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/user/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/user/corporation/**" access="hasRole('CORPORATION')" />
+		<security:intercept-url pattern="/user/moderator/**" access="hasRole('MODERATOR')" />
+		<security:intercept-url pattern="/user/**" access="permitAll" />
+	
+		<!-- OTHERS -->
+	
+		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+
+		<security:form-login 
+			login-page="/security/login.do"
+			password-parameter="password" 
+			username-parameter="username"
+			authentication-failure-url="/security/loginFailure.do" />
+
+		<security:logout 
+			logout-success-url="/" 
+			invalidate-session="true" />
+	</security:http>
+
+</beans>
