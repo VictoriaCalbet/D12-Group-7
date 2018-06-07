@@ -15,9 +15,6 @@ before_install:
 - mysql -u root < Scripts/Create-Acme-Patronage-Full-Populate.sql
 - cd Acme-Patronage
 
-before_script:
-- cd Acme-Patronage
-
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V 
 
