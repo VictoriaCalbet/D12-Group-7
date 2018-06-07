@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 
 import repositories.AnnouncementCommentRepository;
 import domain.Administrator;
-import domain.Announcement;
 import domain.AnnouncementComment;
 
 @Service
@@ -23,15 +22,15 @@ public class AnnouncementCommentService {
 	@Autowired
 	private AnnouncementCommentRepository	announcementCommentRepository;
 
-
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private UserService userService;
-	
+	private UserService						userService;
+
 	@Autowired
-	private AdministratorService administratorService;
-	
+	private AdministratorService			administratorService;
+
+
 	// Constructors -----------------------------------------------------------
 
 	public AnnouncementCommentService() {
@@ -68,33 +67,32 @@ public class AnnouncementCommentService {
 	}
 
 	// TODO: AnnouncementComment - saveFromCreate
-	public AnnouncementComment saveFromCreate(AnnouncementComment anC) {
-		
-		Assert.isTrue(anC.getId()==0);
+	public AnnouncementComment saveFromCreate(final AnnouncementComment anC) {
+
+		Assert.isTrue(anC.getId() == 0);
 		Assert.notNull(anC);
 		Assert.notNull(anC.getText());
 		Assert.notNull(anC.getAnnouncement());
-		
+
 		anC.setCreationMoment(new Date(System.currentTimeMillis() - 1));
 		anC.setUser(this.userService.findByPrincipal());
-		
+
 		final AnnouncementComment result = this.announcementCommentRepository.save(anC);
-		
+
 		return result;
 	}
-	
-	public void delete(AnnouncementComment aC){
-		
-		Assert.notNull(aC,"message.error.announcementComment.null");
-		
-		Administrator admin = this.administratorService.findByPrincipal();
-		
-		Assert.notNull(admin,"message.error.announcementComment.notAnAdmin");
-		
+
+	public void delete(final AnnouncementComment aC) {
+
+		Assert.notNull(aC, "message.error.announcementComment.null");
+
+		final Administrator admin = this.administratorService.findByPrincipal();
+
+		Assert.notNull(admin, "message.error.announcementComment.notAnAdmin");
+
 		this.announcementCommentRepository.delete(aC.getId());
-		
+
 	}
-	
 
 	public void flush() {
 		this.announcementCommentRepository.flush();
@@ -102,18 +100,18 @@ public class AnnouncementCommentService {
 
 	// Other business methods -------------------------------------------------
 
-	public Collection<AnnouncementComment> listAllAnnouncementComments(int announcementId){
-		
-		Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementComments(announcementId);
-	
+	public Collection<AnnouncementComment> listAllAnnouncementComments(final int announcementId) {
+
+		final Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementComments(announcementId);
+
 		return result;
 	}
-	
-	public Collection<AnnouncementComment> listAllAnnouncementCommentsOfUser(int userId){
-		
-		Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementCommentsOfUser(userId);
-	
+
+	public Collection<AnnouncementComment> listAllAnnouncementCommentsOfUser(final int userId) {
+
+		final Collection<AnnouncementComment> result = this.announcementCommentRepository.listAllAnnouncementCommentsOfUser(userId);
+
 		return result;
 	}
-	
+
 }

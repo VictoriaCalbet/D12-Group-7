@@ -28,7 +28,7 @@ public class ReportServiceTest extends AbstractTest {
 
 
 	/**
-	 * Acme-Patronage: Requirement 31
+	 * Acme-Patronage: Requirement 26.1
 	 * 
 	 * An actor who is authenticated as a user must be able to:
 	 * Fill a complaint about any project.
@@ -77,7 +77,7 @@ public class ReportServiceTest extends AbstractTest {
 		this.checkExceptions(expectedException, caught);
 	}
 	/**
-	 * Acme-Patronage: Requirement 32
+	 * Acme-Patronage: Requirement 28.1
 	 * 
 	 * An actor who is authenticated as a moderator must be able to:
 	 * Accept or reject a complaint
@@ -131,7 +131,7 @@ public class ReportServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 32
+	 * Acme-Patronage: Requirement 28.1
 	 * 
 	 * An actor who is authenticated as a moderator must be able to:
 	 * Accept or reject a complaint
@@ -185,7 +185,7 @@ public class ReportServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 32
+	 * Acme-Patronage: Requirement 28.1
 	 * 
 	 * An actor who is authenticated as a moderator must be able to:
 	 * Accept or reject a complaint
@@ -232,7 +232,7 @@ public class ReportServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 28
+	 * Acme-Patronage: Requirement 14
 	 * 
 	 * Users can fill a report about a project.
 	 * A report is a complaint about any aspect of the project.

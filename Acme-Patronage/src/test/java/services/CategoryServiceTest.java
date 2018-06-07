@@ -28,8 +28,8 @@ public class CategoryServiceTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 	/**
-	 * Acme-Patronage: Requirement 12 An actor who is authenticated as an administrator must be able to:
-	 * 12.1. Manage the categories, thus create, edit and delete a category. If a
+	 * Acme-Patronage: Requirement 19 An actor who is authenticated as an administrator must be able to:
+	 * 19.1. Manage the categories, thus create, edit and delete a category. If a
 	 * category is in use by any project it cannot be edited, only deleted. This
 	 * removes the category from the project.
 	 * 
@@ -96,7 +96,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 12
+	 * Acme-Patronage: Requirement 19.1
 	 * 
 	 * Tests- Save a category
 	 * 
@@ -167,7 +167,7 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 12
+	 * Acme-Patronage: Requirement 19.1
 	 * 
 	 * Tests- Delete a category
 	 * 

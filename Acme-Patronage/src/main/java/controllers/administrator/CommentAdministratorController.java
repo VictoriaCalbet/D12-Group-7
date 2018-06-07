@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AdministratorService;
 import services.AnnouncementCommentService;
 import services.AwardCommentService;
 import services.ProjectCommentService;
@@ -32,9 +31,6 @@ public class CommentAdministratorController extends AbstractController {
 
 	@Autowired
 	private ProjectCommentService		projectCommentService;
-
-	@Autowired
-	private AdministratorService		administratorService;
 
 
 	public CommentAdministratorController() {
@@ -110,7 +106,7 @@ public class CommentAdministratorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/deleteProjectComment", method = RequestMethod.GET)
 	public ModelAndView deleteProjectComment(@RequestParam final int projectCommentId) {
 		ModelAndView result = null;
@@ -153,7 +149,7 @@ public class CommentAdministratorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/deleteAnnouncementComment", method = RequestMethod.GET)
 	public ModelAndView deleteAnnouncementComment(@RequestParam final int announcementCommentId) {
 		ModelAndView result = null;

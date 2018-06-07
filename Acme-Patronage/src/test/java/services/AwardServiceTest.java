@@ -36,7 +36,7 @@ public class AwardServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/**
-	 * Acme-Patronage: Requirement 11.4
+	 * Acme-Patronage: Requirement 18.4
 	 * 
 	 * Manage the awards he or she has created. The user is able to create, edit and
 	 * delete an award. Awards can be edited as long as its project is not published.
@@ -218,7 +218,7 @@ public class AwardServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 9.4
+	 * Acme-Patronage: Requirement 16.4
 	 * 
 	 * List the awards of every project if they have any.
 	 * 

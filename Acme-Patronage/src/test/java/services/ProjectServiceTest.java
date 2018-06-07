@@ -36,7 +36,7 @@ public class ProjectServiceTest extends AbstractTest {
 
 	/***
 	 * 
-	 * Requirement 9.2, 9.3 to Acme-Project
+	 * Requirement 16.2, 16.3 to Acme-Project
 	 * 
 	 * List the projects with a future due date and browse them by categories.
 	 * List the projects ordered by creation moment (new ones on top).
@@ -75,7 +75,7 @@ public class ProjectServiceTest extends AbstractTest {
 
 	/***
 	 * 
-	 * Requirement 9.2, 9.3 to Acme-Project
+	 * Requirement 16.2, 16.3 to Acme-Project
 	 * 
 	 * List the projects with a future due date and browse them by categories.
 	 * List the projects ordered by creation moment (new ones on top).
@@ -120,7 +120,7 @@ public class ProjectServiceTest extends AbstractTest {
 
 	/***
 	 * 
-	 * Requirement 9.7 to Acme-Project
+	 * Requirement 16.7 to Acme-Project
 	 * 
 	 * Search for a project using a single keyword that must appear in its title
 	 * or description
@@ -162,7 +162,7 @@ public class ProjectServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/***
-	 * Acme-Project: Requirement 11.1
+	 * Acme-Project: Requirement 18.1
 	 * 
 	 * Create a project. The user who has created a project is commonly
 	 * referred as the creator
@@ -242,7 +242,7 @@ public class ProjectServiceTest extends AbstractTest {
 	/***
 	 * 
 	 * 
-	 * Requirement 11.2 to Acme-Project
+	 * Requirement 18.2 to Acme-Project
 	 * 
 	 * Edit a project as long as it's in draft mode. Once the project is in final
 	 * mode, it cannot be modified and it's considered as published
@@ -298,7 +298,7 @@ public class ProjectServiceTest extends AbstractTest {
 	/***
 	 * 
 	 * 
-	 * Requirement 11.3 to Acme-Project
+	 * Requirement 18.3 to Acme-Project
 	 * 
 	 * Delete a project as long as it hasn't any patronages. If any, the project
 	 * can only be cancelled.
@@ -348,7 +348,7 @@ public class ProjectServiceTest extends AbstractTest {
 	/***
 	 * 
 	 * 
-	 * Requirement 11.3 to Acme-Project
+	 * Requirement 18.3 to Acme-Project
 	 * 
 	 * Delete a project as long as it hasn't any patronages. If any, the project
 	 * can only be cancelled.
@@ -397,7 +397,7 @@ public class ProjectServiceTest extends AbstractTest {
 
 	/***
 	 * 
-	 * Requirement 33.2 to Acme-Project
+	 * Requirement 29.2 to Acme-Project
 	 * 
 	 * Delete a project with a legit complaint.
 	 * 

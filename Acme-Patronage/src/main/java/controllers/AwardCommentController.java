@@ -14,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AwardCommentService;
 import services.AwardService;
 import services.ProjectService;
-import services.UserService;
-import services.forms.CommentFormService;
 import domain.AwardComment;
 import domain.Project;
 
@@ -31,7 +29,8 @@ public class AwardCommentController extends AbstractController {
 
 	@Autowired
 	private AwardService		awardService;
-	
+
+
 	public AwardCommentController() {
 
 		super();
@@ -42,11 +41,10 @@ public class AwardCommentController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = true) final int awardId) {
 		ModelAndView result;
 
-		try{
-		
-			Assert.notNull(this.awardService.findOne(awardId),"message.error.award.null");
-			
-			
+		try {
+
+			Assert.notNull(this.awardService.findOne(awardId), "message.error.award.null");
+
 			Collection<AwardComment> awardComments;
 
 			awardComments = this.awardCommentService.listAllAwardComments(awardId);
@@ -54,15 +52,15 @@ public class AwardCommentController extends AbstractController {
 			result = new ModelAndView("awardComment/list");
 			result.addObject("awardComments", awardComments);
 			result.addObject("requestURI", "awardComments/list.do");
-		}catch(Throwable oops){
-			
+		} catch (final Throwable oops) {
+
 			String messageError = "awardComment.commit.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
 			result = new ModelAndView("project/list");
-			Collection<Project> projects = this.projectService.findProjectFutureDueDate();
-			result.addObject("message",messageError);
-			result.addObject("projects",projects);
+			final Collection<Project> projects = this.projectService.findProjectFutureDueDate();
+			result.addObject("message", messageError);
+			result.addObject("projects", projects);
 		}
 		return result;
 

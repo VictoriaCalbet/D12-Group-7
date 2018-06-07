@@ -35,7 +35,7 @@ public class MessageServiceTest extends AbstractTest {
 	// it using JUnit.
 
 	/**
-	 * Acme-Patronage: Requirement not listed:
+	 * Acme-Patronage: Req 27.1
 	 * 
 	 * An actor who is authenticated must be able to:
 	 * Send a message to any actor.

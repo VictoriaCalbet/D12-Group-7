@@ -31,7 +31,7 @@ public class ActorServiceTest extends AbstractTest {
 	// it using JUnit.
 
 	/**
-	 * Acme-Patronage: Requirement 33.1:
+	 * Acme-Patronage: Requirement 29.1:
 	 * 
 	 * An actor who is authenticated as a administrator must be able to:
 	 * Ban or unban a user if he or she has created a project with a legit complaint.

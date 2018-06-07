@@ -1,3 +1,4 @@
+
 package controllers.user;
 
 import java.util.ArrayList;
@@ -17,10 +18,7 @@ import services.ProjectCommentService;
 import services.ProjectService;
 import services.UserService;
 import services.forms.CommentFormService;
-
 import controllers.AbstractController;
-import domain.Award;
-import domain.AwardComment;
 import domain.Project;
 import domain.ProjectComment;
 import domain.User;
@@ -28,128 +26,124 @@ import domain.forms.CommentForm;
 
 @Controller
 @RequestMapping("/projectComment/user")
-public class ProjectCommentUserController extends AbstractController{
+public class ProjectCommentUserController extends AbstractController {
 
 	//Services needed
-	
+
 	@Autowired
-	private ProjectCommentService projectCommentService;
-	
+	private ProjectCommentService	projectCommentService;
+
 	@Autowired
-	private UserService userService;
-	
+	private UserService				userService;
+
 	@Autowired
-	private ProjectService projectService;
-	
+	private ProjectService			projectService;
+
 	@Autowired
-	private CommentFormService commentFormService;
-	
+	private CommentFormService		commentFormService;
+
+
 	//Constructor
-	
-	public ProjectCommentUserController(){
-		
+
+	public ProjectCommentUserController() {
+
 		super();
 	}
-	
+
 	//Listing
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		
+
 		Collection<ProjectComment> projectComments;
 		final User u = this.userService.findByPrincipal();
 
 		projectComments = this.projectCommentService.listAllProjectCommentsOfUser(u.getId());
-		
+
 		result = new ModelAndView("projectComment/list");
 		result.addObject("projectComments", projectComments);
 		result.addObject("requestURI", "projectComment/user/list.do");
-		
+
 		return result;
-		
+
 	}
-	
+
 	// Creation ----------------------------------------------------------------
 
-			@RequestMapping(value = "/create", method = RequestMethod.GET)
-			public ModelAndView create(final int projectId) {
-				ModelAndView result;
-				CommentForm cForm;
-				
-				try{
-					
-					Project p = this.projectService.findOne(projectId);
-					
-					Assert.notNull(p,"message.error.projectComment.project.null");
-					Assert.isTrue(!p.getIsDraft(),"message.error.projectComment.draftProject");
-					Assert.isTrue(!p.getIsCancelled(),"message.error.projectComment.cancelledProject");
-					cForm = this.commentFormService.create();
-					result = this.createModelAndView(cForm);
-					
-				}catch(final Throwable oops) {
-					String messageError = "projectComment.commit.error";
-					if (oops.getMessage().contains("message.error"))
-						messageError = oops.getMessage();
-					result = new ModelAndView("projectComment/list");
-					User user = this.userService.findByPrincipal();
-					Collection<ProjectComment> projectComments = this.projectCommentService.listAllProjectCommentsOfUser(user.getId());
-					result.addObject("message",messageError);
-					result.addObject("projectComments",projectComments);
-				}
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create(final int projectId) {
+		ModelAndView result;
+		CommentForm cForm;
 
-				return result;
-				
-				
+		try {
 
+			final Project p = this.projectService.findOne(projectId);
+
+			Assert.notNull(p, "message.error.projectComment.project.null");
+			Assert.isTrue(!p.getIsDraft(), "message.error.projectComment.draftProject");
+			Assert.isTrue(!p.getIsCancelled(), "message.error.projectComment.cancelledProject");
+			cForm = this.commentFormService.create();
+			result = this.createModelAndView(cForm);
+
+		} catch (final Throwable oops) {
+			String messageError = "projectComment.commit.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = new ModelAndView("projectComment/list");
+			final User user = this.userService.findByPrincipal();
+			final Collection<ProjectComment> projectComments = this.projectCommentService.listAllProjectCommentsOfUser(user.getId());
+			result.addObject("message", messageError);
+			result.addObject("projectComments", projectComments);
+		}
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView create(@Valid final CommentForm commentForm, final BindingResult binding, final int projectId) {
+
+		ModelAndView result;
+
+		if (binding.hasErrors())
+			result = this.createModelAndView(commentForm);
+		else
+			try {
+				this.commentFormService.saveFromCreate(commentForm, "PROJECT", projectId);
+				result = new ModelAndView("redirect:/projectComment/user/list.do");
+			} catch (final Throwable oops) {
+				String messageError = "projectComment.commit.error";
+				if (oops.getMessage().contains("message.error"))
+					messageError = oops.getMessage();
+				result = this.createModelAndView(commentForm, messageError);
 			}
 
-			@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-			public ModelAndView create(@Valid final CommentForm commentForm, final BindingResult binding, int projectId) {
+		return result;
+	}
 
-				ModelAndView result;
+	protected ModelAndView createModelAndView(final CommentForm commentForm) {
+		ModelAndView result;
 
-				if (binding.hasErrors())
-					result = this.createModelAndView(commentForm);
-				else
-					try {
-						this.commentFormService.saveFromCreate(commentForm, "PROJECT",projectId);
-						result = new ModelAndView("redirect:/projectComment/user/list.do");
-					} catch (final Throwable oops) {
-						String messageError = "projectComment.commit.error";
-						if (oops.getMessage().contains("message.error"))
-							messageError = oops.getMessage();
-						result = this.createModelAndView(commentForm, messageError);
-					}
+		result = this.createModelAndView(commentForm, null);
 
-				return result;
-			}
+		return result;
+	}
 
-			protected ModelAndView createModelAndView(final CommentForm commentForm) {
-				ModelAndView result;
+	protected ModelAndView createModelAndView(final CommentForm commentForm, final String message) {
+		ModelAndView result;
 
-				result = this.createModelAndView(commentForm, null);
+		final Collection<Integer> numbers = new ArrayList<Integer>();
 
-				return result;
-			}
+		for (int ind = 1; ind < 6; ind++)
+			numbers.add(ind);
 
-			protected ModelAndView createModelAndView(final CommentForm commentForm, final String message) {
-				ModelAndView result;
+		result = new ModelAndView("projectComment/edit");
+		result.addObject("commentForm", commentForm);
+		result.addObject("numbers", numbers);
+		result.addObject("message", message);
 
-				Collection<Integer> numbers = new ArrayList<Integer>();
-				
-				for(int ind=1;ind<6;ind++){
-					
-					numbers.add(ind);
-				}
-				
-				result = new ModelAndView("projectComment/edit");
-				result.addObject("commentForm", commentForm);
-				result.addObject("numbers", numbers);
-				result.addObject("message", message);
+		return result;
+	}
 
-				return result;
-			}
-			
-	
 }

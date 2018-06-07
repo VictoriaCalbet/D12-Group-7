@@ -33,7 +33,7 @@ public class CorporationServiceTest extends AbstractTest {
 	// it using JUnit.
 
 	/**
-	 * Acme-Patronage: Req 21.1
+	 * Acme-Patronage: Req 20.1
 	 * 
 	 * An actor who is not authenticated must be able to:
 	 * Register to the system as a corporation.

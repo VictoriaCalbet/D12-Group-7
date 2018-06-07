@@ -40,7 +40,7 @@ public class AnnouncementServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/**
-	 * Acme-Patronage: Requirement 9.4
+	 * Acme-Patronage: Requirement 16.4
 	 * 
 	 * List the awards of every project if they have any
 	 * 
@@ -92,7 +92,7 @@ public class AnnouncementServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 23.1
+	 * Acme-Patronage: Requirement 22.1
 	 * 
 	 * Post an announcement of a project he or she has created.
 	 * Announcements cannot be edited or deleted.
@@ -162,7 +162,7 @@ public class AnnouncementServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 23.2
+	 * Acme-Patronage: Requirement 22.2
 	 * 
 	 * Display a stream of announcements regarding the projects that he or
 	 * she has funded.

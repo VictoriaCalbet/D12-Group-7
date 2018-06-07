@@ -32,7 +32,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/**
-	 * Acme-Patronage: Requirement 24
+	 * Acme-Patronage: Requirement 23.1
 	 * 
 	 * An actor who is authenticated as a corporation must be able to:
 	 * Manage its sponsorships, thus create, edit and delete them.
@@ -86,7 +86,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 24
+	 * Acme-Patronage: Requirement 23.1
 	 * 
 	 * An actor who is authenticated as a corporation must be able to:
 	 * Manage its sponsorships, thus create, edit and delete them.
@@ -146,7 +146,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 24
+	 * Acme-Patronage: Requirement 23.1
 	 * 
 	 * An actor who is authenticated as a corporation must be able to:
 	 * Manage its sponsorships, thus create, edit and delete them.
@@ -205,7 +205,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 
 	/**
-	 * Acme-Patronage: Requirement 26
+	 * Acme-Patronage: Requirement 34
 	 * 
 	 * Whenever a project is displayed, a random sponsorship must be
 	 * selected and its banner shown, if any.

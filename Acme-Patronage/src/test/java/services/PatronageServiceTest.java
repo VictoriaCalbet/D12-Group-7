@@ -34,7 +34,7 @@ public class PatronageServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 	/**
 	 * Acme-Patronage: 4. Users can patronage projects. Every fund must store the amount of money, the
-	 * date of the fund and a valid credit card with an expiration date after the project’s
+	 * date of the fund and a valid credit card with an expiration date after the project's
 	 * due date. If the project is cancelled, these will be cancelled too.
 	 * 
 	 * Tests-Patronage a project
