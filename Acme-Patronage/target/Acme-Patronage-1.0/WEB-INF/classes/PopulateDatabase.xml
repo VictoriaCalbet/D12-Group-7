@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="user1" />
+		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="user2" />
+		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="user3" />
+		<property name="password" value="92877af70a45fd6a2ed7fe81e1236b78" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="moderator1" />
+		<property name="password" value="38caf4a470117125b995f7ce53e6e6b9" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MODERATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="moderator2" />
+		<property name="password" value="95d88ad73653fc7ad4fec3bc56677c3c" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MODERATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="corporation1" />
+		<property name="password" value="6ebb9282d889012f86ad6c73cf6e706b" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CORPORATION" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="corporation2" />
+		<property name="password" value="29ce5983dce114d6e5b06e4fef1694e2" />
+		<property name="isEnabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CORPORATION" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Other domain beans come here -->	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="fullName" value="Admin McAdmin"/>
+		<property name="email" value="admin@admins.com"/>
+		<property name="telephone" value="619619617"/>
+		<property name="bio" value="This is a bio of an admin."/>
+		<property name="userAccount" ref="userAccount1"/>
+	</bean>
+	
+	<bean id="user1" class="domain.User">
+		<property name="fullName" value="User1 McUser1"/>
+		<property name="email" value="user1@users.com"/>
+		<property name="telephone" value="619619619"/>
+		<property name="bio" value="This is the bio of user1."/>
+		<property name="userAccount" ref="userAccount2"/>
+		<property name="projects">
+		
+			<list>
+			
+				<ref bean="project1"/>
+				
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+				
+				<ref bean="report2"/>
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+				
+				<ref bean="patronage2"/>
+				<ref bean="patronage3"/>
+			
+			</list>
+		
+		</property>
+		<property name="announcements">
+		
+			<list>
+			
+				<ref bean="announcement1"/>
+			
+			</list>
+		
+		</property>
+		<property name="comments">
+		
+			<list>
+			
+				<ref bean="announcementComment1"/>
+				<ref bean="announcementComment2"/>
+				<ref bean="awardComment1"/>
+				<ref bean="awardComment2"/>
+				<ref bean="awardComment3"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="user2" class="domain.User">
+		<property name="fullName" value="User2 McUser2"/>
+		<property name="email" value="user2@users.com"/>
+		<property name="telephone" value="619619618"/>
+		<property name="bio" value="This is the bio of user2."/>
+		<property name="userAccount" ref="userAccount3"/>
+		<property name="projects">
+		
+			<list>
+			
+				<ref bean="project2"/>
+				<ref bean="project3"/>
+				
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+				
+				
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+				
+				<ref bean="patronage1"/>
+			
+			</list>
+		
+		</property>
+		<property name="announcements">
+		
+			<list>
+			
+				<ref bean="announcement2"/>
+				
+			
+			</list>
+		
+		</property>
+		<property name="comments">
+		
+			<list>
+				<ref bean="announcementComment3"/>
+				<ref bean="projectComment1"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="user3" class="domain.User">
+		<property name="fullName" value="User3 McUser3"/>
+		<property name="email" value="user3@users.com"/>
+		<property name="telephone" value="619619718"/>
+		<property name="bio" value="This is the bio of user3."/>
+		<property name="userAccount" ref="userAccount4"/>
+		<property name="projects">
+		
+			<list>
+			
+				<ref bean="project4"/>
+				<ref bean="project5"/>
+				
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+				
+				<ref bean="report1"/>
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+				
+				
+			
+			</list>
+		
+		</property>
+		<property name="announcements">
+		
+			<list>
+				<ref bean="announcement3"/>
+			</list>
+		
+		</property>
+		<property name="comments">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="moderator1" class="domain.Moderator">
+		<property name="fullName" value="Moderator1 McModerator1"/>
+		<property name="email" value="moderator1@moderators.com"/>
+		<property name="telephone" value="619619622"/>
+		<property name="bio" value="This is the bio of moderator1."/>
+		<property name="userAccount" ref="userAccount5"/>
+	</bean>
+	
+	<bean id="moderator2" class="domain.Moderator">
+		<property name="fullName" value="Moderator2 McModerator2"/>
+		<property name="email" value="moderator2@moderators.com"/>
+		<property name="telephone" value="619619625"/>
+		<property name="bio" value="This is the bio of moderator2."/>
+		<property name="userAccount" ref="userAccount6"/>
+	</bean>
+	
+	<bean id="corporation1" class="domain.Corporation">
+		<property name="fullName" value="Corporation1 McCorporation1"/>
+		<property name="email" value="corporation1@corporations.com"/>
+		<property name="telephone" value="61961999"/>
+		<property name="bio" value="This is the bio of corporation1."/>
+		<property name="userAccount" ref="userAccount7"/>
+		<property name="sponsorships">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="corporation2" class="domain.Corporation">
+		<property name="fullName" value="Corporation2 McCorporation2"/>
+		<property name="email" value="corporation2@corporations.com"/>
+		<property name="telephone" value="61961990"/>
+		<property name="bio" value="This is the bio of corporation2."/>
+		<property name="userAccount" ref="userAccount8"/>
+		<property name="sponsorships">
+		
+			<list>
+				<ref bean="sponsorship1"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<!-- #Advertisements Advertisements of the system -->
+	
+	<bean id="announcement1" class="domain.Announcement">
+	
+		<property name="title" value="Announcement1"/>
+		<property name="description" value="This is Announcement1."/>
+		<property name="creationMoment" value="24/11/2016 11:00"/>
+		<property name="user" ref="user1"/>
+		<property name="project" ref="project1"/>
+		<property name="announcementComments">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="announcement2" class="domain.Announcement">
+	
+		<property name="title" value="Announcement2"/>
+		<property name="description" value="This is Announcement2."/>
+		<property name="creationMoment" value="25/11/2016 12:00"/>
+		<property name="user" ref="user2"/>
+		<property name="project" ref="project2"/>
+		<property name="announcementComments">
+		
+			<list>
+			<ref bean="announcementComment1"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="announcement3" class="domain.Announcement">
+	
+		<property name="title" value="Announcement3"/>
+		<property name="description" value="This is Announcement3."/>
+		<property name="creationMoment" value="26/11/2016 13:00"/>
+		<property name="user" ref="user2"/>
+		<property name="project" ref="project3"/>
+		<property name="announcementComments">
+		
+			<list>
+			<ref bean="announcementComment2"/>
+			<ref bean="announcementComment3"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<!-- #AnnouncementComments Announcement Comments in the system -->
+	
+	<bean id="announcementComment1" class="domain.AnnouncementComment">
+	
+		<property name="text" value="Comment in an announcement"/>
+		<property name="creationMoment" value="27/12/2016 14:00"/>
+		<property name="rating" value="1"/>
+		<property name="announcement" ref="announcement2"/>
+		<property name="user" ref="user1"/>
+	
+	</bean>
+	
+	<bean id="announcementComment2" class="domain.AnnouncementComment">
+		
+		<property name="text" value="Comment in another different announcement"/>
+		<property name="creationMoment" value="28/12/2016 14:00"/>
+		<property name="rating" value="2"/>
+		<property name="announcement" ref="announcement3"/>
+		<property name="user" ref="user1"/>
+	</bean>
+	
+	<bean id="announcementComment3" class="domain.AnnouncementComment">
+		<property name="text" value="Look! Another comment in an announcement"/>
+		<property name="creationMoment" value="29/12/2016 14:00"/>
+		<property name="rating" value="4"/>
+		<property name="announcement" ref="announcement3"/>
+		<property name="user" ref="user2"/>
+	</bean>
+	
+	<!-- #Awards Awards in the system -->
+	
+	<bean id="award1" class="domain.Award">
+	
+		<property name="name" value="Award1"/>
+		<property name="description" value="You get a prize, you get a prize, EVERYBODY GETS A PRIZE!!"/>
+		<property name="moneyGoal" value="50.0"/>
+		<property name="project" ref="project1"/>
+		<property name="awardComments">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="award2" class="domain.Award">
+	
+		<property name="name" value="Award2"/>
+		<property name="description" value="I will write more original examples for testing purposes rather than 'Award2'."/>
+		<property name="moneyGoal" value="1600.0"/>
+		<property name="project" ref="project2"/>
+		<property name="awardComments">
+		
+			<list>
+				<ref bean="awardComment1"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="award3" class="domain.Award">
+	
+		<property name="name" value="Award3"/>
+		<property name="description" value="I will try to do the Ice Bucket Challenge."/>
+		<property name="moneyGoal" value="200.0"/>
+		<property name="project" ref="project3"/>
+		<property name="awardComments">
+		
+			<list>
+				<ref bean="awardComment2"/>
+				<ref bean="awardComment3"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="award4" class="domain.Award">
+		<property name="name" value="Award4"/>
+		<property name="description" value="I will make a large amount of examples."/>
+		<property name="moneyGoal" value="2000.0"/>
+		<property name="project" ref="project5"/>
+		<property name="awardComments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="award5" class="domain.Award">
+	
+		<property name="name" value="Award5"/>
+		<property name="description" value="Montgomery Burns Award for Outstanding Achievement in the Field of Excellence"/>
+		<property name="moneyGoal" value="2000.0"/>
+		<property name="project" ref="project5"/>
+		<property name="awardComments">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<!-- #AwardComments Award Comments in the system -->
+	
+	<bean id="awardComment1" class="domain.AwardComment">
+		<property name="text" value="Comment in an award"/>
+		<property name="creationMoment" value="28/12/2016 14:00"/>
+		<property name="rating" value="2"/>
+		<property name="award" ref="award2"/>
+		<property name="user" ref="user1"/>
+		
+	</bean>
+	
+	<bean id="awardComment2" class="domain.AwardComment">
+		<property name="text" value="Comment in another award"/>
+		<property name="creationMoment" value="28/12/2016 15:00"/>
+		<property name="rating" value="3"/>
+		<property name="award" ref="award3"/>
+		<property name="user" ref="user1"/>
+	</bean>
+	
+	<bean id="awardComment3" class="domain.AwardComment">
+		<property name="text" value="Comment in a brand new different award"/>
+		<property name="creationMoment" value="28/12/2016 15:00"/>
+		<property name="rating" value="4"/>
+		<property name="award" ref="award3"/>
+		<property name="user" ref="user1"/>
+	</bean>
+	
+	<!-- #Categories Categories of the system -->
+	
+	<bean id="category1" class="domain.Category">
+		
+		<property name="name" value="Games"/>
+		<property name="description" value="This category is for games which need funding."/>
+		<property name="projects">
+			<list>
+			
+			<ref bean="project1"/>
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category2" class="domain.Category">
+		
+		<property name="name" value="Art"/>
+		<property name="description" value="This category is for artists who need funding."/>
+		<property name="projects">
+			<list>
+			
+			<ref bean="project2"/>
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category3" class="domain.Category">
+		
+		<property name="name" value="Artisan Crafts"/>
+		<property name="description" value="This category is for handmade crafters who need funding."/>
+		<property name="projects">
+			<list>
+			
+			<ref bean="project3"/>
+			</list>
+		</property>
+	
+	</bean>
+	
+	<bean id="category4" class="domain.Category">
+		
+		<property name="name" value="Others"/>
+		<property name="description" value="This category is for projects that don't match the other categories."/>
+		<property name="projects">
+			<list>
+			
+			
+			</list>
+		</property>
+	
+	</bean>
+	
+	<!-- #CreditCard Credit Cards in the system -->
+	<bean id="creditCard1" class="domain.CreditCard">
+    	<property name="holderName" value="user1" /> 
+    	<property name="brandName" value="VISA" /> 
+    	<property name="number" value="4485750721419113" /> 
+    	<property name="expirationMonth" value="06" /> 
+    	<property name="expirationYear" value="2019" /> 
+    	<property name="cvv" value="673" /> 
+    </bean>
+    
+    <bean id="creditCard2" class="domain.CreditCard">
+  		<property name="holderName" value="user2" /> 
+  		<property name="brandName" value="VISA" /> 
+  		<property name="number" value="4485750721419113" /> 
+  		<property name="expirationMonth" value="06" /> 
+  		<property name="expirationYear" value="2019" /> 
+  		<property name="cvv" value="673" /> 
+    </bean>
+	
+	<!-- #Messages Messages in the system -->
+	<bean id="message1" class="domain.Message">
+		<property name="header" value="Header of message1"/>
+		<property name="body" value="This is a message for you!"/>
+		<property name="attachmentLink"><null/></property>
+		<property name="sender" ref="user1"/>
+		<property name="recipient" ref="moderator1"/>
+	</bean>
+	
+	<bean id="message2" class="domain.Message">
+		<property name="header" value="Header of message2"/>
+		<property name="body" value="A message for you!"/>
+		<property name="attachmentLink"><null/></property>
+		<property name="sender" ref="moderator2"/>
+		<property name="recipient" ref="corporation1"/>
+	</bean>
+	
+	<!-- #Patronages Patronages in the system -->
+	
+	<bean id="patronage1" class="domain.Patronage">
+		
+		<property name="amount" value="20.0"/>
+		<property name="creationDate" value="13/12/2016 12:00"/>
+		<property name="creditCard" ref="creditCard2"/>
+		<property name="isCancelled" value="false"/>
+		<property name="user" ref="user2"/>
+		<property name="project" ref="project1"/>
+	</bean>
+	
+	<bean id="patronage2" class="domain.Patronage">
+		
+		<property name="amount" value="30.0"/>
+		<property name="creationDate" value="14/12/2016 12:00"/>
+		<property name="creditCard" ref="creditCard1"/>
+		<property name="isCancelled" value="false"/>
+		<property name="user" ref="user1"/>
+		<property name="project" ref="project2"/>
+	</bean>
+	
+	<bean id="patronage3" class="domain.Patronage">
+		
+		<property name="amount" value="2.0"/>
+		<property name="creationDate" value="15/12/2016 12:00"/>
+		<property name="creditCard" ref="creditCard1"/>
+		<property name="isCancelled" value="false"/>
+		<property name="user" ref="user1"/>
+		<property name="project" ref="project3"/>
+	</bean>
+	
+	<!-- #Projects Projects in the system -->
+	
+	<bean id="project1" class="domain.Project">
+	
+		<property name="title" value="Project1"/>
+		<property name="description" value="Project1 is about a game."/>
+		<property name="creationMoment" value="8/11/2016 15:30"/>
+		<property name="economicGoal" value="5050.0"/>
+		<property name="minimumPatronageAmount" value="5.0"/>
+		<property name="isDraft" value="false"/>
+		<property name="dueDate" value="12/02/2019 15:30"/>
+		<property name="isCancelled" value="false"/>
+		<property name="creator" ref="user1"/>
+		<property name="category" ref="category1"/>
+		<property name="announcements">
+		
+			<list>
+				<ref bean="announcement1"/>
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+			
+				<ref bean="patronage1"/>
+			
+			</list>
+		
+		</property>
+		<property name="projectComments">
+		
+			<list>
+			
+				<ref bean="projectComment1"/>
+			
+			</list>
+		
+		</property>
+		<property name="sponsorships">
+		
+			<list>
+			
+				<ref bean="sponsorship1"/>
+			
+			</list>
+		
+		</property>
+		<property name="awards">
+		
+			<list>
+			
+				<ref bean="award1"/>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="project2" class="domain.Project">
+	
+		<property name="title" value="Project2"/>
+		<property name="description" value="Project2 is about art."/>
+		<property name="creationMoment" value="8/11/2016 16:30"/>
+		<property name="economicGoal" value="10050.0"/>
+		<property name="minimumPatronageAmount" value="10.0"/>
+		<property name="isDraft" value="false"/>
+		<property name="dueDate" value="1/01/2017 15:30"/>
+		<property name="isCancelled" value="false"/>
+		<property name="creator" ref="user2"/>
+		<property name="category" ref="category2"/>
+		<property name="announcements">
+		
+			<list>
+				<ref bean="announcement1"/>
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+			
+				<ref bean="report1"/>
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+			
+				<ref bean="patronage2"/>
+			
+			</list>
+		
+		</property>
+		<property name="projectComments">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="sponsorships">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="awards">
+		
+			<list>
+			
+				<ref bean="award2"/>
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="project3" class="domain.Project">
+	
+		<property name="title" value="Project3"/>
+		<property name="description" value="Project3 is about crafting."/>
+		<property name="creationMoment" value="4/11/2016 16:30"/>
+		<property name="economicGoal" value="12470.0"/>
+		<property name="minimumPatronageAmount" value="15.0"/>
+		<property name="isDraft" value="false"/>
+		<property name="dueDate" value="1/03/2017 15:30"/>
+		<property name="isCancelled" value="false"/>
+		<property name="creator" ref="user3"/>
+		<property name="category" ref="category3"/>
+		<property name="announcements">
+		
+			<list>
+				<ref bean="announcement3"/>
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+			
+				<ref bean="patronage3"/>
+			
+			</list>
+		
+		</property>
+		<property name="projectComments">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="sponsorships">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="awards">
+		
+			<list>
+			
+				<ref bean="award3"/>
+				<ref bean="award4"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="project4" class="domain.Project">
+	
+		<property name="title" value="Project4"/>
+		<property name="description" value="Project4 is about something else."/>
+		<property name="creationMoment" value="8/11/2016 16:30"/>
+		<property name="economicGoal" value="620050.0"/>
+		<property name="minimumPatronageAmount" value="30.0"/>
+		<property name="isDraft" value="false"/>
+		<property name="dueDate" value="1/01/2019 15:30"/>
+		<property name="isCancelled" value="true"/>
+		<property name="creator" ref="user3"/>
+		<property name="category" ref="category4"/>
+		<property name="announcements">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+			
+				<ref bean="report2"/>
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="projectComments">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="sponsorships">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="awards">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="project5" class="domain.Project">
+	
+		<property name="title" value="Project5"/>
+		<property name="description" value="Project5 is a draft."/>
+		<property name="creationMoment" value="8/11/2016 16:30"/>
+		<property name="economicGoal" value="720050.0"/>
+		<property name="minimumPatronageAmount" value="40.0"/>
+		<property name="isDraft" value="true"/>
+		<property name="dueDate" value="1/04/2019 15:30"/>
+		<property name="isCancelled" value="false"/>
+		<property name="creator" ref="user3"/>
+		<property name="category" ref="category4"/>
+		<property name="announcements">
+		
+			<list>
+			
+			</list>
+		
+		</property>
+		<property name="reports">
+		
+			<list>
+				
+			
+			</list>
+		
+		</property>
+		<property name="patronages">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="projectComments">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="sponsorships">
+		
+			<list>
+			
+			
+			</list>
+		
+		</property>
+		<property name="awards">
+		
+			<list>
+				<ref bean="award5"/>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<!-- #ProjectComment Project comments -->
+	
+	<bean id="projectComment1" class="domain.ProjectComment">
+		
+		<property name="text" value="Comment in a project"/>
+		<property name="creationMoment" value="27/12/2016 14:00"/>
+		<property name="rating" value="5"/>
+		<property name="project" ref="project1"/>
+		<property name="user" ref="user2"/>
+	</bean>
+	
+	<!-- #Reports Reports in the system -->
+	
+		<bean id="report1" class="domain.Report">
+		
+			<property name="complaint" value="I hate this user."/>
+			<property name="reason" value="It's childish"/>
+			<property name="isLegit" value="false"/>
+			<property name="user" ref="user3"/>
+			<property name="project" ref="project2"/>
+		</bean>
+		
+		<bean id="report2" class="domain.Report">
+		
+			<property name="complaint" value="This project is inappropriate because reasons."/>
+			<property name="reason" value="The reasons are so goods, I'm happy."/>
+			<property name="isLegit" value="true"/>
+			<property name="user" ref="user1"/>
+			<property name="project" ref="project4"/>
+		</bean>
+	
+	<!-- #Sponsorships in the system -->
+	
+	<bean id="sponsorship1" class="domain.Sponsorship">
+	
+		<property name="bannerURL" value="https://image.freepik.com/free-icon/facebook-logo_318-49940.jpg"/>
+		<property name="pageURL" value="https://facebook.com"/>
+		<property name="project" ref="project1"/>
+		<property name="corporation" ref="corporation1"/>
+	
+	</bean>
+	
+</beans>
